@@ -10,6 +10,7 @@ public class Deck : MonoBehaviour {
     Card_Sha sha;
 	// Use this for initialization
 	void Start () {
+        //MainProcess.Instance.RegOnStageDelegate(OnStageDel);
 
         Instance = this;
         if (Instance == null) Debug.Log("Deck is null");
@@ -32,11 +33,23 @@ public class Deck : MonoBehaviour {
 
     public void DrawCard()
     {
-        MainProcess.Instance.self.holdCards[0] = cardPile[pTop];
+        Player.holdCards[0] = cardPile[pTop];
         pTop--;
-        MainProcess.Instance.self.holdCards[1] = cardPile[pTop];
+        Player.holdCards[1] = cardPile[pTop];
+        //MainProcess.Instance.self.holdCards[1] = cardPile[pTop];
         pTop--;
         restCardsNumber -= 2;
         Debug.Log("draw two sha");
+        //MainProcess.Instance.NextStage();
+    }
+
+    void OnStageDel(MainProcess.StageEvent stageEvent)
+    {
+        /*if (stageEvent.curStage == MainProcess.Stage.drawing)
+        {
+            DrawCard();
+            MainProcess.Instance.NextStage();
+        }
+        */
     }
 }
