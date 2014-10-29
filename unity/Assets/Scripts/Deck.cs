@@ -31,15 +31,16 @@ public class Deck : MonoBehaviour {
 	
 	}
 
-    public void DrawCard()
+    public Card DrawCard()
     {
-        Player.holdCards[0] = cardPile[pTop];
+        /*Player.holdCards[1] = cardPile[pTop];
         pTop--;
-        Player.holdCards[1] = cardPile[pTop];
+        Player.holdCards[1] = cardPile[pTop];*/
         //MainProcess.Instance.self.holdCards[1] = cardPile[pTop];
-        pTop--;
-        restCardsNumber -= 2;
-        Debug.Log("draw two sha");
+        //pTop--;
+        restCardsNumber--;
+        Debug.Log("draw a sha");
+        return cardPile[pTop--];
         //MainProcess.Instance.NextStage();
     }
 

@@ -28,7 +28,7 @@ public class Player : MonoSingleton<Player> {
         curHealth = 4;
         judgementCards = new Card[3];
         holdCards = new Card[20];
-        pHoldCards = 0;
+        pHoldCards = -1;
         holdCardsNumber = 0;
     }
 
@@ -105,15 +105,24 @@ public class Player : MonoSingleton<Player> {
         Debug.Log("PlaySha()" + isPlayingStage);
         if (isPlayingStage)
         {
-            holdCards[1].Effect();
+            holdCards[pHoldCards].Effect();
             Debug.Log("self played sha");
+            pHoldCards--;
+            holdCardsNumber--;
+            Debug.Log("handcard = " + holdCardsNumber);
             //MainProcess.Instance.NextStage();
         }
     }
 
     public void Draw()
     {
-        Deck.Instance.DrawCard();
+        holdCards[++pHoldCards] = Deck.Instance.DrawCard();
+        //Debug.Log("handcard = " + holdCardsNumber);
+        holdCards[++pHoldCards] = Deck.Instance.DrawCard();
+        
+        holdCardsNumber += 2;
+        Debug.Log("handcard = " + holdCardsNumber);
+        //pHoldCards = holdCardsNumber;
     }
 
     void OnStageDel(MainProcess.StageEvent stageEvent)
@@ -130,6 +139,7 @@ public class Player : MonoSingleton<Player> {
         {
             EnterDiscardingStage();
         }
-
+        else
+            MainProcess.Instance.NextStage();
     }
 }

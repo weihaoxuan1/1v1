@@ -51,6 +51,9 @@ public class MainProcess : MonoSingleton<MainProcess> {
 
 	int turn;
 	float time;
+    public float stageDelay = 1;
+    float delay = 0;
+    Stage lastStage;
 	Stage curStage;
 	public Player opposite;
     public Player self;
@@ -61,6 +64,7 @@ public class MainProcess : MonoSingleton<MainProcess> {
 	// Use this for initialization
 	void Start () {
         stageEvent = new StageEvent();
+        lastStage = (Stage)0;
         curStage = (Stage)0;
         turn = 1;
         time = 0;
@@ -73,29 +77,37 @@ public class MainProcess : MonoSingleton<MainProcess> {
 	// Update is called once per frame
 	void Update () {
         time += Time.deltaTime;
+        delay += Time.deltaTime;
+        if(lastStage != curStage && delay >= stageDelay)
+        {
+            lastStage = curStage;
+            delay = 0;
+            if (onStageDels != null)
+                onStageDels(GetStageEvent());
+        }
 	}
 
 	public void NextStage()
 	{
+        
+        curStage++;
         if (curStage >= (Stage)19)
         {
             curStage = (Stage)0;
             turn++;
-            Debug.Log("next turn "+turn);
+            Debug.Log("next turn " + turn);
         }
-        curStage++;
         info.text = "curStage is " + curStage;
         Debug.Log("curStage is " + curStage +" "+(int)curStage);
 		
         
-        if (onStageDels != null)
-            onStageDels(GetStageEvent());
-        if (curStage != (Stage)8 && curStage != (Stage)14 && curStage != (Stage)11)
+        
+        /*if (curStage != (Stage)8 && curStage != (Stage)14 && curStage != (Stage)11)
         {
             //Debug.Log("xuan");
             Invoke("NextStage",1);
         }
-        
+        */
 	}
 
     public void GameOver()
