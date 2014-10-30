@@ -77,19 +77,22 @@ public class MainProcess : MonoSingleton<MainProcess> {
 	// Update is called once per frame
 	void Update () {
         time += Time.deltaTime;
-        delay += Time.deltaTime;
-        if(lastStage != curStage && delay >= stageDelay)
+        
+        if(lastStage != curStage )
         {
-            lastStage = curStage;
-            delay = 0;
-            if (onStageDels != null)
-                onStageDels(GetStageEvent());
+            delay += Time.deltaTime;
+            if (delay >= stageDelay)
+            {
+                lastStage = curStage;
+                delay = 0;
+                if (onStageDels != null)
+                    onStageDels(GetStageEvent());
+            }
         }
 	}
 
 	public void NextStage()
 	{
-        
         curStage++;
         if (curStage >= (Stage)19)
         {
@@ -99,7 +102,6 @@ public class MainProcess : MonoSingleton<MainProcess> {
         }
         info.text = "curStage is " + curStage;
         Debug.Log("curStage is " + curStage +" "+(int)curStage);
-		
         
         
         /*if (curStage != (Stage)8 && curStage != (Stage)14 && curStage != (Stage)11)

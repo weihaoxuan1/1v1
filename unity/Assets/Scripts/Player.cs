@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-public class Player : MonoSingleton<Player> {
+public class Player : MonoBehaviour {
 
-    //public static Player Instance;
+    public static Player Instance;
 
     static int maxHealth;
     static int curHealth;
@@ -14,15 +14,17 @@ public class Player : MonoSingleton<Player> {
     static bool isPlayingStage = false;
     static bool isDrawingStage = false;
     static bool isDiscardingStage = false;
+    static bool isCallingShan = false;
+    public Player opposite;
 
     public UILabel enemyHealth;
-    public UILabel info;
+    public UILabel holdCardsLabel;
 
     void Start()
     {
         Debug.Log("Player Start()");
         MainProcess.Instance.RegOnStageDelegate(OnStageDel);
-        //Instance = this;
+        Instance = this;
         
         maxHealth = 4;
         curHealth = 4;
@@ -37,15 +39,16 @@ public class Player : MonoSingleton<Player> {
         Debug.Log("Player OnEnable()");
     }
 
-    void Updata()
+    void Update()
     {
+        //CheckHoldCards();
     }
 
     void OnGUI()
     {
         if (GUI.Button(new Rect(110, 10, 300, 200), "next"))
             MainProcess.Instance.NextStage();
-        if (GUI.Button(new Rect(410, 10, 300, 200), "sha"))
+        if (GUI.Button(new Rect(110, 210, 300, 200), "sha"))
         {
             if (isPlayingStage)
             {
@@ -53,7 +56,7 @@ public class Player : MonoSingleton<Player> {
                 isPlayingStage = false;
             }
         }
-        if (GUI.Button(new Rect(710, 10, 300, 200), "draw"))
+        if (GUI.Button(new Rect(110, 410, 300, 200), "draw"))
         {
             if (isDrawingStage)
             {
@@ -62,13 +65,13 @@ public class Player : MonoSingleton<Player> {
             }
         }
     }
-	public void SufferSha()
+	/*public void SufferSha()
 	{
 		curHealth--;
         enemyHealth.text = curHealth.ToString() + "/4"; 
         Debug.Log("being sha , injure 1 point , curHealth = "+curHealth);
         CheckDead();
-	}
+	}*/
 
     public void EnterDrawingStage()
     {
@@ -105,23 +108,33 @@ public class Player : MonoSingleton<Player> {
         Debug.Log("PlaySha()" + isPlayingStage);
         if (isPlayingStage)
         {
-            holdCards[pHoldCards].Effect();
+            holdCards[pHoldCards].Effect(this);
             Debug.Log("self played sha");
             pHoldCards--;
             holdCardsNumber--;
             Debug.Log("handcard = " + holdCardsNumber);
             //MainProcess.Instance.NextStage();
+            CheckHoldCards();
         }
     }
 
     public void Draw()
     {
         holdCards[++pHoldCards] = Deck.Instance.DrawCard();
-        //Debug.Log("handcard = " + holdCardsNumber);
+        Debug.Log("handcard = "+pHoldCards.ToString() + holdCards[pHoldCards].name);
         holdCards[++pHoldCards] = Deck.Instance.DrawCard();
         
         holdCardsNumber += 2;
-        Debug.Log("handcard = " + holdCardsNumber);
+        Debug.Log("handcardNO = " + holdCardsNumber);
+        for (int i = 0; i < holdCardsNumber; i++)
+        {
+            if (holdCards[i] == null)
+                Debug.Log(i.ToString() + " is verynull");
+            //Debug.Log("checkholdcards" + i);
+            else
+                holdCardsLabel.text = holdCards[i].name + " ";
+        }
+        CheckHoldCards();
         //pHoldCards = holdCardsNumber;
     }
 
@@ -141,5 +154,48 @@ public class Player : MonoSingleton<Player> {
         }
         else
             MainProcess.Instance.NextStage();
+    }
+
+    public int IncreaseHp(int point)
+    {
+        curHealth += point;
+        if (curHealth > maxHealth)
+            curHealth = maxHealth;
+        return curHealth;
+    }
+
+    public int DecreaseHp(int point)
+    {
+        curHealth -= point;
+        enemyHealth.text = curHealth.ToString() + "/4";
+        CheckDead();
+        return curHealth;
+    }
+
+    public void CallingShan()
+    {
+        isCallingShan = true;
+        for (int i = 0; i < holdCardsNumber; i++)
+        {
+            if (holdCards[i].name.Equals("shan"))
+            {
+                holdCards[i] = null;
+                isCallingShan = false;
+                return;
+            }
+        }
+        DecreaseHp(1);
+    }
+
+    void CheckHoldCards()
+    {
+        for (int i = 0; i < holdCardsNumber; i++)
+        {
+            if (holdCards[i] == null)
+                Debug.Log(i.ToString() + " is null");
+            //Debug.Log("checkholdcards" + i);
+            else
+            holdCardsLabel.text = holdCards[i].name + " ";
+        }
     }
 }

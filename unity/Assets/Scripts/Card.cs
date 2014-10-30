@@ -8,6 +8,6 @@ public class Card : MonoBehaviour{
 	public bool clickable;
 	public string name;
 
-	public virtual void Effect(){}
+	public virtual void Effect(Player user){}
 
 }

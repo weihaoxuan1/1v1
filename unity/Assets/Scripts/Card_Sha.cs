@@ -2,9 +2,19 @@ using UnityEngine;
 using System.Collections;
 
 public class Card_Sha : Card{
+    public Card_Sha()
+    {
+        name = "sha";
+    }
 
-	public override void Effect()
+    void Start()
+    {
+        //name = "sha";
+    }
+
+	public override void Effect(Player user)
 	{
-		Player.Instance.SufferSha();
+        user.opposite.CallingShan();
+        //user.opposite.DecreaseHp(1);
 	}
 }
