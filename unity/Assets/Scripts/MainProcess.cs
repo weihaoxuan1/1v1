@@ -68,8 +68,8 @@ public class MainProcess : MonoSingleton<MainProcess> {
         curStage = (Stage)0;
         turn = 1;
         time = 0;
-        opposite = Player.Instance;// _Enemy.Instance;
-        self = Player.Instance;
+        //opposite = Player.Instance;// _Enemy.Instance;
+        //self = Player.Instance;
         Debug.Log("Started the game");
         //NextStage();
 	}
@@ -100,7 +100,8 @@ public class MainProcess : MonoSingleton<MainProcess> {
             turn++;
             Debug.Log("next turn " + turn);
         }
-        info.text = "curStage is " + curStage;
+        if(info)
+			info.text = "curStage is " + curStage;
         Debug.Log("curStage is " + curStage +" "+(int)curStage);
         
         

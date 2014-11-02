@@ -3,18 +3,18 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-    public static Player Instance;
+    //public static Player Instance;
 
-    static int maxHealth;
-    static int curHealth;
+    public static int maxHealth;
+    public static int curHealth;
     public static Card[] judgementCards;
     public static Card[] holdCards;
-    static int pHoldCards;
-    static int holdCardsNumber;
-    static bool isPlayingStage = false;
-    static bool isDrawingStage = false;
-    static bool isDiscardingStage = false;
-    static bool isCallingShan = false;
+    public static int pHoldCards;
+    public static int holdCardsNumber;
+    public static bool isPlayingStage = false;
+    public static bool isDrawingStage = false;
+    public static bool isDiscardingStage = false;
+    public static bool isCallingShan = false;
     public Player opposite;
 
     public UILabel enemyHealth;
@@ -23,8 +23,8 @@ public class Player : MonoBehaviour {
     void Start()
     {
         Debug.Log("Player Start()");
-        MainProcess.Instance.RegOnStageDelegate(OnStageDel);
-        Instance = this;
+        //MainProcess.Instance.RegOnStageDelegate(OnStageDel);
+        //Instance = this;
         
         maxHealth = 4;
         curHealth = 4;
@@ -125,9 +125,10 @@ public class Player : MonoBehaviour {
         holdCards[++pHoldCards] = Deck.Instance.DrawCard();
         
         holdCardsNumber += 2;
-        Debug.Log("handcardNO = " + holdCardsNumber);
+        Debug.Log("handcardNO = " );
         for (int i = 0; i < holdCardsNumber; i++)
         {
+			//holdCards[i] = new Card();
             if (holdCards[i] == null)
                 Debug.Log(i.ToString() + " is verynull");
             //Debug.Log("checkholdcards" + i);
@@ -138,8 +139,9 @@ public class Player : MonoBehaviour {
         //pHoldCards = holdCardsNumber;
     }
 
-    void OnStageDel(MainProcess.StageEvent stageEvent)
+    public void OnStageDel(MainProcess.StageEvent stageEvent)
     {
+
         if (stageEvent.curStage == MainProcess.Stage.drawing)
         {
             EnterDrawingStage();
@@ -167,7 +169,7 @@ public class Player : MonoBehaviour {
     public int DecreaseHp(int point)
     {
         curHealth -= point;
-        enemyHealth.text = curHealth.ToString() + "/4";
+        if(enemyHealth)enemyHealth.text = curHealth.ToString() + "/4";
         CheckDead();
         return curHealth;
     }

@@ -9,5 +9,13 @@ public class Player_Man : Player
     {
         Instance = this;
         opposite = Player_Enemy.Instance;
+		MainProcess.Instance.RegOnStageDelegate(OnStageDel);
+		maxHealth = 4;
+        curHealth = 4;
+        judgementCards = new Card[3];
+        holdCards = new Card[20];
+        pHoldCards = -1;
+        holdCardsNumber = 0;
+
     }
 }

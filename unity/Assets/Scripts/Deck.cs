@@ -64,7 +64,7 @@ public class Deck : MonoBehaviour {
         //pTop--;
         restCardsNumber--;
         Debug.Log("draw a " + cardPile[pTop].name);
-        return cardPile[pTop--];
+        return cardPile[pTop];
         //MainProcess.Instance.NextStage();
     }
 
