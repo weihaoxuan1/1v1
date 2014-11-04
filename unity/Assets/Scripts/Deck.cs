@@ -4,13 +4,18 @@ using System.Collections;
 public class Deck : MonoBehaviour {
     public static Deck Instance;
 
-    static Card[] cardPile;
+    public static Card[] cardPile;
     int pTop = 0;
-    int restCardsNumber = 0;
+    public int restCardsNumber = 0;
     Card_Sha sha;
     Card_Shan shan;
     Card_Tao tao;
 	// Use this for initialization
+    public void Reset()
+    {
+        InitDeck();
+    }
+
 	void Start () {
         //MainProcess.Instance.RegOnStageDelegate(OnStageDel);
 
@@ -22,7 +27,19 @@ public class Deck : MonoBehaviour {
         shan = new Card_Shan();
         tao = new Card_Tao();
         //Debug.Log("aaaa"+ shan.name);
-        for(int i=0;i<50;i++)
+        InitDeck();
+        /*for (int i = 0; i < 50; i++)
+        {
+            Debug.Log(cardPile[i].name);
+        }*/
+        //Debug.Log(cardPile[1] == null ? "null" : "not null");
+        //Debug.Log(cardPile[1].name);
+	}
+
+
+    void InitDeck()
+    {
+        for (int i = 0; i < 50; i++)
         {
             int a = Random.Range(0, 100);
             if (a < 60)
@@ -40,16 +57,11 @@ public class Deck : MonoBehaviour {
                 cardPile[i] = tao;
                 Debug.Log("here add a tao");
             }
-            
+
         }
         pTop = 49;
         restCardsNumber = 49;
-        /*for (int i = 0; i < 50; i++)
-        {
-            Debug.Log(cardPile[i].name);
-        }*/
-	}
-	
+    }
 	// Update is called once per frame
 	void Update () {
 	
@@ -57,14 +69,11 @@ public class Deck : MonoBehaviour {
 
     public Card DrawCard()
     {
-        /*Player.holdCards[1] = cardPile[pTop];
-        pTop--;
-        Player.holdCards[1] = cardPile[pTop];*/
-        //MainProcess.Instance.self.holdCards[1] = cardPile[pTop];
         //pTop--;
         restCardsNumber--;
         Debug.Log("draw a " + cardPile[pTop].name);
-        return cardPile[pTop];
+        Debug.Log("Deck rest " + restCardsNumber);
+        return cardPile[pTop--];
         //MainProcess.Instance.NextStage();
     }
 

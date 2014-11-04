@@ -59,8 +59,17 @@ public class MainProcess : MonoSingleton<MainProcess> {
     public Player self;
     StageEvent stageEvent;
     public UILabel info;
+    public bool isMyTurn = true;
 
-
+    public void Reset()
+    {
+        turn = 1;
+        time = 0;
+        lastStage = Stage.begin;
+        curStage = Stage.begin;
+        if (info) info.text = "?";
+        isMyTurn = true;
+    }
 	// Use this for initialization
 	void Start () {
         stageEvent = new StageEvent();
@@ -71,7 +80,7 @@ public class MainProcess : MonoSingleton<MainProcess> {
         //opposite = Player.Instance;// _Enemy.Instance;
         //self = Player.Instance;
         Debug.Log("Started the game");
-        //NextStage();
+        Invoke("NextStage",2);
 	}
 	
 	// Update is called once per frame
@@ -115,16 +124,28 @@ public class MainProcess : MonoSingleton<MainProcess> {
 
     public void GameOver()
     {
-        Application.Quit();
+        if (info) info.text = isMyTurn ? "enemy dead" : "you dead";
+        Reset();
+        Player_Enemy.Instance.Reset();
+        Player_Man.Instance.Reset();
+        Deck.Instance.Reset();
+        Player_Man.Instance.Reg();
+        Invoke("NextStage", 5);
     }
 
     StageEvent GetStageEvent()
     {
+        //Debug.Log("xxxxx" + curStage);
         stageEvent.curStage = curStage;
         stageEvent.turn = turn;
         stageEvent.time = time;
         //stageEvent.self = self;
         //stageEvent.opposite = opposite;
         return stageEvent;
+    }
+
+    public Stage GetCurstage()
+    {
+        return curStage;
     }
 }

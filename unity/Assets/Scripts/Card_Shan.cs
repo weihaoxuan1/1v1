@@ -20,6 +20,6 @@ public class Card_Shan : Card {
 
     public override void Effect(Player user)
     {
-        
+        user.isCallingShan = false;
     }
 }

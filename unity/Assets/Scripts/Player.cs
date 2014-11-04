@@ -1,24 +1,46 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
     //public static Player Instance;
 
-    public static int maxHealth;
-    public static int curHealth;
-    public static Card[] judgementCards;
-    public static Card[] holdCards;
-    public static int pHoldCards;
-    public static int holdCardsNumber;
-    public static bool isPlayingStage = false;
-    public static bool isDrawingStage = false;
-    public static bool isDiscardingStage = false;
-    public static bool isCallingShan = false;
+    public  int maxHealth;
+    public  int curHealth;
+    //public static Card[] judgementCards;
+    //public static Card[] holdCards;
+    public List<Card> holdCards;
+    public  int pHoldCards;
+    public  int holdCardsNumber;
+    public  bool isPlayingStage = false;
+    public  bool isDrawingStage = false;
+    public  bool isDiscardingStage = false;
+    public bool isCallingShan = false;
+    public bool isCallingTao = false;
+    public bool isHaveSha = false;
     public Player opposite;
 
-    public UILabel enemyHealth;
+    public UILabel Health;
     public UILabel holdCardsLabel;
+
+    //public bool isMyTurn = true;
+    public void Reset()
+    {
+        curHealth = 4;
+        holdCards.Clear();
+        pHoldCards = -1;
+        holdCardsNumber = 0;
+        isPlayingStage = false;
+        isDrawingStage = false;
+        isDiscardingStage = false;
+        isCallingShan = false;
+        isCallingTao = false;
+        isHaveSha = false;
+        if (Health) Health.text = "4/4";
+        if (holdCardsLabel) holdCardsLabel.text = "";
+        Unreg();
+    }
 
     void Start()
     {
@@ -28,10 +50,11 @@ public class Player : MonoBehaviour {
         
         maxHealth = 4;
         curHealth = 4;
-        judgementCards = new Card[3];
-        holdCards = new Card[20];
+        //judgementCards = new Card[3];
+        //holdCards = new Card[20];
         pHoldCards = -1;
         holdCardsNumber = 0;
+        //holdCards[1] = new Card_Sha();
     }
 
     void OnEnable()
@@ -44,27 +67,7 @@ public class Player : MonoBehaviour {
         //CheckHoldCards();
     }
 
-    void OnGUI()
-    {
-        if (GUI.Button(new Rect(110, 10, 300, 200), "next"))
-            MainProcess.Instance.NextStage();
-        if (GUI.Button(new Rect(110, 210, 300, 200), "sha"))
-        {
-            if (isPlayingStage)
-            {
-                PlaySha();
-                isPlayingStage = false;
-            }
-        }
-        if (GUI.Button(new Rect(110, 410, 300, 200), "draw"))
-        {
-            if (isDrawingStage)
-            {
-                Draw();
-                isDrawingStage = false;
-            }
-        }
-    }
+    
 	/*public void SufferSha()
 	{
 		curHealth--;
@@ -105,28 +108,82 @@ public class Player : MonoBehaviour {
 
     public void PlaySha()
     {
-        Debug.Log("PlaySha()" + isPlayingStage);
+        //Debug.Log("isPlayingStage = " + isPlayingStage);
         if (isPlayingStage)
         {
-            holdCards[pHoldCards].Effect(this);
-            Debug.Log("self played sha");
-            pHoldCards--;
-            holdCardsNumber--;
-            Debug.Log("handcard = " + holdCardsNumber);
-            //MainProcess.Instance.NextStage();
-            CheckHoldCards();
+            //Card temp = null;
+            int count = 0;
+            foreach (Card c in holdCards)
+            {
+                
+                if (c.name.Equals("sha") && isHaveSha == false)
+                {
+                    c.Effect(this);
+                    //holdCards[pHoldCards].Effect(this);
+                    Debug.Log("self played sha");
+                    pHoldCards--;
+                    holdCardsNumber--;
+                    //temp = c;
+
+                    //MainProcess.Instance.NextStage();
+                    
+                    isHaveSha = true;
+                    holdCards.RemoveAt(count);
+                    CheckHoldCards();
+                    return;
+                }
+                count++;
+            }
+            if (isHaveSha == false)
+            {
+                Debug.Log("there is no sha");
+            }
+            /*if (temp)
+            {
+                Debug.Log("self played" + temp.name);
+                holdCards.Remove(temp);
+            }*/
+        }
+    }
+
+    public void PlayTao()
+    {
+        if (isPlayingStage && curHealth<maxHealth)
+        {
+            //Card temp = null;
+            int count = 0;
+            foreach (Card c in holdCards)
+            {
+
+                if (c.name.Equals("tao"))
+                {
+                    c.Effect(this);
+                    Debug.Log("self played tao");
+                    pHoldCards--;
+                    holdCardsNumber--;
+                    holdCards.RemoveAt(count);
+                    CheckHoldCards();
+                    return;
+                }
+                count++;
+            }
         }
     }
 
     public void Draw()
     {
-        holdCards[++pHoldCards] = Deck.Instance.DrawCard();
-        Debug.Log("handcard = "+pHoldCards.ToString() + holdCards[pHoldCards].name);
-        holdCards[++pHoldCards] = Deck.Instance.DrawCard();
-        
+        holdCards.Add(Deck.Instance.DrawCard());
+        pHoldCards++;
+        //holdCards[1] = Deck.Instance.DrawCard();
+        //Debug.Log("handcard = "+pHoldCards.ToString() + holdCards[1].name);
+        //holdCards[++pHoldCards] = Deck.Instance.DrawCard();
+        holdCards.Add(Deck.Instance.DrawCard());
+        pHoldCards++;
         holdCardsNumber += 2;
-        Debug.Log("handcardNO = " );
-        for (int i = 0; i < holdCardsNumber; i++)
+        Debug.Log("handcardNO = "+holdCards.Count );
+        //if (holdCards[1] == null)
+        //    Debug.Log(" is verynull");
+        /*for (int i = 0; i < holdCardsNumber; i++)
         {
 			//holdCards[i] = new Card();
             if (holdCards[i] == null)
@@ -134,70 +191,59 @@ public class Player : MonoBehaviour {
             //Debug.Log("checkholdcards" + i);
             else
                 holdCardsLabel.text = holdCards[i].name + " ";
-        }
+        }*/
         CheckHoldCards();
         //pHoldCards = holdCardsNumber;
     }
 
-    public void OnStageDel(MainProcess.StageEvent stageEvent)
-    {
-
-        if (stageEvent.curStage == MainProcess.Stage.drawing)
-        {
-            EnterDrawingStage();
-        }
-        else if (stageEvent.curStage == MainProcess.Stage.playing)
-        {
-            EnterPlayingStage();
-        }
-        else if (stageEvent.curStage == MainProcess.Stage.discarding)
-        {
-            EnterDiscardingStage();
-        }
-        else
-            MainProcess.Instance.NextStage();
-    }
+    
 
     public int IncreaseHp(int point)
     {
         curHealth += point;
         if (curHealth > maxHealth)
             curHealth = maxHealth;
+        if (Health) Health.text = curHealth.ToString() + "/4";
         return curHealth;
     }
 
     public int DecreaseHp(int point)
     {
         curHealth -= point;
-        if(enemyHealth)enemyHealth.text = curHealth.ToString() + "/4";
+        if(Health)Health.text = curHealth.ToString() + "/4";
         CheckDead();
         return curHealth;
     }
 
-    public void CallingShan()
+    public virtual void CallingShan()
     {
-        isCallingShan = true;
-        for (int i = 0; i < holdCardsNumber; i++)
-        {
-            if (holdCards[i].name.Equals("shan"))
-            {
-                holdCards[i] = null;
-                isCallingShan = false;
-                return;
-            }
-        }
-        DecreaseHp(1);
+        
     }
 
-    void CheckHoldCards()
+    public void CheckHoldCards()
     {
-        for (int i = 0; i < holdCardsNumber; i++)
+        /*for (int i = 0; i < holdCardsNumber; i++)
         {
             if (holdCards[i] == null)
                 Debug.Log(i.ToString() + " is null");
             //Debug.Log("checkholdcards" + i);
             else
             holdCardsLabel.text = holdCards[i].name + " ";
+        }*/
+        holdCardsLabel.text = "";
+        foreach (Card a in holdCards)
+        {
+            holdCardsLabel.text += a.name + " ";
         }
     }
+
+    public void Reg()
+    {
+        MainProcess.Instance.RegOnStageDelegate(OnStageDel);
+    }
+    public void Unreg()
+    {
+        MainProcess.Instance.UnregOnStageDelegate(OnStageDel);
+    }
+    public virtual void OnStageDel(MainProcess.StageEvent stageEvent) { }
 }
