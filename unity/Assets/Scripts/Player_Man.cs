@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.Collections;
-
+/// <summary>
+/// ÕÊº“¿‡
+/// </summary>
 public class Player_Man : Player
 {
     public static Player_Man Instance;
@@ -89,7 +91,7 @@ public class Player_Man : Player
             }
             else if (stageEvent.curStage == MainProcess.Stage.endOver)
             {
-                MainProcess.Instance.isMyTurn = !MainProcess.Instance.isMyTurn;
+                //MainProcess.Instance.isMyTurn = !MainProcess.Instance.isMyTurn;
                 this.Unreg();
                 opposite.Reg();
                 MainProcess.Instance.NextStage();

@@ -1,12 +1,27 @@
 using UnityEngine;
 using System.Collections;
-
+/// <summary>
+/// 敌人类
+/// </summary>
 public class Player_Enemy : Player
 {
     public static Player_Enemy Instance;
     public int i = 0;
     public float AItime = 1;
     float timeDelay = 0;
+
+    public delegate void OnChooseCardDelegate(Card card);
+    private OnChooseCardDelegate onChooseCardDels;
+
+    public void RegOnChooseCardDelegate(OnChooseCardDelegate onChooseCardDel)
+    {
+        onChooseCardDels += onChooseCardDel;
+    }
+    public void UnregOnChooseCardDelegate(OnChooseCardDelegate onChooseCardDel)
+    {
+        if(onChooseCardDels != null)
+            onChooseCardDels -= onChooseCardDel;
+    }
 
     void Start()
     {
@@ -21,51 +36,7 @@ public class Player_Enemy : Player
 
     void Update()
     {
-        if (isPlayingStage && !opposite.isCallingShan)
-        {
-            Debug.Log("1");
-            timeDelay += Time.deltaTime;
-            if (timeDelay >= AItime )
-            {
-                Debug.Log("2");
-                if (i < holdCards.Count)
-                {
-                    Debug.Log("3");
-                    timeDelay = 0;
-                    if (holdCards[i].name.Equals("tao") && curHealth < maxHealth)
-                    {
-                        Debug.Log("4");
-                        holdCards[i].Effect(this);
-                        holdCards.RemoveAt(i);
-                        CheckHoldCards();
-                        Debug.Log("enemy use a tao");
-                    }
-                    else if (holdCards[i].name.Equals("sha") && !isHaveSha)
-                    {
-                        Debug.Log("5");
-                        holdCards[i].Effect(this);
-                        holdCards.RemoveAt(i);
-                        CheckHoldCards();
-                        isHaveSha = true;
-                        Debug.Log("enemy use a sha");
-                    }
-                    else
-                    {
-                        Debug.Log("6");
-                        i++;
-                    }
-                }
-                else
-                {
-                    Debug.Log("7");
-                    timeDelay = 0;
-                    isPlayingStage = false;
-                    isHaveSha = false;
-                    i = 0;
-                    MainProcess.Instance.NextStage();
-                }
-            }
-        }
+        AI();
     }
 
     public override void OnStageDel(MainProcess.StageEvent stageEvent)
@@ -94,7 +65,7 @@ public class Player_Enemy : Player
             }
             else if (stageEvent.curStage == MainProcess.Stage.endOver)
             {
-                MainProcess.Instance.isMyTurn = !MainProcess.Instance.isMyTurn;
+                //MainProcess.Instance.isMyTurn = !MainProcess.Instance.isMyTurn;
                 this.Unreg();
                 opposite.Reg();
                 MainProcess.Instance.NextStage();
@@ -103,7 +74,7 @@ public class Player_Enemy : Player
                 MainProcess.Instance.NextStage();
         }
     }
-
+    //被要求出闪
     public override void CallingShan()
     {
         isCallingShan = true;
@@ -130,27 +101,58 @@ public class Player_Enemy : Player
         }
     }
 
-    /*void AI()
+    public void OnChose(Card card)
     {
-        //int played = 0;
-        for (int i = 0; i < holdCards.Count; i++)
+        onChooseCardDels(card);
+    }
+
+    void AI()
+    {
+        if (isPlayingStage && !opposite.isCallingShan)
         {
-            if (holdCards[i].name.Equals("tao") && curHealth < maxHealth)
+            Debug.Log("1");
+            timeDelay += Time.deltaTime;
+            if (timeDelay >= AItime )
             {
-                holdCards[i].Effect(this);
-                holdCards.RemoveAt(i);
-                i--;
-                //played++;
-            }
-            else if (holdCards[i].name.Equals("sha") && !isHaveSha)
-            {
-                holdCards.RemoveAt(i);
-                holdCards[i].Effect(this);
-                isHaveSha = true;
-                
-                i--;
-                //played++;
+                Debug.Log("2");
+                if (i < holdCards.Count)
+                {
+                    Debug.Log("3");
+                    timeDelay = 0;
+                    if (holdCards[i].name.Equals("tao") && curHealth < maxHealth)//有桃吃桃
+                    {
+                        Debug.Log("4");
+                        holdCards[i].Effect(this);
+                        holdCards.RemoveAt(i);
+                        CheckHoldCards();
+                        Debug.Log("enemy use a tao");
+                    }
+                    else if (holdCards[i].name.Equals("sha") && !isHaveSha)//有杀杀,没杀过
+                    {
+                        Debug.Log("5");
+                        holdCards[i].Effect(this);
+                        holdCards.RemoveAt(i);
+                        CheckHoldCards();
+                        isHaveSha = true;
+                        if (MainProcess.Instance.info) MainProcess.Instance.info.text = "enemy use a sha";
+                        Debug.Log("enemy use a sha");
+                    }
+                    else
+                    {
+                        Debug.Log("6");
+                        i++;
+                    }
+                }
+                else
+                {
+                    Debug.Log("7");
+                    timeDelay = 0;
+                    isPlayingStage = false;
+                    isHaveSha = false;
+                    i = 0;
+                    MainProcess.Instance.NextStage();
+                }
             }
         }
-    }*/
+    }
 }

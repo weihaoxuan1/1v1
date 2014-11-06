@@ -1,3 +1,8 @@
+//----------------------------------------------
+//            NGUI: Next-Gen UI kit
+// Copyright © 2011-2014 Tasharen Entertainment
+//----------------------------------------------
+
 using UnityEngine;
 
 /// <summary>
@@ -14,32 +19,34 @@ public class TypewriterEffect : MonoBehaviour
 	string mText;
 	int mOffset = 0;
 	float mNextChar = 0f;
+	bool mReset = true;
+
+	void OnEnable () { mReset = true; }
 
 	void Update ()
 	{
-		if (mLabel == null)
+		if (mReset)
 		{
+			mOffset = 0;
+			mReset = false;
 			mLabel = GetComponent<UILabel>();
-			mLabel.supportEncoding = false;
-			mLabel.symbolStyle = NGUIText.SymbolStyle.None;
 			mText = mLabel.processedText;
 		}
 
-		if (mOffset < mText.Length)
+		if (mOffset < mText.Length && mNextChar <= RealTime.time)
 		{
-			if (mNextChar <= RealTime.time)
-			{
-				charsPerSecond = Mathf.Max(1, charsPerSecond);
+			charsPerSecond = Mathf.Max(1, charsPerSecond);
 
-				// Periods and end-of-line characters should pause for a longer time.
-				float delay = 1f / charsPerSecond;
-				char c = mText[mOffset];
-				if (c == '.' || c == '\n' || c == '!' || c == '?') delay *= 4f;
+			// Periods and end-of-line characters should pause for a longer time.
+			float delay = 1f / charsPerSecond;
+			char c = mText[mOffset];
+			if (c == '.' || c == '\n' || c == '!' || c == '?') delay *= 4f;
 
-				mNextChar = RealTime.time + delay;
-				mLabel.text = mText.Substring(0, ++mOffset);
-			}
+			// Automatically skip all symbols
+			NGUIText.ParseSymbol(mText, ref mOffset);
+
+			mNextChar = RealTime.time + delay;
+			mLabel.text = mText.Substring(0, ++mOffset);
 		}
-		else Destroy(this);
 	}
 }

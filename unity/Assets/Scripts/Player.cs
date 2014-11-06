@@ -1,7 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+/// <summary>
+/// 玩家基类
+/// </summary>
 public class Player : MonoBehaviour {
 
     //public static Player Instance;
@@ -10,16 +12,20 @@ public class Player : MonoBehaviour {
     public  int curHealth;
     //public static Card[] judgementCards;
     //public static Card[] holdCards;
+    public List<Card> judgementCards;
     public List<Card> holdCards;
     public  int pHoldCards;
     public  int holdCardsNumber;
-    public  bool isPlayingStage = false;
-    public  bool isDrawingStage = false;
-    public  bool isDiscardingStage = false;
-    public bool isCallingShan = false;
-    public bool isCallingTao = false;
-    public bool isHaveSha = false;
-    public Player opposite;
+    public  bool isPlayingStage = false;//是否出牌阶段
+    public  bool isDrawingStage = false;//是否摸牌阶段
+    public  bool isDiscardingStage = false;//是否弃牌阶段
+    public bool isCallingShan = false;//是否被要求出闪
+    public bool isCallingTao = false;//是否求桃
+    public bool isCallingWuXie = false;//是否求无懈
+    public bool isCallingHoldChoose = false;
+    public bool isCallingAllChoose = false;
+    public bool isHaveSha = false;//是否已杀过
+    public Player opposite;//指对方,方便使用卡牌效果
 
     public UILabel Health;
     public UILabel holdCardsLabel;
@@ -215,9 +221,31 @@ public class Player : MonoBehaviour {
         return curHealth;
     }
 
+    public Card LostCard(int i)
+    {
+        Card temp = holdCards[i];
+        Debug.Log("Lost " + temp.name);
+        holdCards.RemoveAt(i);
+        CheckHoldCards();
+        return temp;
+    }
+
+    public List<Card> SetJudgementCard(Card c)
+    {
+        judgementCards.Add(c);
+        return judgementCards;
+    }
+
     public virtual void CallingShan()
     {
-        
+    }
+
+    public virtual void CallingWuXie()
+    {
+    }
+
+    public virtual void CallingTao()
+    {
     }
 
     public void CheckHoldCards()

@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2013 Tasharen Entertainment
+// Copyright © 2011-2014 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -83,7 +83,19 @@ static public class NGUITools
 		{
 			if (mListener == null || !NGUITools.GetActive(mListener))
 			{
-				mListener = GameObject.FindObjectOfType(typeof(AudioListener)) as AudioListener;
+				AudioListener[] listeners = GameObject.FindObjectsOfType(typeof(AudioListener)) as AudioListener[];
+
+				if (listeners != null)
+				{
+					for (int i = 0; i < listeners.Length; ++i)
+					{
+						if (NGUITools.GetActive(listeners[i]))
+						{
+							mListener = listeners[i];
+							break;
+						}
+					}
+				}
 
 				if (mListener == null)
 				{
@@ -189,18 +201,23 @@ static public class NGUITools
 	{
 		int layerMask = 1 << layer;
 
+		Camera cam;
+
 		for (int i = 0; i < UICamera.list.size; ++i)
 		{
-			Camera uc = UICamera.list.buffer[i].cachedCamera;
-			if ((uc != null) && (uc.cullingMask & layerMask) != 0)
-				return uc;
+			cam = UICamera.list.buffer[i].cachedCamera;
+			if ((cam != null) && (cam.cullingMask & layerMask) != 0)
+				return cam;
 		}
+
+		cam = Camera.main;
+		if (cam != null && (cam.cullingMask & layerMask) != 0) return cam;
 
 		Camera[] cameras = NGUITools.FindActive<Camera>();
 
 		for (int i = 0, imax = cameras.Length; i < imax; ++i)
 		{
-			Camera cam = cameras[i];
+			cam = cameras[i];
 			if ((cam.cullingMask & layerMask) != 0)
 				return cam;
 		}
@@ -231,7 +248,11 @@ static public class NGUITools
 					if (Application.isPlaying) GameObject.Destroy(col);
 					else GameObject.DestroyImmediate(col);
 				}
+
 				box = go.AddComponent<BoxCollider>();
+#if !UNITY_3_5 && UNITY_EDITOR
+				UnityEditor.Undo.RegisterCreatedObjectUndo(box, "Add Collider");
+#endif
 				box.isTrigger = true;
 
 				UIWidget widget = go.GetComponent<UIWidget>();
@@ -287,7 +308,6 @@ static public class NGUITools
 
 			if (w != null)
 			{
-				if (!w.isVisible) return;
 				Vector4 region = w.drawingDimensions;
 				box.center = new Vector3((region.x + region.z) * 0.5f, (region.y + region.w) * 0.5f);
 				box.size = new Vector3(region.z - region.x, region.w - region.y);
@@ -299,7 +319,7 @@ static public class NGUITools
 				box.size = new Vector3(b.size.x, b.size.y, 0f);
 			}
 #if UNITY_EDITOR
-			UnityEditor.EditorUtility.SetDirty(box);
+			NGUITools.SetDirty(box);
 #endif
 		}
 	}
@@ -341,7 +361,24 @@ static public class NGUITools
  #else
 		UnityEditor.Undo.RecordObject(obj, name);
  #endif
-		UnityEditor.EditorUtility.SetDirty(obj);
+		NGUITools.SetDirty(obj);
+#endif
+	}
+
+	/// <summary>
+	/// Convenience function that marks the specified object as dirty in the Unity Editor.
+	/// </summary>
+
+	static public void SetDirty (UnityEngine.Object obj)
+	{
+#if UNITY_EDITOR
+		if (obj)
+		{
+			//if (obj is Component) Debug.Log(NGUITools.GetHierarchy((obj as Component).gameObject), obj);
+			//else if (obj is GameObject) Debug.Log(NGUITools.GetHierarchy(obj as GameObject), obj);
+			//else Debug.Log("Hmm... " + obj.GetType(), obj);
+			UnityEditor.EditorUtility.SetDirty(obj);
+		}
 #endif
 	}
 
@@ -705,11 +742,22 @@ static public class NGUITools
 
 		if (trans != null)
 		{
+			// Find the root object
 			while (trans.parent != null) trans = trans.parent;
-			trans.parent = panel.transform;
-			trans.localScale = Vector3.one;
-			trans.localPosition = Vector3.zero;
-			SetChildLayer(panel.cachedTransform, panel.cachedGameObject.layer);
+
+			if (NGUITools.IsChild(trans, panel.transform))
+			{
+				// Odd hierarchy -- can't reparent
+				panel = trans.gameObject.AddComponent<UIPanel>();
+			}
+			else
+			{
+				// Reparent this root object to be a child of the panel
+				trans.parent = panel.transform;
+				trans.localScale = Vector3.one;
+				trans.localPosition = Vector3.zero;
+				SetChildLayer(panel.cachedTransform, panel.cachedGameObject.layer);
+			}
 		}
 		return panel;
 	}
@@ -806,8 +854,11 @@ static public class NGUITools
 	static public T FindInParents<T> (GameObject go) where T : Component
 	{
 		if (go == null) return null;
+#if UNITY_FLASH
 		object comp = go.GetComponent<T>();
-
+#else
+		T comp = go.GetComponent<T>();
+#endif
 		if (comp == null)
 		{
 			Transform t = go.transform.parent;
@@ -818,7 +869,11 @@ static public class NGUITools
 				t = t.parent;
 			}
 		}
+#if UNITY_FLASH
 		return (T)comp;
+#else
+		return comp;
+#endif
 	}
 
 	/// <summary>
@@ -828,8 +883,11 @@ static public class NGUITools
 	static public T FindInParents<T> (Transform trans) where T : Component
 	{
 		if (trans == null) return null;
+#if UNITY_FLASH
 		object comp = trans.GetComponent<T>();
-
+#else
+		T comp = trans.GetComponent<T>();
+#endif
 		if (comp == null)
 		{
 			Transform t = trans.transform.parent;
@@ -840,7 +898,11 @@ static public class NGUITools
 				t = t.parent;
 			}
 		}
+#if UNITY_FLASH
 		return (T)comp;
+#else
+		return comp;
+#endif
 	}
 
 	/// <summary>
@@ -918,7 +980,13 @@ static public class NGUITools
 	/// Activate the specified object and all of its children.
 	/// </summary>
 
-	static void Activate (Transform t)
+	static void Activate (Transform t) { Activate(t, true); }
+
+	/// <summary>
+	/// Activate the specified object and all of its children.
+	/// </summary>
+
+	static void Activate (Transform t, bool compatibilityMode)
 	{
 		SetActiveSelf(t.gameObject, true);
 
@@ -931,18 +999,21 @@ static public class NGUITools
 			Activate(child);
 		}
 #else
-		// If there is even a single enabled child, then we're using a Unity 4.0-based nested active state scheme.
-		for (int i = 0, imax = t.childCount; i < imax; ++i)
+		if (compatibilityMode)
 		{
-			Transform child = t.GetChild(i);
-			if (child.gameObject.activeSelf) return;
-		}
+			// If there is even a single enabled child, then we're using a Unity 4.0-based nested active state scheme.
+			for (int i = 0, imax = t.childCount; i < imax; ++i)
+			{
+				Transform child = t.GetChild(i);
+				if (child.gameObject.activeSelf) return;
+			}
 
-		// If this point is reached, then all the children are disabled, so we must be using a Unity 3.5-based active state scheme.
-		for (int i = 0, imax = t.childCount; i < imax; ++i)
-		{
-			Transform child = t.GetChild(i);
-			Activate(child);
+			// If this point is reached, then all the children are disabled, so we must be using a Unity 3.5-based active state scheme.
+			for (int i = 0, imax = t.childCount; i < imax; ++i)
+			{
+				Transform child = t.GetChild(i);
+				Activate(child, true);
+			}
 		}
 #endif
 	}
@@ -968,13 +1039,20 @@ static public class NGUITools
 	/// and it tries to find a panel on its parent.
 	/// </summary>
 
-	static public void SetActive (GameObject go, bool state)
+	static public void SetActive (GameObject go, bool state) { SetActive(go, state, true); }
+
+	/// <summary>
+	/// SetActiveRecursively enables children before parents. This is a problem when a widget gets re-enabled
+	/// and it tries to find a panel on its parent.
+	/// </summary>
+
+	static public void SetActive (GameObject go, bool state, bool compatibilityMode)
 	{
 		if (go)
 		{
 			if (state)
 			{
-				Activate(go.transform);
+				Activate(go.transform, compatibilityMode);
 #if UNITY_EDITOR
 				if (Application.isPlaying)
 #endif
@@ -1355,5 +1433,19 @@ static public class NGUITools
 				mSides[i] = relativeTo.InverseTransformPoint(mSides[i]);
 		}
 		return mSides;
+	}
+
+	/// <summary>
+	/// Convenience function that converts Class + Function combo into Class.Function representation.
+	/// </summary>
+
+	static public string GetFuncName (object obj, string method)
+	{
+		if (obj == null) return "<null>";
+		if (string.IsNullOrEmpty(method)) return "<Choose>";
+		string type = obj.GetType().ToString();
+		int period = type.LastIndexOf('.');
+		if (period > 0) type = type.Substring(period + 1);
+		return type + "." + method;
 	}
 }

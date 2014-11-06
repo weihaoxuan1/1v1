@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
-
+/// <summary>
+/// 主流程类
+/// </summary>
 public class MainProcess : MonoSingleton<MainProcess> {
 
-
+    //阶段设置
 	public enum Stage{
         begin = 0,
 		beginStart = 1,
@@ -25,7 +27,7 @@ public class MainProcess : MonoSingleton<MainProcess> {
 		ending = 17,
 		endOver = 18
 	};
-
+    //发送给委托的结构
     public struct StageEvent
     {
         public int turn;
@@ -34,7 +36,7 @@ public class MainProcess : MonoSingleton<MainProcess> {
         //public Player opposite;
         //public Player self;
     };
-
+    //委托相关
     public delegate void OnStageDelegate(StageEvent stageEvent);
     private OnStageDelegate onStageDels;
 
@@ -59,8 +61,9 @@ public class MainProcess : MonoSingleton<MainProcess> {
     public Player self;
     StageEvent stageEvent;
     public UILabel info;
+    public UILabel whoseTurn;
     public bool isMyTurn = true;
-
+    //游戏结束时
     public void Reset()
     {
         turn = 1;
@@ -86,11 +89,12 @@ public class MainProcess : MonoSingleton<MainProcess> {
 	// Update is called once per frame
 	void Update () {
         time += Time.deltaTime;
-        
+        //当调用过NextStage()时会进入
         if(lastStage != curStage )
         {
             delay += Time.deltaTime;
-            if (delay >= stageDelay)
+            //阶段之间的延时,修改stageDelay可控制
+            if (delay >= stageDelay || (int)curStage%3!=2)
             {
                 lastStage = curStage;
                 delay = 0;
@@ -99,7 +103,7 @@ public class MainProcess : MonoSingleton<MainProcess> {
             }
         }
 	}
-
+    //进入下一个阶段时调用
 	public void NextStage()
 	{
         curStage++;
@@ -108,6 +112,8 @@ public class MainProcess : MonoSingleton<MainProcess> {
             curStage = (Stage)0;
             turn++;
             Debug.Log("next turn " + turn);
+            isMyTurn = !isMyTurn;
+            if (whoseTurn) whoseTurn.text = isMyTurn ? "your turn" : "enemy turn";
         }
         if(info)
 			info.text = "curStage is " + curStage;
@@ -132,7 +138,7 @@ public class MainProcess : MonoSingleton<MainProcess> {
         Player_Man.Instance.Reg();
         Invoke("NextStage", 5);
     }
-
+    //委托函数
     StageEvent GetStageEvent()
     {
         //Debug.Log("xxxxx" + curStage);

@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+/// <summary>
+/// 牌堆类
+/// </summary>
 public class Deck : MonoBehaviour {
     public static Deck Instance;
 
-    public static Card[] cardPile;
+    public BetterList<Card> cardPile;
+    public BetterList<Card> discardPile;
     int pTop = 0;
     public int restCardsNumber = 0;
     Card_Sha sha;
@@ -22,7 +26,7 @@ public class Deck : MonoBehaviour {
         Instance = this;
         if (Instance == null) Debug.Log("Deck is null");
         else Debug.Log("Deck is not null");
-	    cardPile = new Card[50];
+	    //cardPile = new Card[50];
         sha = new Card_Sha();
         shan = new Card_Shan();
         tao = new Card_Tao();
@@ -44,17 +48,20 @@ public class Deck : MonoBehaviour {
             int a = Random.Range(0, 100);
             if (a < 60)
             {
-                cardPile[i] = sha;
+                //cardPile[i] = sha;
+                cardPile.Add(sha);
                 Debug.Log("here add a sha");
             }
             else if (a < 80)
             {
-                cardPile[i] = shan;
+                cardPile.Add(shan);
+                //cardPile[i] = shan;
                 Debug.Log("here add a shan");
             }
             else
             {
-                cardPile[i] = tao;
+                cardPile.Add(tao);
+                //cardPile[i] = tao;
                 Debug.Log("here add a tao");
             }
 
@@ -77,13 +84,26 @@ public class Deck : MonoBehaviour {
         //MainProcess.Instance.NextStage();
     }
 
-    void OnStageDel(MainProcess.StageEvent stageEvent)
+    public Card Judge()
     {
-        /*if (stageEvent.curStage == MainProcess.Stage.drawing)
+        Debug.Log("judged a ");
+        return cardPile[pTop--];
+    }
+
+    public void WashDeck(){}
+
+    public void DiscardCard(Card c)
+    {
+        discardPile.Add(c);
+    }
+
+    /*void OnStageDel(MainProcess.StageEvent stageEvent)
+    {
+        if (stageEvent.curStage == MainProcess.Stage.drawing)
         {
             DrawCard();
             MainProcess.Instance.NextStage();
         }
-        */
-    }
+        
+    }*/
 }
