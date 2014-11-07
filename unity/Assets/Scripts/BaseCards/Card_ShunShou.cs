@@ -20,6 +20,7 @@ public class Card_ShunShou : Card {
 	}
     public override void Effect(Player user)
     {
+        base.Effect(user);
         user.isCallingAllChoose = true;
         Player_Enemy.Instance.RegOnChooseCardDelegate(GetCard);
         u = user;

@@ -14,6 +14,7 @@ public class Card_Sha : Card{
 
 	public override void Effect(Player user)
 	{
+        base.Effect(user);
         user.opposite.CallingShan();
         //user.opposite.DecreaseHp(1);
 	}

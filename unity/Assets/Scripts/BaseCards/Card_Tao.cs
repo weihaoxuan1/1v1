@@ -19,6 +19,7 @@ public class Card_Tao : Card {
 
     public override void Effect(Player user)
     {
+        base.Effect(user);
         user.IncreaseHp(1);
     }
 }

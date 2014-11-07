@@ -90,7 +90,17 @@ public class Deck : MonoBehaviour {
         return cardPile[pTop--];
     }
 
-    public void WashDeck(){}
+    public void WashDeck(){
+        int rest = discardPile.size;
+
+        for (int i = 0; i < rest; i++)
+        {
+            int r = Random.Range(0, rest);
+            cardPile.Add(discardPile[r]);
+            discardPile.RemoveAt(r);
+            rest--;
+        }
+    }
 
     public void DiscardCard(Card c)
     {

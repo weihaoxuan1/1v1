@@ -19,7 +19,9 @@ public class Card_GuoChai : Card {
 
     public override void Effect(Player user)
     {
+        base.Effect(user);
         user.isCallingAllChoose = true;
         //Deck.Instance.DiscardCard(user.opposite.LostCard(
     }
+
 }

@@ -10,7 +10,10 @@ public class Card : MonoBehaviour{
 	public bool clickable;
 	public string name;
 
-	public virtual void Effect(Player user){}
+	public virtual void Effect(Player user)
+    {
+        Deck.Instance.DiscardCard(this);
+    }
 
     public void OnChooseCard()
     {
