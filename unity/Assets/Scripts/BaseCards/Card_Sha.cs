@@ -18,4 +18,9 @@ public class Card_Sha : Card{
         user.opposite.CallingShan();
         //user.opposite.DecreaseHp(1);
 	}
+	
+	public void OnClick()
+	{
+		Debug.Log ("click");
+	}
 }

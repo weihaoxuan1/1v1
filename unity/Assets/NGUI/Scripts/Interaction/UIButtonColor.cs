@@ -182,7 +182,7 @@ public class UIButtonColor : UIWidgetContainer
 		{
 			if (!mInitDone) OnInit();
 			if (tweenTarget != null) SetState(isOver ? State.Hover : State.Normal, false);
-            if (tweenTarget != null) ShowButton(isOver ? true : false);
+            //if (tweenTarget != null) ShowButton(isOver ? true : false);
 		}
 	}
 
@@ -191,7 +191,7 @@ public class UIButtonColor : UIWidgetContainer
     /// </summary>
     /// <param name="isOver"></param>
     /// 
-    void ShowButton(bool isOver)
+    /*void ShowButton(bool isOver)
     {
         GameObject button;
         try
@@ -216,7 +216,7 @@ public class UIButtonColor : UIWidgetContainer
         {
         }
         
-    }
+    }*/
 
 	/// <summary>
 	/// Set the pressed state.

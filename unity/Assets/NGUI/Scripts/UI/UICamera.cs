@@ -972,9 +972,9 @@ public class UICamera : MonoBehaviour
 		current = this;
 
 		// Process touch events first
-        if (Application.platform == RuntimePlatform.Android) ProcessMouse_Android(InputSystem.aimPosition);
+        /*if (Application.platform == RuntimePlatform.Android) ProcessMouse_Android(InputSystem.aimPosition);
         else if (useTouch) ProcessTouches();
-        else if (useMouse) ProcessMouse();
+        else if (useMouse) ProcessMouse();*/
 
 		// Custom input processing
 		if (onCustomInput != null) onCustomInput();

@@ -1,0 +1,357 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &100000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 400000}
+  - 114: {fileID: 11400000}
+  m_Layer: 0
+  m_Name: Equitment
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &400000
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d0c51bb0b6e93049af5e88f93826e3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: f6d932b982d0b714e93e940f506533e1, type: 2}
+  mSprites:
+  - name: "\u6B66\u5668-\u4E08\u516B\u86C7\u77DB"
+    x: 1617
+    y: 923
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u6B66\u5668-\u53E4\u952D\u5200"
+    x: 2018
+    y: 67
+    width: 307
+    height: 427
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 8
+    paddingRight: 5
+    paddingTop: 7
+    paddingBottom: 2
+  - name: "\u6B66\u5668-\u5BD2\u51B0\u5251"
+    x: 0
+    y: 924
+    width: 402
+    height: 561
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 11
+    paddingRight: 7
+    paddingTop: 8
+    paddingBottom: 3
+  - name: "\u6B66\u5668-\u65B9\u5929"
+    x: 815
+    y: 1486
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u6B66\u5668-\u6731\u96C0\u7FBD\u6247"
+    x: 2419
+    y: 1621
+    width: 307
+    height: 427
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 8
+    paddingRight: 5
+    paddingTop: 7
+    paddingBottom: 2
+  - name: "\u6B66\u5668-\u8BF8\u845B\u8FDE\u5F29"
+    x: 1216
+    y: 360
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u6B66\u5668-\u8D2F\u77F3\u65A7"
+    x: 1617
+    y: 360
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u6B66\u5668-\u94F6\u6708\u67AA"
+    x: 3035
+    y: 1621
+    width: 300
+    height: 427
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: "\u6B66\u5668-\u96CC\u96C4"
+    x: 1216
+    y: 1486
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u6B66\u5668-\u9752\u91ED\u5251"
+    x: 0
+    y: 361
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u6B66\u5668-\u9752\u9F99\u5200"
+    x: 815
+    y: 360
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u6B66\u5668-\u9E92\u9E9F\u5F13"
+    x: 414
+    y: 1486
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u9632\u5177-\u4EC1\u738B\u76FE"
+    x: 0
+    y: 1486
+    width: 413
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 1
+    paddingRight: 6
+    paddingTop: 7
+    paddingBottom: 3
+  - name: "\u9632\u5177-\u516B\u5366\u9635"
+    x: 2018
+    y: 1486
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u9632\u5177-\u767D\u94F6\u72EE\u5B50"
+    x: 2727
+    y: 1621
+    width: 307
+    height: 427
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 8
+    paddingRight: 5
+    paddingTop: 7
+    paddingBottom: 2
+  - name: "\u9632\u5177-\u85E4\u7532"
+    x: 2018
+    y: 495
+    width: 307
+    height: 427
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 8
+    paddingRight: 5
+    paddingTop: 7
+    paddingBottom: 2
+  - name: "\u9A6C-\u5927\u5B9B"
+    x: 1617
+    y: 1486
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u9A6C-\u722A\u9EC4"
+    x: 815
+    y: 923
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u9A6C-\u7684\u5362"
+    x: 1216
+    y: 923
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u9A6C-\u7D2B\u9A8D"
+    x: 2018
+    y: 923
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u9A6C-\u7EDD\u5F71"
+    x: 414
+    y: 360
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  - name: "\u9A6C-\u8D64\u5154"
+    x: 414
+    y: 923
+    width: 400
+    height: 562
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 10
+    paddingRight: 10
+    paddingTop: 5
+    paddingBottom: 5
+  - name: "\u9A6C-\u9A85\u9A9D"
+    x: 0
+    y: 79
+    width: 200
+    height: 281
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 0
+    paddingRight: 0
+    paddingTop: 0
+    paddingBottom: 0
+  mPixelSize: 1
+  mReplacement: {fileID: 0}
+  mCoordinates: 0
+  sprites: []
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 100000}
+  m_IsPrefabParent: 1
+  m_IsExploded: 1
