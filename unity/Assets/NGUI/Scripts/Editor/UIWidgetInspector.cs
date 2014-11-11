@@ -698,7 +698,6 @@ public class UIWidgetInspector : UIRectEditor
 
 			case EventType.MouseUp:
 			{
-				if (e.button == 2) break;
 				if (GUIUtility.hotControl == id)
 				{
 					GUIUtility.hotControl = 0;
@@ -930,12 +929,7 @@ public class UIWidgetInspector : UIRectEditor
 			{
 				GUI.changed = false;
 				int val = EditorGUILayout.IntField("Dimensions", mWidget.width, GUILayout.MinWidth(100f));
-
-				if (GUI.changed)
-				{
-					NGUIEditorTools.RegisterUndo("Dimensions Change", mWidget);
-					mWidget.width = val;
-				}
+				if (GUI.changed) mWidget.width = val;
 			}
 
 			if (!freezeSize && lbl)
@@ -956,12 +950,7 @@ public class UIWidgetInspector : UIRectEditor
 			{
 				GUI.changed = false;
 				int val = EditorGUILayout.IntField("x", mWidget.height, GUILayout.MinWidth(30f));
-
-				if (GUI.changed)
-				{
-					NGUIEditorTools.RegisterUndo("Dimensions Change", mWidget);
-					mWidget.height = val;
-				}
+				if (GUI.changed) mWidget.height = val;
 			}
 
 			NGUIEditorTools.SetLabelWidth(80f);
@@ -1073,7 +1062,7 @@ public class UIWidgetInspector : UIRectEditor
 			Toggle("\u25BA", "ButtonRight", UIWidget.Pivot.Right, true);
 #else
 			Toggle("<", "ButtonLeft", UIWidget.Pivot.Left, true);
-			Toggle("--", "ButtonMid", UIWidget.Pivot.Center, true);
+			Toggle("|", "ButtonMid", UIWidget.Pivot.Center, true);
 			Toggle(">", "ButtonRight", UIWidget.Pivot.Right, true);
 #endif
 			Toggle("\u25B2", "ButtonLeft", UIWidget.Pivot.Top, false);

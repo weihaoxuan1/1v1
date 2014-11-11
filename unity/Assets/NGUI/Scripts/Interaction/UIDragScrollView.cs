@@ -25,7 +25,6 @@ public class UIDragScrollView : MonoBehaviour
 	Transform mTrans;
 	UIScrollView mScroll;
 	bool mAutoFind = false;
-	bool mStarted = false;
 
 	/// <summary>
 	/// Automatically find the scroll view if possible.
@@ -42,18 +41,7 @@ public class UIDragScrollView : MonoBehaviour
 			draggablePanel = null;
 		}
 
-		if (mStarted && (mAutoFind || mScroll == null))
-			FindScrollView();
-	}
-
-	/// <summary>
-	/// Find the scroll view.
-	/// </summary>
-
-	void Start ()
-	{
-		mStarted = true;
-		FindScrollView();
+		if (mAutoFind || mScroll == null) FindScrollView();
 	}
 
 	/// <summary>
@@ -76,6 +64,12 @@ public class UIDragScrollView : MonoBehaviour
 		}
 		mScroll = scrollView;
 	}
+
+	/// <summary>
+	/// Ensure we have a scroll view to work with.
+	/// </summary>
+
+	void Start () { FindScrollView(); }
 
 	/// <summary>
 	/// Create a plane on which we will be performing the dragging.

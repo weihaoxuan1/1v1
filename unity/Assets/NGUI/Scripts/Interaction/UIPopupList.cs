@@ -222,12 +222,12 @@ public class UIPopupList : UIWidgetContainer
 	{
 		get
 		{
-			UIKeyNavigation keys = GetComponent<UIKeyNavigation>();
+			UIButtonKeys keys = GetComponent<UIButtonKeys>();
 			return (keys == null || !keys.enabled);
 		}
 		set
 		{
-			UIKeyNavigation keys = GetComponent<UIKeyNavigation>();
+			UIButtonKeys keys = GetComponent<UIButtonKeys>();
 			if (keys != null) keys.enabled = !value;
 		}
 	}
@@ -256,25 +256,21 @@ public class UIPopupList : UIWidgetContainer
 
 	protected void TriggerCallbacks ()
 	{
-		if (current != this)
+		current = this;
+
+		// Legacy functionality
+		if (mLegacyEvent != null) mLegacyEvent(mSelectedItem);
+
+		if (EventDelegate.IsValid(onChange))
 		{
-			UIPopupList old = current;
-			current = this;
-
-			// Legacy functionality
-			if (mLegacyEvent != null) mLegacyEvent(mSelectedItem);
-
-			if (EventDelegate.IsValid(onChange))
-			{
-				EventDelegate.Execute(onChange);
-			}
-			else if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
-			{
-				// Legacy functionality support (for backwards compatibility)
-				eventReceiver.SendMessage(functionName, mSelectedItem, SendMessageOptions.DontRequireReceiver);
-			}
-			current = old;
+			EventDelegate.Execute(onChange);
 		}
+		else if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
+		{
+			// Legacy functionality support (for backwards compatibility)
+			eventReceiver.SendMessage(functionName, mSelectedItem, SendMessageOptions.DontRequireReceiver);
+		}
+		current = null;
 	}
 
 	/// <summary>
@@ -511,15 +507,9 @@ public class UIPopupList : UIWidgetContainer
 	/// Get rid of the popup dialog when the selection gets lost.
 	/// </summary>
 
-	void OnSelect (bool isSelected) { if (!isSelected) Close(); }
-
-	/// <summary>
-	/// Manually close the popup list.
-	/// </summary>
-
-	public void Close ()
+	void OnSelect (bool isSelected)
 	{
-		if (mChild != null)
+		if (!isSelected && mChild != null)
 		{
 			mLabelList.Clear();
 			handleEvents = false;
@@ -540,7 +530,10 @@ public class UIPopupList : UIWidgetContainer
 				for (int i = 0, imax = cols.Length; i < imax; ++i) cols[i].enabled = false;
 				Destroy(mChild, animSpeed);
 			}
-			else Destroy(mChild);
+			else
+			{
+				Destroy(mChild);
+			}
 
 			mBackground = null;
 			mHighlight = null;
@@ -659,7 +652,8 @@ public class UIPopupList : UIWidgetContainer
 			if (hlsp == null) return;
 
 			float hlspHeight = hlsp.borderTop;
-			float fontHeight = activeFontSize;
+			float pixelSize = (bitmapFont != null) ? bitmapFont.pixelSize : 1f;
+			float fontHeight = activeFontSize * pixelSize;
 			float dynScale = activeFontScale;
 			float labelHeight = fontHeight * dynScale;
 			float x = 0f, y = -padding.y;

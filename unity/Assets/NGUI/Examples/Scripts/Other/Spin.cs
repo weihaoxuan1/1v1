@@ -8,7 +8,6 @@ using UnityEngine;
 public class Spin : MonoBehaviour
 {
 	public Vector3 rotationsPerSecond = new Vector3(0f, 0.1f, 0f);
-	public bool ignoreTimeScale = false;
 
 	Rigidbody mRb;
 	Transform mTrans;
@@ -23,10 +22,9 @@ public class Spin : MonoBehaviour
 	{
 		if (mRb == null)
 		{
-			ApplyDelta(ignoreTimeScale ? RealTime.deltaTime : Time.deltaTime);
+			ApplyDelta(Time.deltaTime);
 		}
 	}
-
 	void FixedUpdate ()
 	{
 		if (mRb != null)

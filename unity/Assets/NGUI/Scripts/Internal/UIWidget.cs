@@ -213,7 +213,7 @@ public class UIWidget : UIRect
 			int min = minHeight;
 			if (value < min) value = min;
 
-			if (mHeight != value && keepAspectRatio != AspectRatioSource.BasedOnWidth)
+			if (mHeight != value && keepAspectRatio != AspectRatioSource.BasedOnHeight)
 			{
 				if (isAnchoredVertically)
 				{
@@ -290,7 +290,7 @@ public class UIWidget : UIRect
 	/// Whether the widget is currently visible.
 	/// </summary>
 
-	public bool isVisible { get { return mIsVisibleByPanel && mIsVisibleByAlpha && mIsInFront && finalAlpha > 0.001f && NGUITools.GetActive(this); } }
+	public bool isVisible { get { return mIsVisibleByPanel && mIsVisibleByAlpha && mIsInFront && finalAlpha > 0.001f; } }
 
 	/// <summary>
 	/// Whether the widget has vertices to draw.
@@ -659,7 +659,7 @@ public class UIWidget : UIRect
 
 		if (panel != null)
 		{
-			bool vis = (hideIfOffScreen || panel.hasCumulativeClipping) ? panel.IsVisible(this) : true;
+			bool vis = (hideIfOffScreen || panel.clipsChildren) ? panel.IsVisible(this) : true;
 			UpdateVisibility(CalculateCumulativeAlpha(Time.frameCount) > 0.001f, vis);
 			UpdateFinalAlpha(Time.frameCount);
 			if (includeChildren) base.Invalidate(true);
@@ -680,7 +680,7 @@ public class UIWidget : UIRect
 	/// Set the widget's rectangle.
 	/// </summary>
 
-	public override void SetRect (float x, float y, float width, float height)
+	public void SetRect (float x, float y, float width, float height)
 	{
 		Vector2 po = pivotOffset;
 
@@ -702,8 +702,8 @@ public class UIWidget : UIRect
 		if (finalHeight < minHeight) finalHeight = minHeight;
 
 		t.localPosition = pos;
-		this.width = finalWidth;
-		this.height = finalHeight;
+		width = finalWidth;
+		height = finalHeight;
 
 		if (isAnchored)
 		{
@@ -1254,7 +1254,7 @@ public class UIWidget : UIRect
 
 			Color outline = new Color(1f, 1f, 1f, 0.2f);
 
-			float adjustment = (root != null) ? 0.05f : 0.001f;
+			float adjustment = (root != null) ? 0.25f : 0.001f;
 			Vector2 offset = pivotOffset;
 			Vector3 center = new Vector3(mWidth * (0.5f - offset.x), mHeight * (0.5f - offset.y), -mDepth * adjustment);
 			Vector3 size = new Vector3(mWidth, mHeight, 1f);

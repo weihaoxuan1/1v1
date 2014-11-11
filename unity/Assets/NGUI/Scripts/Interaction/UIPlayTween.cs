@@ -15,8 +15,6 @@ using System.Collections.Generic;
 [AddComponentMenu("NGUI/Interaction/Play Tween")]
 public class UIPlayTween : MonoBehaviour
 {
-	static public UIPlayTween current;
-
 	/// <summary>
 	/// Target on which there is one or more tween.
 	/// </summary>
@@ -127,18 +125,6 @@ public class UIPlayTween : MonoBehaviour
 			if (trigger == Trigger.OnHover || trigger == Trigger.OnHoverTrue)
 				mActivated = (UICamera.currentTouch.current == gameObject);
 		}
-
-		UIToggle toggle = GetComponent<UIToggle>();
-		if (toggle != null) EventDelegate.Add(toggle.onChange, OnToggle);
-	}
-
-	void OnDisable ()
-	{
-#if UNITY_EDITOR
-		if (!Application.isPlaying) return;
-#endif
-		UIToggle toggle = GetComponent<UIToggle>();
-		if (toggle != null) EventDelegate.Remove(toggle.onChange, OnToggle);
 	}
 
 	void OnHover (bool isOver)
@@ -208,13 +194,17 @@ public class UIPlayTween : MonoBehaviour
 		}
 	}
 
-	void OnToggle ()
+	void OnActivate (bool isActive)
 	{
-		if (!enabled || UIToggle.current == null) return;
-		if (trigger == Trigger.OnActivate ||
-			(trigger == Trigger.OnActivateTrue && UIToggle.current.value) ||
-			(trigger == Trigger.OnActivateFalse && !UIToggle.current.value))
-			Play(UIToggle.current.value);
+		if (enabled)
+		{
+			if (trigger == Trigger.OnActivate ||
+				(trigger == Trigger.OnActivateTrue && isActive) ||
+				(trigger == Trigger.OnActivateFalse && !isActive))
+			{
+				Play(isActive);
+			}
+		}
 	}
 
 	void Update ()
@@ -325,17 +315,15 @@ public class UIPlayTween : MonoBehaviour
 
 	void OnFinished ()
 	{
-		if (--mActive == 0 && current == null)
+		if (--mActive == 0)
 		{
-			current = this;
 			EventDelegate.Execute(onFinished);
-
+			
 			// Legacy functionality
 			if (eventReceiver != null && !string.IsNullOrEmpty(callWhenFinished))
 				eventReceiver.SendMessage(callWhenFinished, SendMessageOptions.DontRequireReceiver);
 
 			eventReceiver = null;
-			current = null;
 		}
 	}
 }

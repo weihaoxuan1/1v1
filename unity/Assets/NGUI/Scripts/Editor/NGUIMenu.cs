@@ -238,11 +238,8 @@ static public class NGUIMenu
 
 	static void AddIfMissing<T> () where T : Component
 	{
-		if (Selection.activeGameObject != null)
-		{
-			for (int i = 0; i < Selection.gameObjects.Length; ++i)
-				Selection.gameObjects[i].AddMissingComponent<T>();
-		}
+		GameObject go = Selection.activeGameObject;
+		if (go != null) go.AddMissingComponent<T>();
 		else Debug.Log("You must select a game object first.");
 	}
 
@@ -256,12 +253,20 @@ static public class NGUIMenu
 	[MenuItem("NGUI/Attach/Collider &#c", false, 7)]
 	static public void AddCollider ()
 	{
-		if (Selection.activeGameObject != null)
+		GameObject go = Selection.activeGameObject;
+
+		if (NGUIEditorTools.WillLosePrefab(go))
 		{
-			for (int i = 0; i < Selection.gameObjects.Length; ++i)
-				NGUITools.AddWidgetCollider(Selection.gameObjects[i]);
+			if (go != null)
+			{
+				NGUIEditorTools.RegisterUndo("Add Widget Collider", go);
+				NGUITools.AddWidgetCollider(go);
+			}
+			else
+			{
+				Debug.Log("You must select a game object first, such as your button.");
+			}
 		}
-		else Debug.Log("You must select a game object first, such as your button.");
 	}
 
 	//[MenuItem("NGUI/Attach/Anchor", false, 7)]
@@ -302,9 +307,6 @@ static public class NGUIMenu
 
 	[MenuItem("NGUI/Attach/Key Binding Script", false, 7)]
 	static public void Add10 () { AddIfMissing<UIKeyBinding>(); }
-
-	[MenuItem("NGUI/Attach/Key Navigation Script", false, 7)]
-	static public void Add10a () { AddIfMissing<UIKeyNavigation>(); }
 
 	[MenuItem("NGUI/Attach/Play Tween Script", false, 7)]
 	static public void Add11 () { AddIfMissing<UIPlayTween>(); }
@@ -394,14 +396,14 @@ static public class NGUIMenu
 	[MenuItem("Assets/NGUI/Open Atlas Maker", false, 0)]
 	static public void OpenAtlasMaker ()
 	{
-		EditorWindow.GetWindow<UIAtlasMaker>(false, "Atlas Maker", true).Show();
+		EditorWindow.GetWindow<UIAtlasMaker>(false, "Atlas Maker", true);
 	}
 
 	[MenuItem("NGUI/Open/Font Maker", false, 9)]
 	[MenuItem("Assets/NGUI/Open Bitmap Font Maker", false, 0)]
 	static public void OpenFontMaker ()
 	{
-		EditorWindow.GetWindow<UIFontMaker>(false, "Font Maker", true).Show();
+		EditorWindow.GetWindow<UIFontMaker>(false, "Font Maker", true);
 	}
 
 	[MenuItem("NGUI/Open/", false, 9)]
@@ -411,31 +413,31 @@ static public class NGUIMenu
 	[MenuItem("NGUI/Open/Panel Tool", false, 9)]
 	static public void OpenPanelWizard ()
 	{
-		EditorWindow.GetWindow<UIPanelTool>(false, "Panel Tool", true).Show();
+		EditorWindow.GetWindow<UIPanelTool>(false, "Panel Tool", true);
 	}
 
 	[MenuItem("NGUI/Open/Draw Call Tool", false, 9)]
 	static public void OpenDCTool ()
 	{
-		EditorWindow.GetWindow<UIDrawCallViewer>(false, "Draw Call Tool", true).Show();
+		EditorWindow.GetWindow<UIDrawCallViewer>(false, "Draw Call Tool", true);
 	}
 
 	[MenuItem("NGUI/Open/Camera Tool", false, 9)]
 	static public void OpenCameraWizard ()
 	{
-		EditorWindow.GetWindow<UICameraTool>(false, "Camera Tool", true).Show();
+		EditorWindow.GetWindow<UICameraTool>(false, "Camera Tool", true);
 	}
 
 	[MenuItem("NGUI/Open/Widget Wizard (Legacy)", false, 9)]
 	static public void CreateWidgetWizard ()
 	{
-		EditorWindow.GetWindow<UICreateWidgetWizard>(false, "Widget Tool", true).Show();
+		EditorWindow.GetWindow<UICreateWidgetWizard>(false, "Widget Tool", true);
 	}
 
 	//[MenuItem("NGUI/Open/UI Wizard (Legacy)", false, 9)]
 	//static public void CreateUIWizard ()
 	//{
-	//    EditorWindow.GetWindow<UICreateNewUIWizard>(false, "UI Tool", true).Show();
+	//    EditorWindow.GetWindow<UICreateNewUIWizard>(false, "UI Tool", true);
 	//}
 
 #endregion

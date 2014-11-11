@@ -138,25 +138,12 @@ public abstract class UIRect : MonoBehaviour
 
 	public AnchorPoint topAnchor = new AnchorPoint(1f);
 
-	public enum AnchorUpdate
-	{
-		OnEnable,
-		OnUpdate,
-	}
-
-	/// <summary>
-	/// Whether anchors will be recalculated on every update.
-	/// </summary>
-
-	public AnchorUpdate updateAnchors = AnchorUpdate.OnUpdate;
-
 	protected GameObject mGo;
 	protected Transform mTrans;
 	protected BetterList<UIRect> mChildren = new BetterList<UIRect>();
 	protected bool mChanged = true;
 	protected bool mStarted = false;
 	protected bool mParentFound = false;
-	protected bool mUpdateAnchors = false;
 
 	/// <summary>
 	/// Final calculated alpha.
@@ -350,12 +337,7 @@ public abstract class UIRect : MonoBehaviour
 	protected virtual void OnEnable ()
 	{
 		mAnchorsCached = false;
-		if (updateAnchors == AnchorUpdate.OnEnable)
-			mUpdateAnchors = true;
 		if (mStarted) OnInit();
-#if UNITY_EDITOR
-		OnValidate();
-#endif
 	}
 
 	/// <summary>
@@ -407,46 +389,39 @@ public abstract class UIRect : MonoBehaviour
 
 		if (mUpdateFrame != frame)
 		{
-#if !UNITY_EDITOR
-			if (updateAnchors == AnchorUpdate.OnUpdate || mUpdateAnchors)
-#endif
+			mUpdateFrame = frame;
+			bool anchored = false;
+
+			if (leftAnchor.target)
 			{
-				mUpdateFrame = frame;
-				mUpdateAnchors = false;
-
-				bool anchored = false;
-
-				if (leftAnchor.target)
-				{
-					anchored = true;
-					if (leftAnchor.rect != null && leftAnchor.rect.mUpdateFrame != frame)
-						leftAnchor.rect.Update();
-				}
-
-				if (bottomAnchor.target)
-				{
-					anchored = true;
-					if (bottomAnchor.rect != null && bottomAnchor.rect.mUpdateFrame != frame)
-						bottomAnchor.rect.Update();
-				}
-
-				if (rightAnchor.target)
-				{
-					anchored = true;
-					if (rightAnchor.rect != null && rightAnchor.rect.mUpdateFrame != frame)
-						rightAnchor.rect.Update();
-				}
-
-				if (topAnchor.target)
-				{
-					anchored = true;
-					if (topAnchor.rect != null && topAnchor.rect.mUpdateFrame != frame)
-						topAnchor.rect.Update();
-				}
-
-				// Update the dimensions using anchors
-				if (anchored) OnAnchor();
+				anchored = true;
+				if (leftAnchor.rect != null && leftAnchor.rect.mUpdateFrame != frame)
+					leftAnchor.rect.Update();
 			}
+
+			if (bottomAnchor.target)
+			{
+				anchored = true;
+				if (bottomAnchor.rect != null && bottomAnchor.rect.mUpdateFrame != frame)
+					bottomAnchor.rect.Update();
+			}
+
+			if (rightAnchor.target)
+			{
+				anchored = true;
+				if (rightAnchor.rect != null && rightAnchor.rect.mUpdateFrame != frame)
+					rightAnchor.rect.Update();
+			}
+
+			if (topAnchor.target)
+			{
+				anchored = true;
+				if (topAnchor.rect != null && topAnchor.rect.mUpdateFrame != frame)
+					topAnchor.rect.Update();
+			}
+
+			// Update the dimensions using anchors
+			if (anchored) OnAnchor();
 
 			// Continue with the update
 			OnUpdate();
@@ -545,15 +520,7 @@ public abstract class UIRect : MonoBehaviour
 		FindCameraFor(bottomAnchor);
 		FindCameraFor(rightAnchor);
 		FindCameraFor(topAnchor);
-
-		mUpdateAnchors = true;
 	}
-
-	/// <summary>
-	/// Set the rectangle manually.
-	/// </summary>
-
-	public abstract void SetRect (float x, float y, float width, float height);
 
 	/// <summary>
 	/// Helper function -- attempt to find the camera responsible for the specified anchor.

@@ -112,12 +112,6 @@ public static class NGUIContextMenu
 	[MenuItem("CONTEXT/Localization/Help")]
 	static void ShowHelp29 (MenuCommand command) { NGUIHelp.Show(typeof(Localization)); }
 
-	[MenuItem("CONTEXT/UIKeyNavigation/Help")]
-	static void ShowHelp30 (MenuCommand command) { NGUIHelp.Show(typeof(UIKeyNavigation)); }
-	
-	[MenuItem("CONTEXT/PropertyBinding/Help")]
-	static void ShowHelp31 (MenuCommand command) { NGUIHelp.Show(typeof(PropertyBinding)); }
-
 	public delegate UIWidget AddFunc (GameObject go);
 
 	static BetterList<string> mEntries = new BetterList<string>();
@@ -240,36 +234,16 @@ public static class NGUIContextMenu
 			string myName = string.Format("Selected {0}", (widget != null) ? NGUITools.GetTypeName(widget) : "Object");
 
 			AddItem(myName + "/Bring to Front", false,
-				delegate(object obj)
-				{
-					for (int i = 0; i < Selection.gameObjects.Length; ++i)
-						NGUITools.BringForward(Selection.gameObjects[i]);
-				},
-				null);
+				delegate(object obj) { NGUITools.BringForward(Selection.activeGameObject); }, null);
 
 			AddItem(myName + "/Push to Back", false,
-				delegate(object obj)
-				{
-					for (int i = 0; i < Selection.gameObjects.Length; ++i)
-						NGUITools.PushBack(Selection.gameObjects[i]);
-				},
-				null);
+				delegate(object obj) { NGUITools.PushBack(Selection.activeGameObject); }, null);
 
 			AddItem(myName + "/Nudge Forward", false,
-				delegate(object obj)
-				{
-					for (int i = 0; i < Selection.gameObjects.Length; ++i)
-						NGUITools.AdjustDepth(Selection.gameObjects[i], 1);
-				},
-				null);
+				delegate(object obj) { NGUITools.AdjustDepth(Selection.activeGameObject, 1); }, null);
 
 			AddItem(myName + "/Nudge Back", false,
-				delegate(object obj)
-				{
-					for (int i = 0; i < Selection.gameObjects.Length; ++i)
-						NGUITools.AdjustDepth(Selection.gameObjects[i], -1);
-				},
-				null);
+				delegate(object obj) { NGUITools.AdjustDepth(Selection.activeGameObject, -1); }, null);
 
 			if (widget != null)
 			{
@@ -327,13 +301,13 @@ public static class NGUIContextMenu
 			{
 				if (target.GetComponent<UIScrollView>() == null)
 				{
-					AddItem("Attach/Scroll View", false, Attach, typeof(UIScrollView));
+					AddItem("Attach/Scroll View", false, delegate(object obj) { target.AddComponent<UIScrollView>(); }, null);
 					NGUIContextMenu.AddSeparator("Attach/");
 				}
 			}
 			else if (target.collider == null)
 			{
-				AddItem("Attach/Box Collider", false, AttachCollider, null);
+				AddItem("Attach/Box Collider", false, delegate(object obj) { NGUITools.AddWidgetCollider(target); }, null);
 				NGUIContextMenu.AddSeparator("Attach/");
 			}
 
@@ -344,7 +318,7 @@ public static class NGUIContextMenu
 			{
 				if (scrollView.GetComponentInChildren<UICenterOnChild>() == null)
 				{
-					AddItem("Attach/Center Scroll View on Child", false, Attach, typeof(UICenterOnChild));
+					AddItem("Attach/Center Scroll View on Child", false, delegate(object obj) { target.AddComponent<UICenterOnChild>(); }, null);
 					header = true;
 				}
 			}
@@ -355,30 +329,29 @@ public static class NGUIContextMenu
 				{
 					if (target.GetComponent<UIDragScrollView>() == null)
 					{
-						AddItem("Attach/Drag Scroll View", false, Attach, typeof(UIDragScrollView));
+						AddItem("Attach/Drag Scroll View", false, delegate(object obj) { target.AddComponent<UIDragScrollView>(); }, null);
 						header = true;
 					}
 
 					if (target.GetComponent<UICenterOnClick>() == null && NGUITools.FindInParents<UICenterOnChild>(target) != null)
 					{
-						AddItem("Attach/Center Scroll View on Click", false, Attach, typeof(UICenterOnClick));
+						AddItem("Attach/Center Scroll View on Click", false, delegate(object obj) { target.AddComponent<UICenterOnClick>(); }, null);
 						header = true;
 					}
 				}
 
 				if (header) NGUIContextMenu.AddSeparator("Attach/");
 
-				AddItem("Attach/Button Script", false, Attach, typeof(UIButton));
-				AddItem("Attach/Toggle Script", false, Attach, typeof(UIToggle));
-				AddItem("Attach/Slider Script", false, Attach, typeof(UISlider));
-				AddItem("Attach/Scroll Bar Script", false, Attach, typeof(UIScrollBar));
-				AddItem("Attach/Progress Bar Script", false, Attach, typeof(UISlider));
-				AddItem("Attach/Popup List Script", false, Attach, typeof(UIPopupList));
-				AddItem("Attach/Input Field Script", false, Attach, typeof(UIInput));
+				AddItem("Attach/Button Script", false, delegate(object obj) { target.AddComponent<UIButton>(); }, null);
+				AddItem("Attach/Toggle Script", false, delegate(object obj) { target.AddComponent<UIToggle>(); }, null);
+				AddItem("Attach/Slider Script", false, delegate(object obj) { target.AddComponent<UISlider>(); }, null);
+				AddItem("Attach/Scroll Bar Script", false, delegate(object obj) { target.AddComponent<UIScrollBar>(); }, null);
+				AddItem("Attach/Progress Bar Script", false, delegate(object obj) { target.AddComponent<UISlider>(); }, null);
+				AddItem("Attach/Popup List Script", false, delegate(object obj) { target.AddComponent<UIPopupList>(); }, null);
+				AddItem("Attach/Input Field Script", false, delegate(object obj) { target.AddComponent<UIInput>(); }, null);
 				NGUIContextMenu.AddSeparator("Attach/");
 				
-				if (target.GetComponent<UIDragResize>() == null)
-					AddItem("Attach/Drag Resize Script", false, Attach, typeof(UIDragResize));
+				if (target.GetComponent<UIDragResize>() == null) AddItem("Attach/Drag Resize Script", false, delegate(object obj) { target.AddComponent<UIDragResize>(); }, null);
 
 				if (target.GetComponent<UIDragScrollView>() == null)
 				{
@@ -398,22 +371,17 @@ public static class NGUIContextMenu
 					}
 				}
 
-				AddItem("Attach/Key Binding Script", false, Attach, typeof(UIKeyBinding));
-
-				if (target.GetComponent<UIKeyNavigation>() == null)
-					AddItem("Attach/Key Navigation Script", false, Attach, typeof(UIKeyNavigation));
+				AddItem("Attach/Key Binding Script", false, delegate(object obj) { target.AddComponent<UIKeyBinding>(); }, null);
 
 				NGUIContextMenu.AddSeparator("Attach/");
 
-				AddItem("Attach/Play Tween Script", false, Attach, typeof(UIPlayTween));
-				AddItem("Attach/Play Animation Script", false, Attach, typeof(UIPlayAnimation));
-				AddItem("Attach/Play Sound Script", false, Attach, typeof(UIPlaySound));
+				AddItem("Attach/Play Tween Script", false, delegate(object obj) { target.AddComponent<UIPlayTween>(); }, null);
+				AddItem("Attach/Play Animation Script", false, delegate(object obj) { target.AddComponent<UIPlayAnimation>(); }, null);
+				AddItem("Attach/Play Sound Script", false, delegate(object obj) { target.AddComponent<UIPlaySound>(); }, null);
 			}
 
-			AddItem("Attach/Property Binding", false, Attach, typeof(PropertyBinding));
-
 			if (target.GetComponent<UILocalize>() == null)
-				AddItem("Attach/Localization Script", false, Attach, typeof(UILocalize));
+				AddItem("Attach/Localization Script", false, delegate(object obj) { target.AddComponent<UILocalize>(); }, null);
 
 			if (widget != null)
 			{
@@ -446,44 +414,13 @@ public static class NGUIContextMenu
 	}
 
 	/// <summary>
-	/// Helper function that adds a widget collider to the specified object.
-	/// </summary>
-
-	static void AttachCollider (object obj)
-	{
-		if (Selection.activeGameObject != null)
-			for (int i = 0; i < Selection.gameObjects.Length; ++i)
-				NGUITools.AddWidgetCollider(Selection.gameObjects[i]);
-	}
-
-	/// <summary>
-	/// Helper function that adds the specified type to all selected game objects. Used with the menu options above.
-	/// </summary>
-
-	static void Attach (object obj)
-	{
-		if (Selection.activeGameObject == null) return;
-		System.Type type = (System.Type)obj;
-
-		for (int i = 0; i < Selection.gameObjects.Length; ++i)
-		{
-			GameObject go = Selection.gameObjects[i];
-			if (go.GetComponent(type) != null) continue;
-#if !UNITY_3_5
-			Component cmp = go.AddComponent(type);
-			Undo.RegisterCreatedObjectUndo(cmp, "Attach " + type);
-#endif
-		}
-	}
-
-	/// <summary>
 	/// Helper function.
 	/// </summary>
 
 	static void AddMissingItem<T> (GameObject target, string name) where T : MonoBehaviour
 	{
 		if (target.GetComponent<T>() == null)
-			AddItem(name, false, Attach, typeof(T));
+			AddItem(name, false, delegate(object obj) { target.AddComponent<T>(); }, null);
 	}
 
 	/// <summary>

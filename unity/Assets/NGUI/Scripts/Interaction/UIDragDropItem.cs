@@ -37,7 +37,6 @@ public class UIDragDropItem : MonoBehaviour
 	protected Transform mTrans;
 	protected Transform mParent;
 	protected Collider mCollider;
-	protected UIButton mButton;
 	protected UIRoot mRoot;
 	protected UIGrid mGrid;
 	protected UITable mTable;
@@ -53,7 +52,6 @@ public class UIDragDropItem : MonoBehaviour
 	{
 		mTrans = transform;
 		mCollider = collider;
-		mButton = GetComponent<UIButton>();
 		mDragScrollView = GetComponent<UIDragScrollView>();
 	}
 
@@ -100,6 +98,9 @@ public class UIDragDropItem : MonoBehaviour
 			UIButtonColor bc = clone.GetComponent<UIButtonColor>();
 			if (bc != null) bc.defaultColor = GetComponent<UIButtonColor>().defaultColor;
 
+			UICamera.Notify(UICamera.currentTouch.pressed, "OnPress", false);
+
+			UICamera.currentTouch.pressed = clone;
 			UICamera.currentTouch.dragged = clone;
 
 			UIDragDropItem item = clone.GetComponent<UIDragDropItem>();
@@ -141,8 +142,7 @@ public class UIDragDropItem : MonoBehaviour
 		if (mDragScrollView != null) mDragScrollView.enabled = false;
 
 		// Disable the collider so that it doesn't intercept events
-		if (mButton != null) mButton.isEnabled = false;
-		else if (mCollider != null) mCollider.enabled = false;
+		if (mCollider != null) mCollider.enabled = false;
 
 		mTouchID = UICamera.currentTouchID;
 		mParent = mTrans.parent;
@@ -157,12 +157,6 @@ public class UIDragDropItem : MonoBehaviour
 		Vector3 pos = mTrans.localPosition;
 		pos.z = 0f;
 		mTrans.localPosition = pos;
-
-		TweenPosition tp = GetComponent<TweenPosition>();
-		if (tp != null) tp.enabled = false;
-
-		SpringPosition sp = GetComponent<SpringPosition>();
-		if (sp != null) sp.enabled = false;
 
 		// Notify the widgets that the parent has changed
 		NGUITools.MarkParentAsChanged(gameObject);
@@ -189,10 +183,7 @@ public class UIDragDropItem : MonoBehaviour
 		if (!cloneOnDrag)
 		{
 			mTouchID = int.MinValue;
-
-			// Re-enable the collider
-			if (mButton != null) mButton.isEnabled = true;
-			else if (mCollider != null) mCollider.enabled = true;
+			if (mCollider != null) mCollider.enabled = true;
 
 			// Is there a droppable container?
 			UIDragDropContainer container = surface ? NGUITools.FindInParents<UIDragDropContainer>(surface) : null;

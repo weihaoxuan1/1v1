@@ -58,7 +58,7 @@ public class UILabel : UIWidget
 	[HideInInspector][SerializeField] int mMaxLineCount = 0; // 0 denotes unlimited
 	[HideInInspector][SerializeField] Effect mEffectStyle = Effect.None;
 	[HideInInspector][SerializeField] Color mEffectColor = Color.black;
-	[HideInInspector][SerializeField] NGUIText.SymbolStyle mSymbols = NGUIText.SymbolStyle.Normal;
+	[HideInInspector][SerializeField] NGUIText.SymbolStyle mSymbols = NGUIText.SymbolStyle.Uncolored;
 	[HideInInspector][SerializeField] Vector2 mEffectDistance = Vector2.one;
 	[HideInInspector][SerializeField] Overflow mOverflow = Overflow.ShrinkContent;
 	[HideInInspector][SerializeField] Material mMaterial;
@@ -76,9 +76,7 @@ public class UILabel : UIWidget
 	[HideInInspector][SerializeField] bool mMultiline = true;
 
 #if DYNAMIC_FONT
-	[System.NonSerialized]
 	Font mActiveTTF = null;
-	float mDensity = 1f;
 #endif
 	bool mShouldBeProcessed = true;
 	string mProcessedText = null;
@@ -760,6 +758,12 @@ public class UILabel : UIWidget
 	bool isValid { get { return mFont != null; } }
 #endif
 
+	/// <summary>
+	/// Label's active pixel size scale.
+	/// </summary>
+
+	float pixelSize { get { return (mFont != null) ? mFont.pixelSize : 1f; } }
+
 #if DYNAMIC_FONT
 	static BetterList<UILabel> mList = new BetterList<UILabel>();
 	static Dictionary<Font, int> mFontUsage = new Dictionary<Font, int>();
@@ -873,7 +877,7 @@ public class UILabel : UIWidget
 
 	protected override void UpgradeFrom265 ()
 	{
-		ProcessText(true, true);
+		ProcessText(true);
 
 		if (mShrinkToFit)
 		{
@@ -893,7 +897,7 @@ public class UILabel : UIWidget
 
 		if (mFont != null)
 		{
-			int min = mFont.defaultSize;
+			int min = Mathf.RoundToInt(mFont.defaultSize * mFont.pixelSize);
 			if (height < min) height = min;
 		}
 
@@ -1029,13 +1033,13 @@ public class UILabel : UIWidget
 	/// Process the raw text, called when something changes.
 	/// </summary>
 
-	void ProcessText () { ProcessText(false, true); }
-
+	void ProcessText () { ProcessText(false); }
+	
 	/// <summary>
 	/// Process the raw text, called when something changes.
 	/// </summary>
 
-	void ProcessText (bool legacyMode, bool full)
+	void ProcessText (bool legacyMode)
 	{
 		if (!isValid) return;
 
@@ -1054,18 +1058,9 @@ public class UILabel : UIWidget
 			return;
 		}
 
-#if DYNAMIC_FONT
+		UpdateNGUIText(mPrintedSize, mWidth, mHeight);
+
 		bool isDynamic = (trueTypeFont != null);
-
-		if (isDynamic && keepCrisp)
-		{
-			UIRoot rt = root;
-			if (rt != null) mDensity = (rt != null) ? rt.pixelSizeAdjustment : 1f;
-		}
-		else mDensity = 1f;
-#endif
-		if (full) UpdateNGUIText();
-
 		if (mOverflow == Overflow.ResizeFreely) NGUIText.rectWidth = 1000000;
 		if (mOverflow == Overflow.ResizeFreely || mOverflow == Overflow.ResizeHeight)
 			NGUIText.rectHeight = 1000000;
@@ -1088,11 +1083,7 @@ public class UILabel : UIWidget
 #endif
 				{
 					mScale = (float)ps / mPrintedSize;
-#if DYNAMIC_FONT
-					NGUIText.fontScale = isDynamic ? mScale : ((float)mFontSize / mFont.defaultSize) * mScale;
-#else
-					NGUIText.fontScale = ((float)mFontSize / mFont.defaultSize) * mScale;
-#endif
+					NGUIText.fontScale = isDynamic ? mScale : ((float)mFontSize / mFont.defaultSize) * mScale * bitmapFont.pixelSize;
 				}
 
 				NGUIText.Update(false);
@@ -1152,6 +1143,8 @@ public class UILabel : UIWidget
 	{
 		if (ambigiousFont != null)
 		{
+			float pixelSize = (trueTypeFont != null) ? 1f : bitmapFont.pixelSize;
+
 			Vector3 pos = cachedTransform.localPosition;
 			pos.x = Mathf.RoundToInt(pos.x);
 			pos.y = Mathf.RoundToInt(pos.y);
@@ -1170,15 +1163,14 @@ public class UILabel : UIWidget
 				int h = height;
 
 				Overflow over = mOverflow;
-				if (over != Overflow.ResizeHeight) mWidth = 100000;
-				mHeight = 100000;
-
 				mOverflow = Overflow.ShrinkContent;
-				ProcessText(false, true);
+				mWidth = 100000;
+				mHeight = 100000;
+				ProcessText(false);
 				mOverflow = over;
 
-				int minX = Mathf.RoundToInt(mCalculatedSize.x);
-				int minY = Mathf.RoundToInt(mCalculatedSize.y);
+				int minX = Mathf.RoundToInt(mCalculatedSize.x * pixelSize);
+				int minY = Mathf.RoundToInt(mCalculatedSize.y * pixelSize);
 
 				minX = Mathf.Max(minX, base.minWidth);
 				minY = Mathf.Max(minY, base.minHeight);
@@ -1202,9 +1194,9 @@ public class UILabel : UIWidget
 		{
 			mWidth = 100000;
 			mHeight = 100000;
-			ProcessText(false, true);
-			mWidth = Mathf.RoundToInt(mCalculatedSize.x);
-			mHeight = Mathf.RoundToInt(mCalculatedSize.y);
+			ProcessText(false);
+			mWidth = Mathf.RoundToInt(mCalculatedSize.x * pixelSize);
+			mHeight = Mathf.RoundToInt(mCalculatedSize.y * pixelSize);
 			if ((mWidth & 1) == 1) ++mWidth;
 			if ((mHeight & 1) == 1) ++mHeight;
 			MarkAsChanged();
@@ -1241,7 +1233,7 @@ public class UILabel : UIWidget
 			string text = processedText;
 			if (string.IsNullOrEmpty(text)) return 0;
 
-			UpdateNGUIText();
+			UpdateNGUIText(defaultFontSize, mWidth, mHeight);
 
 			NGUIText.PrintCharacterPositions(text, mTempVerts, mTempIndices);
 
@@ -1279,19 +1271,14 @@ public class UILabel : UIWidget
 	{
 		if (characterIndex != -1 && characterIndex < mText.Length)
 		{
-			int linkStart = mText.LastIndexOf(' ', characterIndex) + 1;
+			int linkStart = mText.LastIndexOf(' ', characterIndex, characterIndex) + 1;
 			int linkEnd = mText.IndexOf(' ', characterIndex);
 			if (linkEnd == -1) linkEnd = mText.Length;
 
 			if (linkStart != linkEnd)
 			{
-				int len = linkEnd - linkStart;
-
-				if (len > 0)
-				{
-					string word = mText.Substring(linkStart, len);
-					return NGUIText.StripSymbols(word);
-				}
+				string word = mText.Substring(linkStart, linkEnd - linkStart);
+				return NGUIText.StripSymbols(word);
 			}
 		}
 		return null;
@@ -1347,7 +1334,7 @@ public class UILabel : UIWidget
 			if (string.IsNullOrEmpty(text)) return 0;
 
 			int def = defaultFontSize;
-			UpdateNGUIText();
+			UpdateNGUIText(def, mWidth, mHeight);
 
 			NGUIText.PrintCharacterPositions(text, mTempVerts, mTempIndices);
 
@@ -1399,7 +1386,7 @@ public class UILabel : UIWidget
 		if (!isValid) return;
 
 		string text = processedText;
-		UpdateNGUIText();
+		UpdateNGUIText(defaultFontSize, mWidth, mHeight);
 
 		int startingCaretVerts = caret.verts.size;
 		Vector2 center = new Vector2(0.5f, 0.5f);
@@ -1448,13 +1435,13 @@ public class UILabel : UIWidget
 		int offset = verts.size;
 		Color col = color;
 		col.a = finalAlpha;
-		
-		if (mFont != null && mFont.premultipliedAlphaShader) col = NGUITools.ApplyPMA(col);
+		if (mFont != null && mFont.premultipliedAlpha) col = NGUITools.ApplyPMA(col);
 
 		string text = processedText;
+		float pixelSize = (mFont != null) ? mFont.pixelSize : 1f;
 		int start = verts.size;
 
-		UpdateNGUIText();
+		UpdateNGUIText(defaultFontSize, mWidth, mHeight);
 
 		NGUIText.tint = col;
 		NGUIText.Print(text, verts, uvs, cols);
@@ -1462,15 +1449,13 @@ public class UILabel : UIWidget
 		// Center the content within the label vertically
 		Vector2 pos = ApplyOffset(verts, start);
 
-		// Effects don't work with packed fonts
-		if (mFont != null && mFont.packedFontShader) return;
-
 		// Apply an effect if one was requested
 		if (effectStyle != Effect.None)
 		{
 			int end = verts.size;
-			pos.x = mEffectDistance.x;
-			pos.y = mEffectDistance.y;
+			float pixel = pixelSize;
+			pos.x = pixel * mEffectDistance.x;
+			pos.y = pixel * mEffectDistance.y;
 
 			ApplyShadow(verts, uvs, cols, offset, end, pos.x, -pos.y);
 
@@ -1535,7 +1520,7 @@ public class UILabel : UIWidget
 	{
 		Color c = mEffectColor;
 		c.a *= finalAlpha;
-		Color32 col = (bitmapFont != null && bitmapFont.premultipliedAlphaShader) ? NGUITools.ApplyPMA(c) : c;
+		Color32 col = (bitmapFont != null && bitmapFont.premultipliedAlpha) ? NGUITools.ApplyPMA(c) : c;
 
 		for (int i = start; i < end; ++i)
 		{
@@ -1612,7 +1597,7 @@ public class UILabel : UIWidget
 
 	public bool Wrap (string text, out string final, int height)
 	{
-		UpdateNGUIText();
+		UpdateNGUIText(defaultFontSize, mWidth, height);
 		return NGUIText.WrapText(text, out final);
 	}
 
@@ -1620,16 +1605,22 @@ public class UILabel : UIWidget
 	/// Update NGUIText.current with all the properties from this label.
 	/// </summary>
 
-	public void UpdateNGUIText ()
+	public void UpdateNGUIText () { UpdateNGUIText(defaultFontSize, mWidth, mHeight); }
+
+	/// <summary>
+	/// Update NGUIText.current with all the properties from this label.
+	/// </summary>
+
+	public void UpdateNGUIText (int size, int lineWidth, int lineHeight)
 	{
 		Font ttf = trueTypeFont;
 		bool isDynamic = (ttf != null);
 
 		NGUIText.fontSize = mPrintedSize;
 		NGUIText.fontStyle = mFontStyle;
-		NGUIText.rectWidth = mWidth;
-		NGUIText.rectHeight = mHeight;
-		NGUIText.gradient = mApplyGradient && (mFont == null || !mFont.packedFontShader);
+		NGUIText.rectWidth = lineWidth;
+		NGUIText.rectHeight = lineHeight;
+		NGUIText.gradient = mApplyGradient;
 		NGUIText.gradientTop = mGradientTop;
 		NGUIText.gradientBottom = mGradientBottom;
 		NGUIText.encoding = mEncoding;
@@ -1638,7 +1629,7 @@ public class UILabel : UIWidget
 		NGUIText.maxLines = mMaxLineCount;
 		NGUIText.spacingX = mSpacingX;
 		NGUIText.spacingY = mSpacingY;
-		NGUIText.fontScale = isDynamic ? mScale : ((float)mFontSize / mFont.defaultSize) * mScale;
+		NGUIText.fontScale = isDynamic ? mScale : ((float)mFontSize / mFont.defaultSize) * mScale * bitmapFont.pixelSize;
 
 		if (mFont != null)
 		{
@@ -1671,14 +1662,6 @@ public class UILabel : UIWidget
 		{
 			UIRoot rt = root;
 			if (rt != null) NGUIText.pixelDensity = (rt != null) ? rt.pixelSizeAdjustment : 1f;
-		}
-		else NGUIText.pixelDensity = 1f;
-
-		if (mDensity != NGUIText.pixelDensity)
-		{
-			ProcessText(false, false);
-			NGUIText.rectWidth = mWidth;
-			NGUIText.rectHeight = mHeight;
 		}
 #endif
 

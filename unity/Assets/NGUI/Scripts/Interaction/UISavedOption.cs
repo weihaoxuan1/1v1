@@ -96,11 +96,11 @@ public class UISavedOption : MonoBehaviour
 	/// Save the selection.
 	/// </summary>
 
-	public void SaveSelection () { PlayerPrefs.SetString(key, UIPopupList.current.value); }
+	void SaveSelection () { PlayerPrefs.SetString(key, UIPopupList.current.value); }
 
 	/// <summary>
 	/// Save the state.
 	/// </summary>
 
-	public void SaveState () { PlayerPrefs.SetInt(key, UIToggle.current.value ? 1 : 0); }
+	void SaveState () { PlayerPrefs.SetInt(key, UIToggle.current.value ? 1 : 0); }
 }

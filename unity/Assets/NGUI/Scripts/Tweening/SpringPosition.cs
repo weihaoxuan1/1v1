@@ -54,7 +54,7 @@ public class SpringPosition : MonoBehaviour
 	public OnFinished onFinished;
 
 	// Deprecated functionality
-	[SerializeField][HideInInspector] GameObject eventReceiver = null;
+	[SerializeField][HideInInspector] GameObject eventReceiver;
 	[SerializeField][HideInInspector] public string callWhenFinished;
 
 	Transform mTrans;
@@ -81,10 +81,10 @@ public class SpringPosition : MonoBehaviour
 
 		if (worldSpace)
 		{
-			if (mThreshold == 0f) mThreshold = (target - mTrans.position).sqrMagnitude * 0.001f;
+			if (mThreshold == 0f) mThreshold = (target - mTrans.position).magnitude * 0.001f;
 			mTrans.position = NGUIMath.SpringLerp(mTrans.position, target, strength, delta);
 
-			if (mThreshold >= (target - mTrans.position).sqrMagnitude)
+			if (mThreshold >= (target - mTrans.position).magnitude)
 			{
 				mTrans.position = target;
 				NotifyListeners();
@@ -93,10 +93,10 @@ public class SpringPosition : MonoBehaviour
 		}
 		else
 		{
-			if (mThreshold == 0f) mThreshold = (target - mTrans.localPosition).sqrMagnitude * 0.00001f;
+			if (mThreshold == 0f) mThreshold = (target - mTrans.localPosition).magnitude * 0.001f;
 			mTrans.localPosition = NGUIMath.SpringLerp(mTrans.localPosition, target, strength, delta);
 
-			if (mThreshold >= (target - mTrans.localPosition).sqrMagnitude)
+			if (mThreshold >= (target - mTrans.localPosition).magnitude)
 			{
 				mTrans.localPosition = target;
 				NotifyListeners();

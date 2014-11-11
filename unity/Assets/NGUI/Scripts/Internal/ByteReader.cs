@@ -104,21 +104,12 @@ public class ByteReader
 	/// Read a single line from the buffer.
 	/// </summary>
 
-	public string ReadLine () { return ReadLine(true); }
-
-	/// <summary>
-	/// Read a single line from the buffer.
-	/// </summary>
-
-	public string ReadLine (bool skipEmptyLines)
+	public string ReadLine ()
 	{
 		int max = mBuffer.Length;
 
 		// Skip empty characters
-		if (skipEmptyLines)
-		{
-			while (mOffset < max && mBuffer[mOffset] < 32) ++mOffset;
-		}
+		while (mOffset < max && mBuffer[mOffset] < 32) ++mOffset;
 
 		int end = mOffset;
 
@@ -182,29 +173,17 @@ public class ByteReader
 	public BetterList<string> ReadCSV ()
 	{
 		mTemp.Clear();
-		string line = "";
-		bool insideQuotes = false;
-		int wordStart = 0;
 
-		while (canRead)
+		if (canRead)
 		{
-			if (insideQuotes)
-			{
-				string s = ReadLine(false);
-				if (s == null) return null;
-				s = s.Replace("\\n", "\n");
-				line += "\n" + s;
-				++wordStart;
-			}
-			else
-			{
-				line = ReadLine(true);
-				if (line == null) return null;
-				line = line.Replace("\\n", "\n");
-				wordStart = 0;
-			}
+			string line = ReadLine();
+			if (line == null) return null;
+			line = line.Replace("\\n", "\n");
 
-			for (int i = wordStart, imax = line.Length; i < imax; ++i)
+			int wordStart = 0;
+			bool insideQuotes = false;
+
+			for (int i = 0, imax = line.Length; i < imax; ++i)
 			{
 				char ch = line[i];
 
@@ -249,7 +228,6 @@ public class ByteReader
 
 			if (wordStart < line.Length)
 			{
-				if (insideQuotes) continue;
 				mTemp.Add(line.Substring(wordStart, line.Length - wordStart));
 			}
 			return mTemp;

@@ -37,7 +37,7 @@ public class DoubleClick : MonoBehaviour {
             oneClick = false;
             time = 1;
             
-            grid.RemoveChild(this.transform);
+            //grid.RemoveChild(this.transform);
             this.gameObject.SetActive(false);
         }
     }
@@ -55,6 +55,6 @@ public class DoubleClick : MonoBehaviour {
         
         //a.transform.localScale.Set(1, 1, 1);
         //a.GetComponent<UISprite>().SetDimensions(100, 100);
-        grid.AddChild(a.transform);
+        //grid.AddChild(a.transform);
     }
 }

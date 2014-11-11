@@ -73,7 +73,8 @@ public class UIToggle : UIWidgetContainer
 	/// Deprecated functionality. Use the 'group' option instead.
 	/// </summary>
 
-	[HideInInspector][SerializeField] UISprite checkSprite = null;
+	[HideInInspector][SerializeField] Transform radioButtonRoot;
+	[HideInInspector][SerializeField] UISprite checkSprite;
 	[HideInInspector][SerializeField] Animation checkAnimation;
 	[HideInInspector][SerializeField] GameObject eventReceiver;
 	[HideInInspector][SerializeField] string functionName = "OnActivate";
@@ -128,6 +129,7 @@ public class UIToggle : UIWidgetContainer
 #endif
 		}
 
+#if UNITY_EDITOR
 		// Auto-upgrade
 		if (!Application.isPlaying)
 		{
@@ -146,6 +148,12 @@ public class UIToggle : UIWidgetContainer
 			if (Application.isPlaying && activeSprite != null)
 				activeSprite.alpha = startsActive ? 1f : 0f;
 
+			if (radioButtonRoot != null && group == 0)
+			{
+				Debug.LogWarning(NGUITools.GetHierarchy(gameObject) +
+					" uses a 'Radio Button Root'. You need to change it to use a 'group' instead.", this);
+			}
+
 			if (EventDelegate.IsValid(onChange))
 			{
 				eventReceiver = null;
@@ -153,13 +161,11 @@ public class UIToggle : UIWidgetContainer
 			}
 		}
 		else
+#endif
 		{
 			mIsActive = !startsActive;
 			mStarted = true;
-			bool instant = instantTween;
-			instantTween = true;
 			Set(startsActive);
-			instantTween = instant;
 		}
 	}
 
@@ -216,27 +222,23 @@ public class UIToggle : UIWidgetContainer
 				}
 			}
 
-			if (current == null)
-			{
-				current = this;
+			current = this;
 
-				if (EventDelegate.IsValid(onChange))
-				{
-					EventDelegate.Execute(onChange);
-				}
-				else if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
-				{
-					// Legacy functionality support (for backwards compatibility)
-					eventReceiver.SendMessage(functionName, mIsActive, SendMessageOptions.DontRequireReceiver);
-				}
-				current = null;
+			if (EventDelegate.IsValid(onChange))
+			{
+				EventDelegate.Execute(onChange);
 			}
+			else if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
+			{
+				// Legacy functionality support (for backwards compatibility)
+				eventReceiver.SendMessage(functionName, mIsActive, SendMessageOptions.DontRequireReceiver);
+			}
+			current = null;
 
 			// Play the checkmark animation
 			if (activeAnimation != null)
 			{
-				ActiveAnimation aa = ActiveAnimation.Play(activeAnimation, state ? Direction.Forward : Direction.Reverse);
-				if (instantTween) aa.Finish();
+				ActiveAnimation.Play(activeAnimation, state ? Direction.Forward : Direction.Reverse);
 			}
 		}
 	}

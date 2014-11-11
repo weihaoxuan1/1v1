@@ -1550,7 +1550,7 @@ Animation:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 11}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: e8c465e83c3e18040884ef096f01647b, type: 2}
   m_Animations:
@@ -1568,7 +1568,7 @@ Animation:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 12}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: e8c465e83c3e18040884ef096f01647b, type: 2}
   m_Animations:
@@ -1586,7 +1586,7 @@ Animation:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 13}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: e8c465e83c3e18040884ef096f01647b, type: 2}
   m_Animations:
@@ -1604,7 +1604,7 @@ Animation:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 14}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: e8c465e83c3e18040884ef096f01647b, type: 2}
   m_Animations:
@@ -1741,7 +1741,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1918,7 +1917,6 @@ MonoBehaviour:
   tweenTarget: {fileID: 25}
   hover: {r: .600000024, g: 1, b: .200000003, a: 1}
   pressed: {r: .5, g: .5, b: .5, a: 1}
-  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   duration: .200000003
 --- !u!114 &124
 MonoBehaviour:
@@ -1933,7 +1931,6 @@ MonoBehaviour:
   tweenTarget: {fileID: 28}
   hover: {r: .600000024, g: 1, b: .200000003, a: 1}
   pressed: {r: .5, g: .5, b: .5, a: 1}
-  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   duration: .200000003
 --- !u!114 &125
 MonoBehaviour:
@@ -1976,7 +1973,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -2024,7 +2020,6 @@ MonoBehaviour:
   mText: Hello
   mFontSize: 28
   mFontStyle: 0
-  mAlignment: 0
   mEncoding: 1
   mMaxLineCount: 0
   mEffectStyle: 0
@@ -2112,7 +2107,6 @@ MonoBehaviour:
   mText: World
   mFontSize: 28
   mFontStyle: 0
-  mAlignment: 0
   mEncoding: 1
   mMaxLineCount: 0
   mEffectStyle: 0
@@ -2172,7 +2166,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -2236,13 +2229,9 @@ MonoBehaviour:
   tweenTarget: {fileID: 15}
   hover: {r: .600000024, g: 1, b: .200000003, a: .847058833}
   pressed: {r: .276119411, g: .276119411, b: .276119411, a: .847058833}
-  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   duration: .200000003
+  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
-  hoverSprite: 
-  pressedSprite: 
-  disabledSprite: 
-  pixelSnap: 0
   onClick: []
 --- !u!114 &134
 MonoBehaviour:
@@ -2257,13 +2246,9 @@ MonoBehaviour:
   tweenTarget: {fileID: 21}
   hover: {r: .600000024, g: 1, b: .200000003, a: 1}
   pressed: {r: 0, g: 0, b: 0, a: 1}
-  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   duration: .200000003
+  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
-  hoverSprite: 
-  pressedSprite: 
-  disabledSprite: 
-  pixelSnap: 0
   onClick: []
 --- !u!114 &135
 MonoBehaviour:
@@ -2278,13 +2263,9 @@ MonoBehaviour:
   tweenTarget: {fileID: 20}
   hover: {r: .600000024, g: 1, b: .200000003, a: .847058833}
   pressed: {r: .283582091, g: .283582091, b: .283582091, a: .847058833}
-  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   duration: .200000003
+  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
-  hoverSprite: 
-  pressedSprite: 
-  disabledSprite: 
-  pixelSnap: 0
   onClick: []
 --- !u!114 &136
 MonoBehaviour:
@@ -2299,13 +2280,9 @@ MonoBehaviour:
   tweenTarget: {fileID: 22}
   hover: {r: .600000024, g: 1, b: .200000003, a: 1}
   pressed: {r: 0, g: 0, b: 0, a: 1}
-  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   duration: .200000003
+  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
-  hoverSprite: 
-  pressedSprite: 
-  disabledSprite: 
-  pixelSnap: 0
   onClick: []
 --- !u!114 &137
 MonoBehaviour:
@@ -2324,11 +2301,12 @@ MonoBehaviour:
   instantTween: 0
   optionCanBeNone: 0
   onChange: []
+  radioButtonRoot: {fileID: 0}
+  startsChecked: 0
   checkSprite: {fileID: 0}
   checkAnimation: {fileID: 0}
   eventReceiver: {fileID: 0}
   functionName: OnActivate
-  startsChecked: 0
 --- !u!114 &138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2370,7 +2348,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -2418,7 +2395,6 @@ MonoBehaviour:
   mText: Enable DragTilt
   mFontSize: 20
   mFontStyle: 0
-  mAlignment: 0
   mEncoding: 1
   mMaxLineCount: 0
   mEffectStyle: 0
@@ -2478,7 +2454,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -2526,7 +2501,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -2574,7 +2548,6 @@ MonoBehaviour:
   mText: Enable AutoYaw
   mFontSize: 20
   mFontStyle: 0
-  mAlignment: 0
   mEncoding: 1
   mMaxLineCount: 0
   mEffectStyle: 0
@@ -2634,7 +2607,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -2658,11 +2630,12 @@ MonoBehaviour:
   instantTween: 0
   optionCanBeNone: 0
   onChange: []
+  radioButtonRoot: {fileID: 0}
+  startsChecked: 0
   checkSprite: {fileID: 0}
   checkAnimation: {fileID: 0}
   eventReceiver: {fileID: 0}
   functionName: OnActivate
-  startsChecked: 0
 --- !u!114 &145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2758,7 +2731,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -2793,13 +2765,13 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 0
-  mWidth: 457
+  mWidth: 470
   mHeight: 200
   mDepth: 6
   autoResizeBoxCollider: 0
   hideIfOffScreen: 0
   keepAspectRatio: 0
-  aspectRatio: 2.28500009
+  aspectRatio: 2.3499999
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
   mFont: {fileID: 11400000, guid: 9dfefea9e318d8c439ce15f9525c0853, type: 2}
@@ -2814,7 +2786,6 @@ MonoBehaviour:
     and [6699FF]WindowDragTilt[-] example scripts.'
   mFontSize: 20
   mFontStyle: 0
-  mAlignment: 0
   mEncoding: 1
   mMaxLineCount: 0
   mEffectStyle: 0
@@ -2874,7 +2845,6 @@ MonoBehaviour:
   mText: Draggable Window
   mFontSize: 28
   mFontStyle: 0
-  mAlignment: 0
   mEncoding: 1
   mMaxLineCount: 0
   mEffectStyle: 0
@@ -2934,7 +2904,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -2982,7 +2951,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 0
   leftType: 1
@@ -3062,7 +3030,6 @@ MonoBehaviour:
   mClipRange: {x: 0, y: 0, z: 0, w: 0}
   mClipSoftness: {x: 40, y: 40}
   mDepth: 0
-  mClipOffset: {x: 0, y: 0}
 --- !u!114 &154
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3102,7 +3069,6 @@ MonoBehaviour:
   mClipRange: {x: 0, y: 0, z: 0, w: 0}
   mClipSoftness: {x: 40, y: 40}
   mDepth: 0
-  mClipOffset: {x: 0, y: 0}
 --- !u!196 &155
 NavMeshSettings:
   m_ObjectHideFlags: 0
@@ -3132,8 +3098,6 @@ MonoBehaviour:
   manualHeight: 720
   minimumHeight: 320
   maximumHeight: 1536
-  adjustByDPI: 0
-  shrinkPortraitUI: 0
 --- !u!54 &157
 Rigidbody:
   m_ObjectHideFlags: 0

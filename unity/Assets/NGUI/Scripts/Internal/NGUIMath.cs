@@ -366,27 +366,27 @@ static public class NGUIMath
 	/// Calculate the combined bounds of all widgets attached to the specified game object or its children (in relative-to-object space).
 	/// </summary>
 
-	static public Bounds CalculateRelativeWidgetBounds (Transform relativeTo, Transform content)
+	static public Bounds CalculateRelativeWidgetBounds (Transform root, Transform child)
 	{
-		return CalculateRelativeWidgetBounds(relativeTo, content, false);
+		return CalculateRelativeWidgetBounds(root, child, false);
 	}
 
 	/// <summary>
 	/// Calculate the combined bounds of all widgets attached to the specified game object or its children (in relative-to-object space).
 	/// </summary>
 
-	static public Bounds CalculateRelativeWidgetBounds (Transform relativeTo, Transform content, bool considerInactive)
+	static public Bounds CalculateRelativeWidgetBounds (Transform root, Transform child, bool considerInactive)
 	{
-		if (content != null)
+		if (child != null)
 		{
-			UIWidget[] widgets = content.GetComponentsInChildren<UIWidget>(considerInactive);
+			UIWidget[] widgets = child.GetComponentsInChildren<UIWidget>(considerInactive);
 
 			if (widgets.Length > 0)
 			{
 				Vector3 vMin = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
 				Vector3 vMax = new Vector3(float.MinValue, float.MinValue, float.MinValue);
 
-				Matrix4x4 toLocal = relativeTo.worldToLocalMatrix;
+				Matrix4x4 toLocal = root.worldToLocalMatrix;
 				bool isSet = false;
 				Vector3 v;
 
@@ -920,73 +920,5 @@ static public class NGUIMath
 #if UNITY_EDITOR
 		NGUITools.SetDirty(w);
 #endif
-	}
-
-	/// <summary>
-	/// Adjust the specified value by DPI: height * 96 / DPI.
-	/// This will result in in a smaller value returned for higher pixel density devices.
-	/// </summary>
-
-	static public int AdjustByDPI (float height)
-	{
-		float dpi = Screen.dpi;
-
-		RuntimePlatform platform = Application.platform;
-
-		if (dpi == 0f)
-		{
-			dpi = (platform == RuntimePlatform.Android || platform == RuntimePlatform.IPhonePlayer) ? 160f : 96f;
-#if UNITY_BLACKBERRY
-			if (platform == RuntimePlatform.BB10Player) dpi = 160f;
-#elif UNITY_WP8
-			if (platform == RuntimePlatform.WP8Player) dpi = 160f;
-#endif
-		}
-
-		int h = Mathf.RoundToInt(height * (96f / dpi));
-		if ((h & 1) == 1) ++h;
-		return h;
-	}
-
-	/// <summary>
-	/// Convert the specified position, making it relative to the specified object.
-	/// </summary>
-
-	static public Vector2 ScreenToPixels (Vector2 pos, Transform relativeTo)
-	{
-		int layer = relativeTo.gameObject.layer;
-		Camera cam = NGUITools.FindCameraForLayer(layer);
-
-		if (cam == null)
-		{
-			Debug.LogWarning("No camera found for layer " + layer);
-			return pos;
-		}
-		
-		Vector3 wp = cam.ScreenToWorldPoint(pos);
-		return relativeTo.InverseTransformPoint(wp);
-	}
-
-	/// <summary>
-	/// Convert the specified position, making it relative to the specified object's parent.
-	/// Useful if you plan on positioning the widget using the specified value (think mouse cursor).
-	/// </summary>
-
-	static public Vector2 ScreenToParentPixels (Vector2 pos, Transform relativeTo)
-	{
-		int layer = relativeTo.gameObject.layer;
-		if (relativeTo.parent != null)
-			relativeTo = relativeTo.parent;
-
-		Camera cam = NGUITools.FindCameraForLayer(layer);
-
-		if (cam == null)
-		{
-			Debug.LogWarning("No camera found for layer " + layer);
-			return pos;
-		}
-
-		Vector3 wp = cam.ScreenToWorldPoint(pos);
-		return (relativeTo != null) ? relativeTo.InverseTransformPoint(wp) : wp;
 	}
 }

@@ -28,23 +28,7 @@ public class UIPanelTool : EditorWindow
 		public bool widgetsEnabled = false;
 		public List<UIWidget> widgets = new List<UIWidget>();
 	}
-
-	/// <summary>
-	/// First sort by depth, then alphabetically, then by instance ID.
-	/// </summary>
-
-	static int Compare (Entry a, Entry b)
-	{
-		if (a != b && a != null && b != null)
-		{
-			if (a.panel.depth < b.panel.depth) return -1;
-			if (a.panel.depth > b.panel.depth) return 1;
-			int val = string.Compare(a.panel.name, b.panel.name);
-			if (val != 0) return val;
-			return (a.panel.GetInstanceID() < b.panel.GetInstanceID()) ? -1 : 1;
-		}
-		return 0;
-	}
+	static int Compare (Entry a, Entry b) { return UIPanel.CompareFunc(a.panel, b.panel); }
 
 	Vector2 mScroll = Vector2.zero;
 
@@ -137,7 +121,7 @@ public class UIPanelTool : EditorWindow
 				entries.Add(ent);
 			}
 
-			// Sort the list by depth
+			// Sort the list alphabetically
 			entries.Sort(Compare);
 
 			mScroll = GUILayout.BeginScrollView(mScroll);

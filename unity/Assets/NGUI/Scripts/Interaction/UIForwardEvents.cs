@@ -22,6 +22,7 @@ public class UIForwardEvents : MonoBehaviour
 	public bool onSelect		= false;
 	public bool onDrag			= false;
 	public bool onDrop			= false;
+	public bool onInput			= false;
 	public bool onSubmit		= false;
 	public bool onScroll		= false;
 
@@ -78,6 +79,14 @@ public class UIForwardEvents : MonoBehaviour
 		if (onDrop && target != null)
 		{
 			target.SendMessage("OnDrop", go, SendMessageOptions.DontRequireReceiver);
+		}
+	}
+
+	void OnInput (string text)
+	{
+		if (onInput && target != null)
+		{
+			target.SendMessage("OnInput", text, SendMessageOptions.DontRequireReceiver);
 		}
 	}
 

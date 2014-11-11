@@ -22,7 +22,7 @@ public class UISlider : UIProgressBar
 	}
 
 	// Deprecated functionality. Use 'foregroundWidget' instead.
-	[HideInInspector][SerializeField] Transform foreground = null;
+	[HideInInspector][SerializeField] Transform foreground;
 
 	// Deprecated functionality
 	[HideInInspector][SerializeField] float rawValue = 1f; // Use 'value'

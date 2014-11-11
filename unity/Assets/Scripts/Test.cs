@@ -53,24 +53,24 @@ public class Test : MonoBehaviour {
         //g.GetComponent<UISprite>().drawingDimensions.Set(100, 100, 100, 100);
         //g.transform.localScale = new Vector3(0.00185f, 0.00185f, 0.00185f);
         
-        GameObject a = Instantiate(sha)as GameObject;
+        //GameObject a = Instantiate(sha)as GameObject;
         //a.transform = new Vector3(1, 1, 1);
         //a.transform.localScale = new Vector3(1, 1, 1);
-        a.transform.parent = grid.gameObject.transform;
+        //a.transform.parent = grid.gameObject.transform;
         //a.transform.localPosition.Set(0, 0, 0);
         
         //a.transform.localScale.Set(1, 1, 1);
         //a.GetComponent<UISprite>().SetDimensions(100, 100);
-        grid.AddChild(a.transform);
+        //grid.AddChild(a.transform);
     }
 	public void Draw2()
     {
        
         GameObject a = Instantiate(back)as GameObject;
         
-        a.transform.parent = grid2.gameObject.transform;
+        //a.transform.parent = grid2.gameObject.transform;
         
-        grid2.AddChild(a.transform);
+        //grid2.AddChild(a.transform);
     }
 	public void StartGame()
 	{

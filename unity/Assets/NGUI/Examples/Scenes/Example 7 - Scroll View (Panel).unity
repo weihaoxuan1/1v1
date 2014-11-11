@@ -637,14 +637,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07c4de3b4b6fe9045b059ee627c100df, type: 1}
   m_Name: 
   arrangement: 0
-  sorting: 0
   maxPerLine: 0
   cellWidth: 150
   cellHeight: 200
   animateSmoothly: 0
+  sorted: 0
   hideInactive: 1
   keepWithinPanel: 0
-  sorted: 0
 --- !u!54 &121
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1051,7 +1050,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1099,7 +1097,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1159,7 +1156,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1207,7 +1203,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1267,7 +1262,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1362,7 +1356,7 @@ MonoBehaviour:
     absolute: 10
   mColor: {r: .410447776, g: .410447776, b: .410447776, a: 1}
   mPivot: 4
-  mWidth: 1300
+  mWidth: 1320
   mHeight: 740
   mDepth: -2
   autoResizeBoxCollider: 0
@@ -1375,7 +1369,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1676,7 +1669,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1724,7 +1716,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1772,7 +1763,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1820,7 +1810,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -1855,7 +1844,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 1, g: 1, b: 1, a: 1}
   mPivot: 4
-  mWidth: 188
+  mWidth: 100
   mHeight: 20
   mDepth: 10
   autoResizeBoxCollider: 0
@@ -1864,7 +1853,7 @@ MonoBehaviour:
   aspectRatio: 5
   keepCrispWhenShrunk: 1
   mTrueTypeFont: {fileID: 0}
-  mFont: {fileID: 11400000, guid: 93e68f7902ba67545ba1e60502873fb5, type: 2}
+  mFont: {fileID: 11400000, guid: 29056518aafb01b49a5b08faf8e30cff, type: 2}
   mText: Scroll View
   mFontSize: 20
   mFontStyle: 0
@@ -1928,7 +1917,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 0
   leftType: 1
@@ -1976,7 +1964,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 0
   leftType: 1
@@ -2362,13 +2349,9 @@ MonoBehaviour:
   tweenTarget: {fileID: 821599918}
   hover: {r: .882352948, g: .784313738, b: .588235319, a: 1}
   pressed: {r: .717647076, g: .639215708, b: .482352942, a: 1}
-  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   duration: .200000003
+  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
-  hoverSprite: 
-  pressedSprite: 
-  disabledSprite: 
-  pixelSnap: 0
   onClick: []
 --- !u!114 &64656381
 MonoBehaviour:
@@ -2388,6 +2371,7 @@ MonoBehaviour:
   instantTween: 0
   optionCanBeNone: 0
   onChange: []
+  radioButtonRoot: {fileID: 0}
   checkSprite: {fileID: 0}
   checkAnimation: {fileID: 0}
   eventReceiver: {fileID: 0}
@@ -2513,7 +2497,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -2743,7 +2726,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -2995,7 +2977,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -3157,7 +3138,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -3474,7 +3454,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -3549,7 +3528,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -3953,7 +3931,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -4425,7 +4402,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -4761,7 +4737,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -5495,7 +5470,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -5657,7 +5631,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -5732,7 +5705,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -5807,7 +5779,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -5969,7 +5940,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -6280,7 +6250,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -7013,7 +6982,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -7175,7 +7143,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -7424,7 +7391,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -7499,7 +7465,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -7858,7 +7823,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1368274916}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 640, y: 360, z: 0}
+  m_LocalPosition: {x: 649.81958, y: 360, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 191}
@@ -8034,7 +7999,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -8109,7 +8073,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -8143,7 +8106,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1469404478}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 568, y: -323, z: 0}
+  m_LocalPosition: {x: 577.81958, y: -323, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 749131100}
@@ -8173,13 +8136,9 @@ MonoBehaviour:
   tweenTarget: {fileID: 1469404478}
   hover: {r: .835820913, g: .835820913, b: .835820913, a: 1}
   pressed: {r: .23880595, g: .23880595, b: .23880595, a: 1}
-  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   duration: .200000003
+  disabledColor: {r: .5, g: .5, b: .5, a: 1}
   dragHighlight: 0
-  hoverSprite: 
-  pressedSprite: 
-  disabledSprite: 
-  pixelSnap: 0
   onClick: []
 --- !u!114 &1469404483
 MonoBehaviour:
@@ -8258,7 +8217,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -8354,7 +8312,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -8429,7 +8386,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -8504,7 +8460,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -8666,7 +8621,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -8741,7 +8695,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -8903,7 +8856,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -8978,7 +8930,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -9295,7 +9246,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -9370,7 +9320,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -9513,7 +9462,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -9588,7 +9536,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -9837,7 +9784,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -10187,7 +10133,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -10678,7 +10623,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -10821,8 +10765,6 @@ MonoBehaviour:
   manualHeight: 720
   minimumHeight: 720
   maximumHeight: 1080
-  adjustByDPI: 0
-  shrinkPortraitUI: 0
 --- !u!54 &1914776895
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11033,7 +10975,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -11095,7 +11036,7 @@ MonoBehaviour:
     absolute: 0
   mColor: {r: 0, g: 0, b: 0, a: .101960786}
   mPivot: 4
-  mWidth: 1300
+  mWidth: 1320
   mHeight: 740
   mDepth: -1
   autoResizeBoxCollider: 0
@@ -11108,7 +11049,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -11374,7 +11314,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -11449,7 +11388,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1
@@ -11660,7 +11598,6 @@ MonoBehaviour:
   mFillDirection: 4
   mFillAmount: 1
   mInvert: 0
-  mFlip: 0
   mFillCenter: 1
   centerType: 1
   leftType: 1

@@ -83,19 +83,7 @@ static public class NGUITools
 		{
 			if (mListener == null || !NGUITools.GetActive(mListener))
 			{
-				AudioListener[] listeners = GameObject.FindObjectsOfType(typeof(AudioListener)) as AudioListener[];
-
-				if (listeners != null)
-				{
-					for (int i = 0; i < listeners.Length; ++i)
-					{
-						if (NGUITools.GetActive(listeners[i]))
-						{
-							mListener = listeners[i];
-							break;
-						}
-					}
-				}
+				mListener = GameObject.FindObjectOfType(typeof(AudioListener)) as AudioListener;
 
 				if (mListener == null)
 				{
@@ -248,11 +236,7 @@ static public class NGUITools
 					if (Application.isPlaying) GameObject.Destroy(col);
 					else GameObject.DestroyImmediate(col);
 				}
-
 				box = go.AddComponent<BoxCollider>();
-#if !UNITY_3_5 && UNITY_EDITOR
-				UnityEditor.Undo.RegisterCreatedObjectUndo(box, "Add Collider");
-#endif
 				box.isTrigger = true;
 
 				UIWidget widget = go.GetComponent<UIWidget>();
@@ -980,13 +964,7 @@ static public class NGUITools
 	/// Activate the specified object and all of its children.
 	/// </summary>
 
-	static void Activate (Transform t) { Activate(t, true); }
-
-	/// <summary>
-	/// Activate the specified object and all of its children.
-	/// </summary>
-
-	static void Activate (Transform t, bool compatibilityMode)
+	static void Activate (Transform t)
 	{
 		SetActiveSelf(t.gameObject, true);
 
@@ -999,21 +977,18 @@ static public class NGUITools
 			Activate(child);
 		}
 #else
-		if (compatibilityMode)
+		// If there is even a single enabled child, then we're using a Unity 4.0-based nested active state scheme.
+		for (int i = 0, imax = t.childCount; i < imax; ++i)
 		{
-			// If there is even a single enabled child, then we're using a Unity 4.0-based nested active state scheme.
-			for (int i = 0, imax = t.childCount; i < imax; ++i)
-			{
-				Transform child = t.GetChild(i);
-				if (child.gameObject.activeSelf) return;
-			}
+			Transform child = t.GetChild(i);
+			if (child.gameObject.activeSelf) return;
+		}
 
-			// If this point is reached, then all the children are disabled, so we must be using a Unity 3.5-based active state scheme.
-			for (int i = 0, imax = t.childCount; i < imax; ++i)
-			{
-				Transform child = t.GetChild(i);
-				Activate(child, true);
-			}
+		// If this point is reached, then all the children are disabled, so we must be using a Unity 3.5-based active state scheme.
+		for (int i = 0, imax = t.childCount; i < imax; ++i)
+		{
+			Transform child = t.GetChild(i);
+			Activate(child);
 		}
 #endif
 	}
@@ -1039,20 +1014,13 @@ static public class NGUITools
 	/// and it tries to find a panel on its parent.
 	/// </summary>
 
-	static public void SetActive (GameObject go, bool state) { SetActive(go, state, true); }
-
-	/// <summary>
-	/// SetActiveRecursively enables children before parents. This is a problem when a widget gets re-enabled
-	/// and it tries to find a panel on its parent.
-	/// </summary>
-
-	static public void SetActive (GameObject go, bool state, bool compatibilityMode)
+	static public void SetActive (GameObject go, bool state)
 	{
 		if (go)
 		{
 			if (state)
 			{
-				Activate(go.transform, compatibilityMode);
+				Activate(go.transform);
 #if UNITY_EDITOR
 				if (Application.isPlaying)
 #endif
@@ -1433,19 +1401,5 @@ static public class NGUITools
 				mSides[i] = relativeTo.InverseTransformPoint(mSides[i]);
 		}
 		return mSides;
-	}
-
-	/// <summary>
-	/// Convenience function that converts Class + Function combo into Class.Function representation.
-	/// </summary>
-
-	static public string GetFuncName (object obj, string method)
-	{
-		if (obj == null) return "<null>";
-		if (string.IsNullOrEmpty(method)) return "<Choose>";
-		string type = obj.GetType().ToString();
-		int period = type.LastIndexOf('.');
-		if (period > 0) type = type.Substring(period + 1);
-		return type + "." + method;
 	}
 }

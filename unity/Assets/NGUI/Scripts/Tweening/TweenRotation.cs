@@ -34,10 +34,7 @@ public class TweenRotation : UITweener
 
 	protected override void OnUpdate (float factor, bool isFinished)
 	{
-		value = Quaternion.Euler(new Vector3(
-			Mathf.Lerp(from.x, to.x, factor),
-			Mathf.Lerp(from.y, to.y, factor),
-			Mathf.Lerp(from.z, to.z, factor)));
+		value = Quaternion.Slerp(Quaternion.Euler(from), Quaternion.Euler(to), factor);
 	}
 
 	/// <summary>

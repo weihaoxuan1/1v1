@@ -28,10 +28,6 @@ public class UIRootEditor : Editor
 			NGUIEditorTools.DrawProperty("Minimum Height", serializedObject, "minimumHeight");
 			NGUIEditorTools.DrawProperty("Maximum Height", serializedObject, "maximumHeight");
 		}
-
-		NGUIEditorTools.DrawProperty("Shrink Portrait UI", serializedObject, "shrinkPortraitUI");
-		NGUIEditorTools.DrawProperty("Adjust by DPI", serializedObject, "adjustByDPI");
-
 		serializedObject.ApplyModifiedProperties();
 	}
 }

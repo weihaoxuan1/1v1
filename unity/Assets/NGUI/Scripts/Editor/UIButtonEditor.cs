@@ -12,16 +12,52 @@ using UnityEditor;
 #else
 [CustomEditor(typeof(UIButton), true)]
 #endif
-public class UIButtonEditor : UIButtonColorEditor
+public class UIButtonEditor : UIWidgetContainerEditor
 {
-	enum Highlight
+	public override void OnInspectorGUI ()
 	{
-		DoNothing,
-		Press,
-	}
+		serializedObject.Update();
 
-	protected override void DrawProperties ()
-	{
+		NGUIEditorTools.SetLabelWidth(80f);
+		UIButton button = target as UIButton;
+
+		GUILayout.Space(6f);
+
+		if (!serializedObject.isEditingMultipleObjects)
+		{
+			GUI.changed = false;
+			GameObject tt = (GameObject)EditorGUILayout.ObjectField("Target", button.tweenTarget, typeof(GameObject), true);
+
+			if (GUI.changed)
+			{
+				NGUIEditorTools.RegisterUndo("Button Change", button);
+				button.tweenTarget = tt;
+				NGUITools.SetDirty(button);
+			}
+
+			if (tt != null)
+			{
+				UIWidget w = tt.GetComponent<UIWidget>();
+
+				if (w != null)
+				{
+					GUI.changed = false;
+					Color c = EditorGUILayout.ColorField("Normal", w.color);
+
+					if (GUI.changed)
+					{
+						NGUIEditorTools.RegisterUndo("Button Change", w);
+						w.color = c;
+						NGUITools.SetDirty(w);
+					}
+				}
+			}
+		}
+
+		NGUIEditorTools.DrawProperty("Hover", serializedObject, "hover");
+		NGUIEditorTools.DrawProperty("Pressed", serializedObject, "pressed");
+		NGUIEditorTools.DrawProperty("Disabled", serializedObject, "disabledColor");
+
 		SerializedProperty sp = serializedObject.FindProperty("dragHighlight");
 		Highlight ht = sp.boolValue ? Highlight.Press : Highlight.DoNothing;
 		GUILayout.BeginHorizontal();
@@ -30,41 +66,21 @@ public class UIButtonEditor : UIButtonColorEditor
 		GUILayout.EndHorizontal();
 		if (sp.boolValue != highlight) sp.boolValue = highlight;
 
-		DrawTransition();
-		DrawColors();
+		GUILayout.BeginHorizontal();
+		NGUIEditorTools.DrawProperty("Transition", serializedObject, "duration", GUILayout.Width(120f));
+		GUILayout.Label("seconds");
+		GUILayout.EndHorizontal();
 
-		UIButton btn = target as UIButton;
+		serializedObject.ApplyModifiedProperties();
 
-		if (btn.tweenTarget != null)
-		{
-			UISprite sprite = btn.tweenTarget.GetComponent<UISprite>();
+		GUILayout.Space(3f);
 
-			if (sprite != null)
-			{
-				if (NGUIEditorTools.DrawHeader("Sprites"))
-				{
-					NGUIEditorTools.BeginContents();
-					EditorGUI.BeginDisabledGroup(serializedObject.isEditingMultipleObjects);
-					{
-						SerializedObject obj = new SerializedObject(sprite);
-						obj.Update();
-						SerializedProperty atlas = obj.FindProperty("mAtlas");
-						NGUIEditorTools.DrawSpriteField("Normal", obj, atlas, obj.FindProperty("mSpriteName"));
-						obj.ApplyModifiedProperties();
-
-						NGUIEditorTools.DrawSpriteField("Hover", serializedObject, atlas, serializedObject.FindProperty("hoverSprite"), true);
-						NGUIEditorTools.DrawSpriteField("Pressed", serializedObject, atlas, serializedObject.FindProperty("pressedSprite"), true);
-						NGUIEditorTools.DrawSpriteField("Disabled", serializedObject, atlas, serializedObject.FindProperty("disabledSprite"), true);
-					}
-					EditorGUI.EndDisabledGroup();
-
-					NGUIEditorTools.DrawProperty("Pixel Snap", serializedObject, "pixelSnap");
-					NGUIEditorTools.EndContents();
-				}
-			}
-		}
-
-		UIButton button = target as UIButton;
 		NGUIEditorTools.DrawEvents("On Click", button, button.onClick);
+	}
+
+	enum Highlight
+	{
+		DoNothing,
+		Press,
 	}
 }
