@@ -1,6 +1,6 @@
-﻿//----------------------------------------------
+//----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2014 Tasharen Entertainment
+// Copyright © 2011-2015 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -66,6 +66,12 @@ public class BMFont
 	/// </summary>
 
 	public string spriteName { get { return mSpriteName; } set { mSpriteName = value; } }
+
+	/// <summary>
+	/// Access to BMFont's entire set of glyphs.
+	/// </summary>
+
+	public List<BMGlyph> glyphs { get { return mSaved; } }
 
 	/// <summary>
 	/// Helper function that retrieves the specified glyph, creating it if necessary.

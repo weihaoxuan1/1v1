@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2014 Tasharen Entertainment
+// Copyright © 2011-2015 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -171,10 +171,40 @@ public class NGUISettings
 
 #region Convenience accessor properties
 
+	static public bool showTransformHandles
+	{
+		get { return GetBool("NGUI Transform Handles", false); }
+		set { SetBool("NGUI Transform Handles", value); }
+	}
+
+	static public bool minimalisticLook
+	{
+		get { return GetBool("NGUI Minimalistic", false); }
+		set { SetBool("NGUI Minimalistic", value); }
+	}
+
+	static public bool unifiedTransform
+	{
+		get { return GetBool("NGUI Unified", false); }
+		set { SetBool("NGUI Unified", value); }
+	}
+
 	static public Color color
 	{
 		get { return GetColor("NGUI Color", Color.white); }
 		set { SetColor("NGUI Color", value); }
+	}
+
+	static public Color foregroundColor
+	{
+		get { return GetColor("NGUI FG Color", Color.white); }
+		set { SetColor("NGUI FG Color", value); }
+	}
+
+	static public Color backgroundColor
+	{
+		get { return GetColor("NGUI BG Color", Color.black); }
+		set { SetColor("NGUI BG Color", value); }
 	}
 
 	static public ColorMode colorMode
@@ -223,13 +253,11 @@ public class NGUISettings
 		set { Set("NGUI Texture", value); }
 	}
 
-#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
 	static public Sprite sprite2D
 	{
 		get { return Get<Sprite>("NGUI Sprite2D", null); }
 		set { Set("NGUI Sprite2D", value); }
 	}
-#endif
 
 	static public string selectedSprite
 	{
@@ -276,10 +304,22 @@ public class NGUISettings
 		set { SetInt("NGUI Font Size", value); }
 	}
 
+	static public bool fontKerning
+	{
+		get { return GetBool("NGUI Font Kerning", true); }
+		set { SetBool("NGUI Font Kerning", value); }
+	}
+
 	static public FontStyle fontStyle
 	{
 		get { return GetEnum("NGUI Font Style", FontStyle.Normal); }
 		set { SetEnum("NGUI Font Style", value); }
+	}
+
+	static public Font dynamicFont
+	{
+		get { return Get<Font>("NGUI Dynamic Font", null); }
+		set { Set("NGUI Dynamic Font", value); }
 	}
 
 	static public UILabel.Overflow overflowStyle
@@ -318,6 +358,18 @@ public class NGUISettings
 		set { SetBool("NGUI Packing", value); }
 	}
 
+	static public bool trueColorAtlas
+	{
+		get { return GetBool("NGUI Truecolor", true); }
+		set { SetBool("NGUI Truecolor", value); }
+	}
+
+	static public bool keepPadding
+	{
+		get { return GetBool("NGUI KeepPadding", false); }
+		set { SetBool("NGUI KeepPadding", value); }
+	}
+
 	static public bool forceSquareAtlas
 	{
 		get { return GetBool("NGUI Square", false); }
@@ -340,6 +392,50 @@ public class NGUISettings
 	{
 		get { return GetBool("NGUI Guides", false); }
 		set { SetBool("NGUI Guides", value); }
+	}
+
+	static public string charsToInclude
+	{
+		get { return GetString("NGUI Chars", ""); }
+		set { SetString("NGUI Chars", value); }
+	}
+
+#if UNITY_4_3 || UNITY_4_5 || UNITY_4_6
+	static public string pathToFreeType
+	{
+		get
+		{
+			string path = Application.dataPath;
+			if (Application.platform == RuntimePlatform.WindowsEditor) path += "/NGUI/Editor/FreeType.dll";
+			else path += "/NGUI/Editor/FreeType.dylib";
+			return GetString("NGUI FreeType", path);
+		}
+		set { SetString("NGUI FreeType", value); }
+	}
+#else
+	static public string pathToFreeType
+	{
+		get
+		{
+			string path = Application.dataPath;
+			if (Application.platform == RuntimePlatform.WindowsEditor) path += "/NGUI/Editor/FreeType64.dll";
+			else path += "/NGUI/Editor/FreeType64.dylib";
+			return GetString("NGUI FreeType64", path);
+		}
+		set { SetString("NGUI FreeType64", value); }
+	}
+#endif
+
+	static public string searchField
+	{
+		get { return GetString("NGUI Search", null); }
+		set { SetString("NGUI Search", value); }
+	}
+
+	static public string currentPath
+	{
+		get { return GetString("NGUI Path", "Assets/"); }
+		set { SetString("NGUI Path", value); }
 	}
 #endregion
 
@@ -372,7 +468,6 @@ public class NGUISettings
 		return w;
 	}
 
-#if !UNITY_3_5 && !UNITY_4_0 && !UNITY_4_1 && !UNITY_4_2
 	/// <summary>
 	/// Convenience method -- add a UnityEngine.Sprite.
 	/// </summary>
@@ -387,7 +482,7 @@ public class NGUISettings
 		w.height = 100;
 		return w;
 	}
-#endif
+
 	/// <summary>
 	/// Convenience method -- add a sprite.
 	/// </summary>
@@ -511,6 +606,9 @@ public class NGUISettings
 		SetInt("Font Size", lbl.fontSize);
 		SetEnum("Font Style", lbl.fontStyle);
 		SetEnum("Overflow", lbl.overflowMethod);
+		SetBool("UseFloatSpacing", lbl.useFloatSpacing);
+		SetFloat("FloatSpacingX", lbl.floatSpacingX);
+		SetFloat("FloatSpacingY", lbl.floatSpacingY);
 		SetInt("SpacingX", lbl.spacingX);
 		SetInt("SpacingY", lbl.spacingY);
 		SetInt("MaxLines", lbl.maxLineCount);
@@ -540,6 +638,7 @@ public class NGUISettings
 		sp.centerType = GetEnum<UISprite.AdvancedType>("Center Type", UISprite.AdvancedType.Sliced);
 		sp.fillAmount = GetFloat("Fill", sp.fillAmount);
 		sp.fillDirection = GetEnum<UISprite.FillDirection>("FDir", sp.fillDirection);
+		NGUITools.SetDirty(sp);
 	}
 
 	/// <summary>
@@ -568,6 +667,9 @@ public class NGUISettings
 		}
 
 		lbl.overflowMethod = GetEnum<UILabel.Overflow>("Overflow", lbl.overflowMethod);
+		lbl.useFloatSpacing = GetBool("UseFloatSpacing", lbl.useFloatSpacing);
+		lbl.floatSpacingX = GetFloat("FloatSpacingX", lbl.floatSpacingX);
+		lbl.floatSpacingY = GetFloat("FloatSpacingY", lbl.floatSpacingY);
 		lbl.spacingX = GetInt("SpacingX", lbl.spacingX);
 		lbl.spacingY = GetInt("SpacingY", lbl.spacingY);
 		lbl.maxLineCount = GetInt("MaxLines", lbl.maxLineCount);
@@ -581,5 +683,6 @@ public class NGUISettings
 		float x = GetFloat("Effect X", lbl.effectDistance.x);
 		float y = GetFloat("Effect Y", lbl.effectDistance.y);
 		lbl.effectDistance = new Vector2(x, y);
+		NGUITools.SetDirty(lbl);
 	}
 }

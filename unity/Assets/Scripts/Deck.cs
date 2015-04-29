@@ -6,6 +6,10 @@ using System.Collections;
 /// </summary>
 public class Deck : MonoBehaviour {
     public static Deck Instance;
+	Deck()
+	{
+		Instance = this;
+	}
 
     public BetterList<Card> cardPile;
     public BetterList<Card> discardPile;
@@ -23,10 +27,10 @@ public class Deck : MonoBehaviour {
 	void Start () {
         //MainProcess.Instance.RegOnStageDelegate(OnStageDel);
 
-        Instance = this;
         if (Instance == null) Debug.Log("Deck is null");
         else Debug.Log("Deck is not null");
-	    //cardPile = new Card[50];
+	    cardPile = new BetterList<Card>();
+        discardPile = new BetterList<Card>();
         sha = new Card_Sha();
         shan = new Card_Shan();
         tao = new Card_Tao();

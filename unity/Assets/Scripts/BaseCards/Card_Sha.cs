@@ -21,6 +21,9 @@ public class Card_Sha : Card{
 	
 	public void OnClick()
 	{
-		Debug.Log ("click");
+        if (!Player_Man.Instance.isPlayingStage || Player_Man.Instance.isHaveSha) return;
+        Player_Man.Instance.PlaySha(this);
+		Debug.Log ("played a sha");
+        Destroy(this.gameObject);
 	}
 }

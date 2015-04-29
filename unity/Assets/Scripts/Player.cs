@@ -10,6 +10,10 @@ public class Player : MonoBehaviour {
 
     public  int maxHealth;
     public  int curHealth;
+
+    public GameObject self;
+    public GameObject handCard;
+
     //public static Card[] judgementCards;
     //public static Card[] holdCards;
     public List<Card> judgementCards;
@@ -112,14 +116,17 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void PlaySha()
+    public void PlaySha(Card_Sha sha)
     {
         //Debug.Log("isPlayingStage = " + isPlayingStage);
         if (isPlayingStage)
         {
             //Card temp = null;
-            int count = 0;
-            foreach (Card c in holdCards)
+            //int count = 0;
+            sha.Effect(this);
+            holdCardsNumber--;
+            isHaveSha = true;
+            /*foreach (Card c in holdCards)
             {
                 
                 if (c.name.Equals("sha") && isHaveSha == false)
@@ -176,17 +183,20 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void Draw()
+    public void Draw(int num)
     {
-        holdCards.Add(Deck.Instance.DrawCard());
-        pHoldCards++;
+        for (int i = 0; i < num;i++ )
+        {
+            //holdCards.Add(Deck.Instance.DrawCard());
+            pHoldCards++;
+            handCard.GetComponent<HandCard>().AddCard(Deck.Instance.DrawCard());
+        }
+        holdCardsNumber += num;
         //holdCards[1] = Deck.Instance.DrawCard();
         //Debug.Log("handcard = "+pHoldCards.ToString() + holdCards[1].name);
         //holdCards[++pHoldCards] = Deck.Instance.DrawCard();
-        holdCards.Add(Deck.Instance.DrawCard());
-        pHoldCards++;
-        holdCardsNumber += 2;
-        Debug.Log("handcardNO = "+holdCards.Count );
+
+        Debug.Log("handcardNO = " + holdCardsNumber);
         //if (holdCards[1] == null)
         //    Debug.Log(" is verynull");
         /*for (int i = 0; i < holdCardsNumber; i++)
@@ -258,10 +268,10 @@ public class Player : MonoBehaviour {
             else
             holdCardsLabel.text = holdCards[i].name + " ";
         }*/
-        holdCardsLabel.text = "";
+        //holdCardsLabel.text = "";
         foreach (Card a in holdCards)
         {
-            holdCardsLabel.text += a.name + " ";
+            //holdCardsLabel.text += a.name + " ";
         }
     }
 

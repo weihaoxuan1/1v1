@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2014 Tasharen Entertainment
+// Copyright © 2011-2015 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -25,6 +25,7 @@ public class UIDragScrollView : MonoBehaviour
 	Transform mTrans;
 	UIScrollView mScroll;
 	bool mAutoFind = false;
+	bool mStarted = false;
 
 	/// <summary>
 	/// Automatically find the scroll view if possible.
@@ -41,7 +42,18 @@ public class UIDragScrollView : MonoBehaviour
 			draggablePanel = null;
 		}
 
-		if (mAutoFind || mScroll == null) FindScrollView();
+		if (mStarted && (mAutoFind || mScroll == null))
+			FindScrollView();
+	}
+
+	/// <summary>
+	/// Find the scroll view.
+	/// </summary>
+
+	void Start ()
+	{
+		mStarted = true;
+		FindScrollView();
 	}
 
 	/// <summary>
@@ -53,7 +65,7 @@ public class UIDragScrollView : MonoBehaviour
 		// If the scroll view is on a parent, don't try to remember it (as we want it to be dynamic in case of re-parenting)
 		UIScrollView sv = NGUITools.FindInParents<UIScrollView>(mTrans);
 
-		if (scrollView == null)
+		if (scrollView == null || (mAutoFind && sv != scrollView))
 		{
 			scrollView = sv;
 			mAutoFind = true;
@@ -64,12 +76,6 @@ public class UIDragScrollView : MonoBehaviour
 		}
 		mScroll = scrollView;
 	}
-
-	/// <summary>
-	/// Ensure we have a scroll view to work with.
-	/// </summary>
-
-	void Start () { FindScrollView(); }
 
 	/// <summary>
 	/// Create a plane on which we will be performing the dragging.

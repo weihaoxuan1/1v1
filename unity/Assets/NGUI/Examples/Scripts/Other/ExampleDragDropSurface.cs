@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2014 Tasharen Entertainment
+// Copyright © 2011-2015 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -24,7 +24,7 @@ public class ExampleDragDropSurface : MonoBehaviour
 	//        GameObject child = NGUITools.AddChild(gameObject, ddo.prefab);
 
 	//        Transform trans = child.transform;
-	//        trans.position = UICamera.lastHit.point;
+	//        trans.position = UICamera.lastWorldPosition;
 	//        if (rotatePlacedObject) trans.rotation = Quaternion.LookRotation(UICamera.lastHit.normal) * Quaternion.Euler(90f, 0f, 0f);
 	//        Destroy(go);
 	//    }

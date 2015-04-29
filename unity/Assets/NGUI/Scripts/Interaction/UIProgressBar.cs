@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2014 Tasharen Entertainment
+// Copyright © 2011-2015 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -125,22 +125,24 @@ public class UIProgressBar : UIWidgetContainer
 
 			if (mValue != val)
 			{
+				float before = this.value;
 				mValue = val;
 
-				if (NGUITools.GetActive(this))
+				if (before != this.value)
 				{
-					if (EventDelegate.IsValid(onChange))
+					ForceUpdate();
+
+					if (current == null && NGUITools.GetActive(this) && EventDelegate.IsValid(onChange))
 					{
 						current = this;
 						EventDelegate.Execute(onChange);
 						current = null;
 					}
-					ForceUpdate();
-#if UNITY_EDITOR
-					if (!Application.isPlaying)
-						NGUITools.SetDirty(this);
-#endif
 				}
+#if UNITY_EDITOR
+				if (!Application.isPlaying)
+					NGUITools.SetDirty(this);
+#endif
 			}
 		}
 	}
@@ -159,16 +161,19 @@ public class UIProgressBar : UIWidgetContainer
 		}
 		set
 		{
+#if UNITY_4_3 || UNITY_4_5 || UNITY_4_6
 			if (mFG != null)
 			{
 				mFG.alpha = value;
 				if (mFG.collider != null) mFG.collider.enabled = mFG.alpha > 0.001f;
+				else if (mFG.GetComponent<Collider2D>() != null) mFG.GetComponent<Collider2D>().enabled = mFG.alpha > 0.001f;
 			}
 
 			if (mBG != null)
 			{
 				mBG.alpha = value;
 				if (mBG.collider != null) mBG.collider.enabled = mBG.alpha > 0.001f;
+				else if (mBG.GetComponent<Collider2D>() != null) mBG.GetComponent<Collider2D>().enabled = mBG.alpha > 0.001f;
 			}
 
 			if (thumb != null)
@@ -179,8 +184,36 @@ public class UIProgressBar : UIWidgetContainer
 				{
 					w.alpha = value;
 					if (w.collider != null) w.collider.enabled = w.alpha > 0.001f;
+					else if (w.GetComponent<Collider2D>() != null) w.GetComponent<Collider2D>().enabled = w.alpha > 0.001f;
 				}
 			}
+#else
+			if (mFG != null)
+			{
+				mFG.alpha = value;
+				if (mFG.GetComponent<Collider>() != null) mFG.GetComponent<Collider>().enabled = mFG.alpha > 0.001f;
+				else if (mFG.GetComponent<Collider2D>() != null) mFG.GetComponent<Collider2D>().enabled = mFG.alpha > 0.001f;
+			}
+
+			if (mBG != null)
+			{
+				mBG.alpha = value;
+				if (mBG.GetComponent<Collider>() != null) mBG.GetComponent<Collider>().enabled = mBG.alpha > 0.001f;
+				else if (mBG.GetComponent<Collider2D>() != null) mBG.GetComponent<Collider2D>().enabled = mBG.alpha > 0.001f;
+			}
+
+			if (thumb != null)
+			{
+				UIWidget w = thumb.GetComponent<UIWidget>();
+				
+				if (w != null)
+				{
+					w.alpha = value;
+					if (w.GetComponent<Collider>() != null) w.GetComponent<Collider>().enabled = w.alpha > 0.001f;
+					else if (w.GetComponent<Collider2D>() != null) w.GetComponent<Collider2D>().enabled = w.alpha > 0.001f;
+				}
+			}
+#endif
 		}
 	}
 
@@ -206,18 +239,11 @@ public class UIProgressBar : UIWidgetContainer
 
 		if (Application.isPlaying)
 		{
-			if (mFG == null)
-			{
-				Debug.LogWarning("Progress bar needs a foreground widget to work with", this);
-				enabled = false;
-				return;
-			}
-
 			if (mBG != null) mBG.autoResizeBoxCollider = true;
 
 			OnStart();
 
-			if (onChange != null)
+			if (current == null && onChange != null)
 			{
 				current = this;
 				EventDelegate.Execute(onChange);
@@ -332,14 +358,18 @@ public class UIProgressBar : UIWidgetContainer
 
 		if (mFG != null)
 		{
-			UISprite sprite = mFG as UISprite;
+			UIBasicSprite sprite = mFG as UIBasicSprite;
 
 			if (isHorizontal)
 			{
-				if (sprite != null && sprite.type == UISprite.Type.Filled)
+				if (sprite != null && sprite.type == UIBasicSprite.Type.Filled)
 				{
-					sprite.fillDirection = UISprite.FillDirection.Horizontal;
-					sprite.invert = isInverted;
+					if (sprite.fillDirection == UIBasicSprite.FillDirection.Horizontal ||
+						sprite.fillDirection == UIBasicSprite.FillDirection.Vertical)
+					{
+						sprite.fillDirection = UIBasicSprite.FillDirection.Horizontal;
+						sprite.invert = isInverted;
+					}
 					sprite.fillAmount = value;
 				}
 				else
@@ -347,12 +377,17 @@ public class UIProgressBar : UIWidgetContainer
 					mFG.drawRegion = isInverted ?
 						new Vector4(1f - value, 0f, 1f, 1f) :
 						new Vector4(0f, 0f, value, 1f);
+					mFG.enabled = value > 0.001f;
 				}
 			}
-			else if (sprite != null && sprite.type == UISprite.Type.Filled)
+			else if (sprite != null && sprite.type == UIBasicSprite.Type.Filled)
 			{
-				sprite.fillDirection = UISprite.FillDirection.Vertical;
-				sprite.invert = isInverted;
+				if (sprite.fillDirection == UIBasicSprite.FillDirection.Horizontal ||
+					sprite.fillDirection == UIBasicSprite.FillDirection.Vertical)
+				{
+					sprite.fillDirection = UIBasicSprite.FillDirection.Vertical;
+					sprite.invert = isInverted;
+				}
 				sprite.fillAmount = value;
 			}
 			else
@@ -360,6 +395,7 @@ public class UIProgressBar : UIWidgetContainer
 				mFG.drawRegion = isInverted ?
 					new Vector4(0f, 1f - value, 1f, 1f) :
 					new Vector4(0f, 0f, 1f, value);
+				mFG.enabled = value > 0.001f;
 			}
 		}
 

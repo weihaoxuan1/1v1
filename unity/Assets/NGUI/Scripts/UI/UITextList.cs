@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2014 Tasharen Entertainment
+// Copyright © 2011-2015 Tasharen Entertainment
 //----------------------------------------------
 
 #if !UNITY_3_5 && !UNITY_FLASH
@@ -106,7 +106,7 @@ public class UITextList : MonoBehaviour
 	/// Height of each line.
 	/// </summary>
 
-	protected float lineHeight { get { return (textLabel != null) ? textLabel.fontSize + textLabel.spacingY : 20f; } }
+	protected float lineHeight { get { return (textLabel != null) ? textLabel.fontSize + textLabel.effectiveSpacingY : 20f; } }
 
 	/// <summary>
 	/// Height of the scrollable area (outside of the visible area's bounds).
@@ -179,10 +179,10 @@ public class UITextList : MonoBehaviour
 	/// Allow scrolling of the text list.
 	/// </summary>
 
-	void OnScroll (float val)
+	public void OnScroll (float val)
 	{
 		int sh = scrollHeight;
-		
+
 		if (sh != 0)
 		{
 			val *= lineHeight;
@@ -194,7 +194,7 @@ public class UITextList : MonoBehaviour
 	/// Allow dragging of the text list.
 	/// </summary>
 
-	void OnDrag (Vector2 delta)
+	public void OnDrag (Vector2 delta)
 	{
 		int sh = scrollHeight;
 
@@ -258,33 +258,20 @@ public class UITextList : MonoBehaviour
 			textLabel.UpdateNGUIText();
 			NGUIText.rectHeight = 1000000;
 			mTotalLines = 0;
-			bool success = true;
 
 			for (int i = 0; i < mParagraphs.size; ++i)
 			{
 				string final;
 				Paragraph p = mParagraphs.buffer[i];
-
-				if (NGUIText.WrapText(p.text, out final))
-				{
-					p.lines = final.Split('\n');
-					mTotalLines += p.lines.Length;
-				}
-				else
-				{
-					success = false;
-					break;
-				}
+				NGUIText.WrapText(p.text, out final);
+				p.lines = final.Split('\n');
+				mTotalLines += p.lines.Length;
 			}
 
 			// Recalculate the total number of lines
 			mTotalLines = 0;
-
-			if (success)
-			{
-				for (int i = 0, imax = mParagraphs.size; i < imax; ++i)
-					mTotalLines += mParagraphs.buffer[i].lines.Length;
-			}
+			for (int i = 0, imax = mParagraphs.size; i < imax; ++i)
+				mTotalLines += mParagraphs.buffer[i].lines.Length;
 
 			// Update the bar's size
 			if (scrollBar != null)

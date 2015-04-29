@@ -1,6 +1,6 @@
 //----------------------------------------------
 //            NGUI: Next-Gen UI kit
-// Copyright © 2011-2014 Tasharen Entertainment
+// Copyright © 2011-2015 Tasharen Entertainment
 //----------------------------------------------
 
 using UnityEngine;
@@ -69,12 +69,19 @@ public class UIToggle : UIWidgetContainer
 
 	public List<EventDelegate> onChange = new List<EventDelegate>();
 
+	public delegate bool Validate (bool choice);
+
+	/// <summary>
+	/// Want to validate the choice before committing the changes? Set this delegate.
+	/// </summary>
+
+	public Validate validator;
+
 	/// <summary>
 	/// Deprecated functionality. Use the 'group' option instead.
 	/// </summary>
 
-	[HideInInspector][SerializeField] Transform radioButtonRoot;
-	[HideInInspector][SerializeField] UISprite checkSprite;
+	[HideInInspector][SerializeField] UISprite checkSprite = null;
 	[HideInInspector][SerializeField] Animation checkAnimation;
 	[HideInInspector][SerializeField] GameObject eventReceiver;
 	[HideInInspector][SerializeField] string functionName = "OnActivate";
@@ -89,8 +96,15 @@ public class UIToggle : UIWidgetContainer
 
 	public bool value
 	{
-		get { return mIsActive; }
-		set { if (group == 0 || value || optionCanBeNone || !mStarted) Set(value); }
+		get
+		{
+			return mStarted ? mIsActive : startsActive;
+		}
+		set
+		{
+			if (!mStarted) startsActive = value;
+			else if (group == 0 || value || optionCanBeNone || !mStarted) Set(value);
+		}
 	}
 
 	[System.Obsolete("Use 'value' instead")]
@@ -129,7 +143,6 @@ public class UIToggle : UIWidgetContainer
 #endif
 		}
 
-#if UNITY_EDITOR
 		// Auto-upgrade
 		if (!Application.isPlaying)
 		{
@@ -148,12 +161,6 @@ public class UIToggle : UIWidgetContainer
 			if (Application.isPlaying && activeSprite != null)
 				activeSprite.alpha = startsActive ? 1f : 0f;
 
-			if (radioButtonRoot != null && group == 0)
-			{
-				Debug.LogWarning(NGUITools.GetHierarchy(gameObject) +
-					" uses a 'Radio Button Root'. You need to change it to use a 'group' instead.", this);
-			}
-
 			if (EventDelegate.IsValid(onChange))
 			{
 				eventReceiver = null;
@@ -161,11 +168,13 @@ public class UIToggle : UIWidgetContainer
 			}
 		}
 		else
-#endif
 		{
 			mIsActive = !startsActive;
 			mStarted = true;
+			bool instant = instantTween;
+			instantTween = true;
 			Set(startsActive);
+			instantTween = instant;
 		}
 	}
 
@@ -179,8 +188,10 @@ public class UIToggle : UIWidgetContainer
 	/// Fade out or fade in the active sprite and notify the OnChange event listener.
 	/// </summary>
 
-	void Set (bool state)
+	public void Set (bool state)
 	{
+		if (validator != null && !validator(state)) return;
+
 		if (!mStarted)
 		{
 			mIsActive = state;
@@ -212,7 +223,7 @@ public class UIToggle : UIWidgetContainer
 			// Tween the color of the active sprite
 			if (activeSprite != null)
 			{
-				if (instantTween)
+				if (instantTween || !NGUITools.GetActive(this))
 				{
 					activeSprite.alpha = mIsActive ? 1f : 0f;
 				}
@@ -222,23 +233,31 @@ public class UIToggle : UIWidgetContainer
 				}
 			}
 
-			current = this;
+			if (current == null)
+			{
+				UIToggle tog = current;
+				current = this;
 
-			if (EventDelegate.IsValid(onChange))
-			{
-				EventDelegate.Execute(onChange);
+				if (EventDelegate.IsValid(onChange))
+				{
+					EventDelegate.Execute(onChange);
+				}
+				else if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
+				{
+					// Legacy functionality support (for backwards compatibility)
+					eventReceiver.SendMessage(functionName, mIsActive, SendMessageOptions.DontRequireReceiver);
+				}
+				current = tog;
 			}
-			else if (eventReceiver != null && !string.IsNullOrEmpty(functionName))
-			{
-				// Legacy functionality support (for backwards compatibility)
-				eventReceiver.SendMessage(functionName, mIsActive, SendMessageOptions.DontRequireReceiver);
-			}
-			current = null;
 
 			// Play the checkmark animation
 			if (activeAnimation != null)
 			{
-				ActiveAnimation.Play(activeAnimation, state ? Direction.Forward : Direction.Reverse);
+				ActiveAnimation aa = ActiveAnimation.Play(activeAnimation, null,
+					state ? Direction.Forward : Direction.Reverse,
+					EnableCondition.IgnoreDisabledState,
+					DisableCondition.DoNotDisable);
+				if (aa != null && (instantTween || !NGUITools.GetActive(this))) aa.Finish();
 			}
 		}
 	}

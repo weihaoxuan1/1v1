@@ -10,6 +10,7 @@ public class Player_Man : Player
     void Start()
     {
         Instance = this;
+        self = GameObject.Find("Self");
         //opposite = Player_Enemy.Instance;
         MainProcess.Instance.RegOnStageDelegate(OnStageDel);
 		maxHealth = 4;
@@ -24,7 +25,7 @@ public class Player_Man : Player
 
     void OnGUI()
     {
-        if (GUI.Button(new Rect(110, 10, 300, 200), "tao"))
+        /*if (GUI.Button(new Rect(110, 10, 300, 200), "tao"))
         {
             //MainProcess.Instance.NextStage();
             if(MainProcess.Instance.isMyTurn)
@@ -36,21 +37,22 @@ public class Player_Man : Player
                 PlaySha();
                 
         }
+        if (GUI.Button(new Rect(110, 610, 300, 200), "shan"))
+        {
+            PlayShan();
+        }*/
         if (GUI.Button(new Rect(110, 410, 300, 200), "draw"))
         {
             if (isDrawingStage)
             {
-                Draw();
+                Draw(2);
                 isDrawingStage = false;
                 MainProcess.Instance.NextStage();
             }
             
         }
-        if (GUI.Button(new Rect(110, 610, 300, 200), "shan"))
-        {
-            PlayShan();
-        }
-        if (GUI.Button(new Rect(110, 810, 300, 200), "cancel"))
+        
+        if (GUI.Button(new Rect(110, 0, 300, 200), "cancel"))
         {
             if(isCallingShan)
             {

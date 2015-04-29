@@ -51,7 +51,7 @@ public class Player_Enemy : Player
             }
             else if (stageEvent.curStage == MainProcess.Stage.drawing)
             {
-                Draw();
+                Draw(2);
                 MainProcess.Instance.NextStage();
             }
             else if (stageEvent.curStage == MainProcess.Stage.playing)
