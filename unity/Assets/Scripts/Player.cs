@@ -8,8 +8,8 @@ public class Player : MonoBehaviour {
 
     //public static Player Instance;
 
-    public  int maxHealth;
-    public  int curHealth;
+    public int maxHealth;
+    public int curHealth;
 
     public GameObject self;
     public GameObject handCard;
@@ -17,12 +17,12 @@ public class Player : MonoBehaviour {
     //public static Card[] judgementCards;
     //public static Card[] holdCards;
     public List<Card> judgementCards;
-    public List<Card> holdCards;
-    public  int pHoldCards;
-    public  int holdCardsNumber;
-    public  bool isPlayingStage = false;//是否出牌阶段
-    public  bool isDrawingStage = false;//是否摸牌阶段
-    public  bool isDiscardingStage = false;//是否弃牌阶段
+    public List<GameObject> holdCards;
+    public int pHoldCards;
+    public int holdCardsNumber;
+    public bool isPlayingStage = false;//是否出牌阶段
+    public bool isDrawingStage = false;//是否摸牌阶段
+    public bool isDiscardingStage = false;//是否弃牌阶段
     public bool isCallingShan = false;//是否被要求出闪
     public bool isCallingTao = false;//是否求桃
     public bool isCallingWuXie = false;//是否求无懈
@@ -31,7 +31,7 @@ public class Player : MonoBehaviour {
     public bool isHaveSha = false;//是否已杀过
     public Player opposite;//指对方,方便使用卡牌效果
 
-    public UILabel Health;
+    public GameObject healthCard;
     public UILabel holdCardsLabel;
 
     //public bool isMyTurn = true;
@@ -47,8 +47,8 @@ public class Player : MonoBehaviour {
         isCallingShan = false;
         isCallingTao = false;
         isHaveSha = false;
-        if (Health) Health.text = "4/4";
-        if (holdCardsLabel) holdCardsLabel.text = "";
+        //if (Health) Health.text = "4/4";
+        //if (holdCardsLabel) holdCardsLabel.text = "";
         Unreg();
     }
 
@@ -165,12 +165,12 @@ public class Player : MonoBehaviour {
         {
             //Card temp = null;
             int count = 0;
-            foreach (Card c in holdCards)
+            foreach (GameObject c in holdCards)
             {
 
                 if (c.name.Equals("tao"))
                 {
-                    c.Effect(this);
+                    c.gameObject.GetComponent<Card_Tao>().Effect(this);
                     Debug.Log("self played tao");
                     pHoldCards--;
                     holdCardsNumber--;
@@ -187,9 +187,10 @@ public class Player : MonoBehaviour {
     {
         for (int i = 0; i < num;i++ )
         {
-            //holdCards.Add(Deck.Instance.DrawCard());
+			Card tempCard = Deck.Instance.DrawCard();
+
             pHoldCards++;
-            handCard.GetComponent<HandCard>().AddCard(Deck.Instance.DrawCard());
+			holdCards.Add(handCard.GetComponent<HandCard>().AddCard(tempCard));
         }
         holdCardsNumber += num;
         //holdCards[1] = Deck.Instance.DrawCard();
@@ -216,24 +217,31 @@ public class Player : MonoBehaviour {
 
     public int IncreaseHp(int point)
     {
-        curHealth += point;
-        if (curHealth > maxHealth)
-            curHealth = maxHealth;
-        if (Health) Health.text = curHealth.ToString() + "/4";
+		for(int i=0;i<point;i++)
+		{
+			if(curHealth < maxHealth)
+			{
+				curHealth++;      
+				print ("health add 1");
+				healthCard.GetComponent<HeroCoverHealth>().IncreaseHealth(maxHealth);
+			}
+		}
+        //if (Health) Health.text = curHealth.ToString() + "/4";
         return curHealth;
     }
 
     public int DecreaseHp(int point)
     {
         curHealth -= point;
-        if(Health)Health.text = curHealth.ToString() + "/4";
+        //if(Health)Health.text = curHealth.ToString() + "/4";
+		healthCard.GetComponent<HeroCoverHealth>().DecreaseHealth(maxHealth);
         CheckDead();
         return curHealth;
     }
 
-    public Card LostCard(int i)
+    public GameObject LostCard(int i)
     {
-        Card temp = holdCards[i];
+        GameObject temp = holdCards[i];
         Debug.Log("Lost " + temp.name);
         holdCards.RemoveAt(i);
         CheckHoldCards();
@@ -260,6 +268,9 @@ public class Player : MonoBehaviour {
 
     public void CheckHoldCards()
     {
+		print ("check hold cards");
+		holdCardsNumber = holdCards.Count;
+		pHoldCards = holdCardsNumber - 1;
         /*for (int i = 0; i < holdCardsNumber; i++)
         {
             if (holdCards[i] == null)
@@ -269,11 +280,13 @@ public class Player : MonoBehaviour {
             holdCardsLabel.text = holdCards[i].name + " ";
         }*/
         //holdCardsLabel.text = "";
-        foreach (Card a in holdCards)
+        foreach (GameObject a in holdCards)
         {
             //holdCardsLabel.text += a.name + " ";
         }
     }
+
+
 
     public void Reg()
     {

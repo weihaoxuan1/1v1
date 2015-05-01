@@ -14,7 +14,7 @@ public class HandCard : MonoBehaviour {
 	
 	}
 
-    public void AddCard(Card card)
+    public GameObject AddCard(Card card)
     {
         GameObject c = Instantiate( CardNameToPrefab.Instance.NameToPrefab(card.name))as GameObject;
         c.transform.parent = this.transform;
@@ -22,5 +22,6 @@ public class HandCard : MonoBehaviour {
         c.transform.localPosition = new Vector3();
         c.transform.parent.gameObject.GetComponent<UIGrid>().enabled = true;
         print("add a card " + card.name);
+		return c;
     }
 }

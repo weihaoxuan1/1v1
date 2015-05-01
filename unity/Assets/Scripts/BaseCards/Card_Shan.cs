@@ -15,7 +15,10 @@ public class Card_Shan : Card {
 	
 	// Update is called once per frame
 	void Update () {
-	    
+	    if(Player_Man.Instance.isCallingShan)
+			clickable = true;
+		else
+			clickable = false;
 	}
 
     public override void Effect(Player user)
@@ -23,4 +26,12 @@ public class Card_Shan : Card {
         base.Effect(user);
         user.isCallingShan = false;
     }
+
+	void OnClick()
+	{
+		if(clickable)
+		{
+			Effect(Player_Man.Instance);
+		}
+	}
 }

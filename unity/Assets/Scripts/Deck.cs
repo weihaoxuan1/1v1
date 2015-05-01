@@ -13,7 +13,7 @@ public class Deck : MonoBehaviour {
 
     public BetterList<Card> cardPile;
     public BetterList<Card> discardPile;
-    int pTop = 0;
+    public int pTop = 0;
     public int restCardsNumber = 0;
     Card_Sha sha;
     Card_Shan shan;
@@ -109,6 +109,8 @@ public class Deck : MonoBehaviour {
     public void DiscardCard(Card c)
     {
         discardPile.Add(c);
+		Player_Man.Instance.CheckHoldCards ();
+		Player_Enemy.Instance.CheckHoldCards ();
     }
 
     /*void OnStageDel(MainProcess.StageEvent stageEvent)

@@ -6,7 +6,7 @@ using System.Collections;
 public class Player_Enemy : Player
 {
     public static Player_Enemy Instance;
-    public int i = 0;
+    public int pAI = 0;
     public float AItime = 1;
     float timeDelay = 0;
 
@@ -77,20 +77,21 @@ public class Player_Enemy : Player
     //被要求出闪
     public override void CallingShan()
     {
+		print ("opposite calling shan");
         isCallingShan = true;
         int count = 0;
-        foreach (Card c in holdCards)
+        foreach (GameObject c in holdCards)
         {
             if (c.name.Equals("shan") && isCallingShan)
             {
-                c.Effect(this);
+                c.GetComponent<Card_Shan>().Effect(this);
                 break;
             }
             count++;
         }
         if (!isCallingShan)
         {
-            holdCards.RemoveAt(count);
+            //holdCards.RemoveAt(count);
             Debug.Log("opposite played shan");
             CheckHoldCards();
         }
@@ -98,6 +99,7 @@ public class Player_Enemy : Player
         {
             isCallingShan = false;
             DecreaseHp(1);
+
         }
     }
 
@@ -110,37 +112,39 @@ public class Player_Enemy : Player
     {
         if (isPlayingStage && !opposite.isCallingShan)
         {
-            Debug.Log("1");
+            //Debug.Log("1");
             timeDelay += Time.deltaTime;
             if (timeDelay >= AItime )
             {
                 Debug.Log("2");
-                if (i < holdCards.Count)
+                if (pAI < holdCards.Count)
                 {
                     Debug.Log("3");
                     timeDelay = 0;
-                    if (holdCards[i].name.Equals("tao") && curHealth < maxHealth)//有桃吃桃
+                    if (holdCards[pAI].name.Equals("tao") && curHealth < maxHealth)//有桃吃桃
                     {
                         Debug.Log("4");
-                        holdCards[i].Effect(this);
-                        holdCards.RemoveAt(i);
+                        holdCards[pAI].GetComponent<Card_Tao>().Effect(this);
+                        //holdCards.RemoveAt(pAI);
                         CheckHoldCards();
                         Debug.Log("enemy use a tao");
+						return;
                     }
-                    else if (holdCards[i].name.Equals("sha") && !isHaveSha)//有杀杀,没杀过
+                    else if (holdCards[pAI].name.Equals("sha") && !isHaveSha)//有杀杀,没杀过
                     {
                         Debug.Log("5");
-                        holdCards[i].Effect(this);
-                        holdCards.RemoveAt(i);
+						holdCards[pAI].GetComponent<Card_Sha>().Effect(this);
+                        //holdCards.RemoveAt(pAI);
                         CheckHoldCards();
                         isHaveSha = true;
                         if (MainProcess.Instance.info) MainProcess.Instance.info.text = "enemy use a sha";
                         Debug.Log("enemy use a sha");
+						return;
                     }
                     else
                     {
                         Debug.Log("6");
-                        i++;
+                        pAI++;
                     }
                 }
                 else
@@ -149,7 +153,7 @@ public class Player_Enemy : Player
                     timeDelay = 0;
                     isPlayingStage = false;
                     isHaveSha = false;
-                    i = 0;
+                    pAI = 0;
                     MainProcess.Instance.NextStage();
                 }
             }

@@ -98,7 +98,7 @@ GameObject:
   - 114: {fileID: 75863311}
   - 114: {fileID: 75863312}
   m_Layer: 13
-  m_Name: Health
+  m_Name: HealthCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,7 +110,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 75863309}
-  m_LocalRotation: {x: .100696586, y: -.0517593659, z: -.704396069, w: -.700719178}
+  m_LocalRotation: {x: 0, y: 0, z: .707106829, w: .707106709}
   m_LocalPosition: {x: -14, y: -237, z: 12}
   m_LocalScale: {x: .400000006, y: .400000006, z: .400000006}
   m_Children:
@@ -179,6 +179,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroCard: {fileID: 466152794}
+  weightOfFour: 120
+  weightOfThree: 150
 --- !u!1 &106239176
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,7 +517,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 466152794}
   m_LocalRotation: {x: 1.49011612e-08, y: -7.82310963e-08, z: -.707107663, w: .707105994}
-  m_LocalPosition: {x: 22.500721, y: 400.000549, z: -.000200271606}
+  m_LocalPosition: {x: 23, y: 427, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 75863310}
@@ -579,8 +581,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 474594530}
   - 114: {fileID: 474594531}
+  - 114: {fileID: 474594532}
   m_Layer: 13
-  m_Name: Health
+  m_Name: HealthCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -649,6 +652,20 @@ MonoBehaviour:
   mAtlas: {fileID: 11400000, guid: a544f1f534cf87940b7e0d2e7475ecf4, type: 2}
   mSpriteName: "\u4F53\u529B\u724C4"
   mFillCenter: 1
+--- !u!114 &474594532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 474594529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b7354c6236b6d84681a0a342cd22496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heroCard: {fileID: 626404954}
+  weightOfFour: 120
+  weightOfThree: 150
 --- !u!1 &626404954
 GameObject:
   m_ObjectHideFlags: 0
@@ -672,7 +689,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 626404954}
   m_LocalRotation: {x: 0, y: 0, z: -.707106829, w: .707106709}
-  m_LocalPosition: {x: 22.5000458, y: 399.999969, z: 0}
+  m_LocalPosition: {x: 23, y: 427, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 474594530}
@@ -950,9 +967,9 @@ MonoBehaviour:
   isCallingAllChoose: 0
   isHaveSha: 0
   opposite: {fileID: 1567510119}
-  Health: {fileID: 0}
+  healthCard: {fileID: 75863309}
   holdCardsLabel: {fileID: 0}
-  i: 0
+  pAI: 0
   AItime: 1
 --- !u!1 &1256056040
 GameObject:
@@ -1303,7 +1320,7 @@ MonoBehaviour:
   isCallingAllChoose: 0
   isHaveSha: 0
   opposite: {fileID: 1071245884}
-  Health: {fileID: 0}
+  healthCard: {fileID: 474594529}
   holdCardsLabel: {fileID: 0}
 --- !u!1 &1746854631
 GameObject:

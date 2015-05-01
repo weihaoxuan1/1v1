@@ -15,6 +15,7 @@ public class Card_Sha : Card{
 	public override void Effect(Player user)
 	{
         base.Effect(user);
+		print ("sha effect");
         user.opposite.CallingShan();
         //user.opposite.DecreaseHp(1);
 	}
@@ -24,6 +25,6 @@ public class Card_Sha : Card{
         if (!Player_Man.Instance.isPlayingStage || Player_Man.Instance.isHaveSha) return;
         Player_Man.Instance.PlaySha(this);
 		Debug.Log ("played a sha");
-        Destroy(this.gameObject);
+        
 	}
 }

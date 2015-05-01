@@ -112,13 +112,13 @@ public class Player_Man : Player
     {
         if (isCallingShan)
         {
-            Card temp = null;
-            foreach (Card c in holdCards)
+            GameObject temp = null;
+            foreach (GameObject c in holdCards)
             {
                 if (c.name.Equals("shan") && isCallingShan)
                 {
                     temp = c;
-                    c.Effect(this);
+					c.GetComponent<Card_Tao>().Effect(this);
                 }
             }
             if (!isCallingShan)
@@ -129,4 +129,10 @@ public class Player_Man : Player
             }
         }
     }
+
+	public bool IfFullHealth()
+	{
+		if(curHealth < maxHealth)return false;
+		else return true;
+	}
 }
