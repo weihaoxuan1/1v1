@@ -128,6 +128,11 @@ public class MainProcess : MonoSingleton<MainProcess> {
         */
 	}
 
+	public void JumpStage()
+	{
+		curStage += 3;
+	}
+
     public void GameOver()
     {
         if (info) info.text = isMyTurn ? "enemy dead" : "you dead";

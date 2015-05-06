@@ -13,6 +13,10 @@ public class Player : MonoBehaviour {
 
     public GameObject self;
     public GameObject handCard;
+	public GameObject wuQiArea;
+	public GameObject fangJuArea;
+	public GameObject wuQi;
+	public GameObject fangJu;
 
     //public static Card[] judgementCards;
     //public static Card[] holdCards;
@@ -23,6 +27,7 @@ public class Player : MonoBehaviour {
     public bool isPlayingStage = false;//是否出牌阶段
     public bool isDrawingStage = false;//是否摸牌阶段
     public bool isDiscardingStage = false;//是否弃牌阶段
+	public bool isCallingSha = false;
     public bool isCallingShan = false;//是否被要求出闪
     public bool isCallingTao = false;//是否求桃
     public bool isCallingWuXie = false;//是否求无懈
@@ -239,14 +244,23 @@ public class Player : MonoBehaviour {
         return curHealth;
     }
 
-    public GameObject LostCard(int i)
+    public GameObject LostCard(GameObject c)
     {
-        GameObject temp = holdCards[i];
-        Debug.Log("Lost " + temp.name);
-        holdCards.RemoveAt(i);
+        //GameObject temp = holdCards[i];
+        Debug.Log("Lost " + c.name);
+        holdCards.Remove(c);
+		handCard.GetComponent<HandCard>().OutCard (c);
+		//Destroy (c);
         CheckHoldCards();
-        return temp;
+        return c;
     }
+
+	public void GetCard(GameObject c)
+	{
+		holdCards.Add(c);
+		handCard.GetComponent<HandCard>().AddCard(c);
+		CheckHoldCards ();
+	}
 
     public List<Card> SetJudgementCard(Card c)
     {
@@ -266,11 +280,16 @@ public class Player : MonoBehaviour {
     {
     }
 
+	public virtual void CallingSha()
+	{
+	}
+
     public void CheckHoldCards()
     {
 		print ("check hold cards");
 		holdCardsNumber = holdCards.Count;
 		pHoldCards = holdCardsNumber - 1;
+		handCard.GetComponent<UIGrid>().enabled = true;
         /*for (int i = 0; i < holdCardsNumber; i++)
         {
             if (holdCards[i] == null)

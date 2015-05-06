@@ -10,7 +10,7 @@ public class Player_Enemy : Player
     public float AItime = 1;
     float timeDelay = 0;
 
-    public delegate void OnChooseCardDelegate(Card card);
+    public delegate void OnChooseCardDelegate(GameObject card);
     private OnChooseCardDelegate onChooseCardDels;
 
     public void RegOnChooseCardDelegate(OnChooseCardDelegate onChooseCardDel)
@@ -103,9 +103,10 @@ public class Player_Enemy : Player
         }
     }
 
-    public void OnChose(Card card)
+    public void OnChoose(GameObject card)
     {
         onChooseCardDels(card);
+		print ("guangbo");
     }
 
     void AI()

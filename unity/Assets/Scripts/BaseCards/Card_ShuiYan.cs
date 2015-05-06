@@ -1,12 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Card_GuoChai : Card {
+public class Card_ShuiYan : Card {
 
-    public Card_GuoChai()
-    {
-        name = "guochai";
-    }
 	// Use this for initialization
 	void Start () {
 	
@@ -24,18 +20,10 @@ public class Card_GuoChai : Card {
 		}
 	}
 
-    public override void Effect(Player user)
-    {
-        base.Effect(user);
-        user.isCallingAllChoose = true;
-		Player_Enemy.Instance.RegOnChooseCardDelegate(GetCard);
-        //Deck.Instance.DiscardCard(user.opposite.LostCard(
-    }
-	public void GetCard(GameObject card)
+	public override void Effect(Player user)
 	{
-
-		//Player_Man.Instance.GetCard (card);
-		Player_Enemy.Instance.LostCard (card);
+		base.Effect(user);
+		//make chose
 	}
 	
 	void OnClick()

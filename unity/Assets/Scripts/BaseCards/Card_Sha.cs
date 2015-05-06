@@ -11,7 +11,10 @@ public class Card_Sha : Card{
     {
         //name = "sha";
     }
-
+	void Update()
+	{
+		base.Update();
+	}
 	public override void Effect(Player user)
 	{
         base.Effect(user);
@@ -22,8 +25,16 @@ public class Card_Sha : Card{
 	
 	public void OnClick()
 	{
-        if (!Player_Man.Instance.isPlayingStage || Player_Man.Instance.isHaveSha) return;
-        Player_Man.Instance.PlaySha(this);
+		if(clickableAllChoose)
+		{
+			BaseOnClick();
+			return;
+		}
+		if(gameObject.transform.parent.gameObject.name == "EnemyHandCard")return;
+        if (Player_Man.Instance.isPlayingStage && !Player_Man.Instance.isHaveSha && transform.parent.gameObject.name == "PlayerHandCard")
+		{
+        	Player_Man.Instance.PlaySha(this);
+		}
 		Debug.Log ("played a sha");
         
 	}

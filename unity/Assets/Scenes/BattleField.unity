@@ -181,6 +181,33 @@ MonoBehaviour:
   heroCard: {fileID: 466152794}
   weightOfFour: 120
   weightOfThree: 150
+--- !u!1 &86997907
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 86997908}
+  m_Layer: 13
+  m_Name: PlayCardPile
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &86997908
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 86997907}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1359364073}
+  m_RootOrder: 5
 --- !u!1 &106239176
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +253,33 @@ MonoBehaviour:
   shan: {fileID: 100000, guid: 880c13aa36d9f404782224b856d59d17, type: 2}
   back: {fileID: 100000, guid: e3f144fed2f8a69449be1b21cafbccf7, type: 2}
   tao: {fileID: 100000, guid: 3cc3dd10cf329fb4a99a43cac8ce7c7d, type: 2}
+--- !u!1 &125271783
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 125271784}
+  m_Layer: 13
+  m_Name: FangJu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &125271784
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 125271783}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 340, y: -565, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1957245094}
+  m_RootOrder: 4
 --- !u!1 &149283005
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,8 +404,11 @@ Transform:
   m_Children:
   - {fileID: 1071245880}
   - {fileID: 75863310}
+  - {fileID: 881391464}
+  - {fileID: 852286199}
+  - {fileID: 1676789559}
   m_Father: {fileID: 1359364073}
-  m_RootOrder: 6
+  m_RootOrder: 8
 --- !u!1 &225876119
 GameObject:
   m_ObjectHideFlags: 0
@@ -468,6 +525,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9b469e19e9dce04e867140bfe2b56c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pTop: 0
   restCardsNumber: 0
 --- !u!114 &225876125
 MonoBehaviour:
@@ -572,6 +630,10 @@ MonoBehaviour:
   mAtlas: {fileID: 11400000, guid: a544f1f534cf87940b7e0d2e7475ecf4, type: 2}
   mSpriteName: "\u80CC\u9762-\u5C06"
   mFillCenter: 1
+--- !u!4 &468028028 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 400000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+  m_PrefabInternal: {fileID: 890419044}
 --- !u!1 &474594529
 GameObject:
   m_ObjectHideFlags: 0
@@ -744,6 +806,33 @@ MonoBehaviour:
   mAtlas: {fileID: 11400000, guid: a544f1f534cf87940b7e0d2e7475ecf4, type: 2}
   mSpriteName: "\u80CC\u9762-\u5C06"
   mFillCenter: 1
+--- !u!1 &852286198
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 852286199}
+  m_Layer: 13
+  m_Name: FangJu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &852286199
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 852286198}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 340, y: -236, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 223608577}
+  m_RootOrder: 3
 --- !u!1 &881391462
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,7 +845,7 @@ GameObject:
   - 114: {fileID: 881391465}
   - 114: {fileID: 881391466}
   m_Layer: 13
-  m_Name: HandCard
+  m_Name: EnemyHandCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -775,13 +864,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrangement: 0
   sorting: 0
-  pivot: 0
+  pivot: 4
   maxPerLine: 0
   cellWidth: 100
   cellHeight: 200
   animateSmoothly: 1
-  hideInactive: 1
-  keepWithinPanel: 1
+  hideInactive: 0
+  keepWithinPanel: 0
   sorted: 0
 --- !u!4 &881391464
 Transform:
@@ -792,9 +881,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1071245880}
-  m_RootOrder: 0
+  m_Children:
+  - {fileID: 468028028}
+  m_Father: {fileID: 223608577}
+  m_RootOrder: 2
 --- !u!114 &881391465
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -819,6 +909,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd224f7fc9e3a9344b8776a61c59a135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tempPlace: {fileID: 0}
+--- !u!1001 &890419044
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 881391464}
+    m_Modifications:
+    - target: {fileID: 400000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6500000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+      propertyPath: m_Size.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 5a37e2ce409c2a74e877cc61ec0f7996, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1071245879
 GameObject:
   m_ObjectHideFlags: 0
@@ -827,10 +964,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1071245880}
+  - 114: {fileID: 1071245884}
   - 114: {fileID: 1071245882}
   - 54: {fileID: 1071245881}
   - 114: {fileID: 1071245883}
-  - 114: {fileID: 1071245884}
   m_Layer: 13
   m_Name: Opposite
   m_TagString: Untagged
@@ -847,8 +984,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 881391464}
+  m_Children: []
   m_Father: {fileID: 223608577}
   m_RootOrder: 0
 --- !u!54 &1071245881
@@ -902,7 +1038,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3002
+  startingRenderQueue: 3004
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 3
@@ -924,7 +1060,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: 0
   dragEffect: 2
-  restrictWithinPanel: 1
+  restrictWithinPanel: 0
   disableDragIfFits: 0
   smoothDragStart: 1
   iOSDragEmulation: 1
@@ -934,7 +1070,7 @@ MonoBehaviour:
   verticalScrollBar: {fileID: 0}
   showScrollBars: 1
   customMovement: {x: 1, y: 0}
-  contentPivot: 0
+  contentPivot: 4
   scale: {x: 0, y: 0, z: 0}
   relativePositionOnReset: {x: 0, y: 0}
   centerOnChild: {fileID: 0}
@@ -953,6 +1089,10 @@ MonoBehaviour:
   curHealth: 4
   self: {fileID: 1071245879}
   handCard: {fileID: 881391462}
+  wuQiArea: {fileID: 0}
+  fangJuArea: {fileID: 0}
+  wuQi: {fileID: 0}
+  fangJu: {fileID: 0}
   judgementCards: []
   holdCards: []
   pHoldCards: 0
@@ -960,6 +1100,7 @@ MonoBehaviour:
   isPlayingStage: 0
   isDrawingStage: 0
   isDiscardingStage: 0
+  isCallingSha: 0
   isCallingShan: 0
   isCallingTao: 0
   isCallingWuXie: 0
@@ -971,6 +1112,75 @@ MonoBehaviour:
   holdCardsLabel: {fileID: 0}
   pAI: 0
   AItime: 1
+--- !u!1 &1194183956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1194183957}
+  m_Layer: 13
+  m_Name: WuQi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1194183957
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1194183956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -404, y: -548, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1957245094}
+  m_RootOrder: 3
+--- !u!1001 &1196722839
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1778744456}
+    m_Modifications:
+    - target: {fileID: 410704, guid: bb5686d8e186dd84c98dec1ebc1ca617, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 410704, guid: bb5686d8e186dd84c98dec1ebc1ca617, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 410704, guid: bb5686d8e186dd84c98dec1ebc1ca617, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 410704, guid: bb5686d8e186dd84c98dec1ebc1ca617, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 410704, guid: bb5686d8e186dd84c98dec1ebc1ca617, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 410704, guid: bb5686d8e186dd84c98dec1ebc1ca617, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 410704, guid: bb5686d8e186dd84c98dec1ebc1ca617, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 410704, guid: bb5686d8e186dd84c98dec1ebc1ca617, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: bb5686d8e186dd84c98dec1ebc1ca617, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1256056040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1153,6 +1363,8 @@ Transform:
   - {fileID: 1746854632}
   - {fileID: 225876120}
   - {fileID: 1929534794}
+  - {fileID: 86997908}
+  - {fileID: 1597897043}
   - {fileID: 1957245094}
   - {fileID: 223608577}
   m_Father: {fileID: 0}
@@ -1180,10 +1392,10 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1567510115}
+  - 114: {fileID: 1567510119}
   - 114: {fileID: 1567510118}
   - 54: {fileID: 1567510117}
   - 114: {fileID: 1567510116}
-  - 114: {fileID: 1567510119}
   m_Layer: 13
   m_Name: Self
   m_TagString: Untagged
@@ -1200,8 +1412,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -762.709229, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 1778744456}
+  m_Children: []
   m_Father: {fileID: 1957245094}
   m_RootOrder: 0
 --- !u!114 &1567510116
@@ -1217,7 +1428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movement: 0
   dragEffect: 2
-  restrictWithinPanel: 1
+  restrictWithinPanel: 0
   disableDragIfFits: 0
   smoothDragStart: 1
   iOSDragEmulation: 1
@@ -1227,7 +1438,7 @@ MonoBehaviour:
   verticalScrollBar: {fileID: 0}
   showScrollBars: 1
   customMovement: {x: 1, y: 0}
-  contentPivot: 0
+  contentPivot: 4
   scale: {x: 0, y: 0, z: 0}
   relativePositionOnReset: {x: 0, y: 0}
   centerOnChild: {fileID: 0}
@@ -1282,7 +1493,7 @@ MonoBehaviour:
   anchorOffset: 0
   softBorderPadding: 1
   renderQueue: 0
-  startingRenderQueue: 3002
+  startingRenderQueue: 3004
   mClipTexture: {fileID: 0}
   mAlpha: 1
   mClipping: 3
@@ -1306,6 +1517,10 @@ MonoBehaviour:
   curHealth: 4
   self: {fileID: 1567510114}
   handCard: {fileID: 1778744453}
+  wuQiArea: {fileID: 0}
+  fangJuArea: {fileID: 0}
+  wuQi: {fileID: 0}
+  fangJu: {fileID: 0}
   judgementCards: []
   holdCards: []
   pHoldCards: 0
@@ -1313,6 +1528,7 @@ MonoBehaviour:
   isPlayingStage: 0
   isDrawingStage: 0
   isDiscardingStage: 0
+  isCallingSha: 0
   isCallingShan: 0
   isCallingTao: 0
   isCallingWuXie: 0
@@ -1322,6 +1538,60 @@ MonoBehaviour:
   opposite: {fileID: 1071245884}
   healthCard: {fileID: 474594529}
   holdCardsLabel: {fileID: 0}
+--- !u!1 &1597897042
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1597897043}
+  m_Layer: 13
+  m_Name: TempPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1597897043
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1597897042}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1359364073}
+  m_RootOrder: 6
+--- !u!1 &1676789558
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1676789559}
+  m_Layer: 13
+  m_Name: WuQi
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1676789559
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1676789558}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -404, y: -231, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 223608577}
+  m_RootOrder: 4
 --- !u!1 &1746854631
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,7 +1690,7 @@ GameObject:
   - 114: {fileID: 1778744454}
   - 114: {fileID: 1778744457}
   m_Layer: 13
-  m_Name: HandCard
+  m_Name: PlayerHandCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1452,13 +1722,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arrangement: 0
   sorting: 0
-  pivot: 0
+  pivot: 4
   maxPerLine: 0
   cellWidth: 100
   cellHeight: 200
   animateSmoothly: 1
-  hideInactive: 1
-  keepWithinPanel: 1
+  hideInactive: 0
+  keepWithinPanel: 0
   sorted: 0
 --- !u!4 &1778744456
 Transform:
@@ -1467,11 +1737,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1778744453}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -762.709229, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1567510115}
-  m_RootOrder: 0
+  m_Children:
+  - {fileID: 1930385845}
+  m_Father: {fileID: 1957245094}
+  m_RootOrder: 2
 --- !u!114 &1778744457
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1483,6 +1754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd224f7fc9e3a9344b8776a61c59a135, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tempPlace: {fileID: 0}
 --- !u!1 &1929534793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1561,6 +1833,10 @@ MonoBehaviour:
   mAtlas: {fileID: 11400000, guid: 728807a4a166deb41bc3a418e6d1d2bd, type: 2}
   mSpriteName: "\u57FA\u672C-\u6740"
   mFillCenter: 1
+--- !u!4 &1930385845 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 410704, guid: bb5686d8e186dd84c98dec1ebc1ca617, type: 2}
+  m_PrefabInternal: {fileID: 1196722839}
 --- !u!1 &1957245093
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,8 +1864,11 @@ Transform:
   m_Children:
   - {fileID: 1567510115}
   - {fileID: 474594530}
+  - {fileID: 1778744456}
+  - {fileID: 1194183957}
+  - {fileID: 125271784}
   m_Father: {fileID: 1359364073}
-  m_RootOrder: 5
+  m_RootOrder: 7
 --- !u!1 &2126868893
 GameObject:
   m_ObjectHideFlags: 0

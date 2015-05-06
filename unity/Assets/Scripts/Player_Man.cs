@@ -108,6 +108,11 @@ public class Player_Man : Player
         isCallingShan = true;
     }
 
+	public override void CallingSha()
+	{
+		isCallingSha = true;
+	}
+
     public void PlayShan()
     {
         if (isCallingShan)
