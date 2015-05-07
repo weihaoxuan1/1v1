@@ -18,6 +18,11 @@ public class Card_Sha : Card{
 	public override void Effect(Player user)
 	{
         base.Effect(user);
+		if(user.isCallingSha)
+		{
+			user.isCallingSha = false;
+			return;
+		}
 		print ("sha effect");
         user.opposite.CallingShan();
         //user.opposite.DecreaseHp(1);

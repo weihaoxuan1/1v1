@@ -27,8 +27,8 @@ public class Card_NanMan : Card {
 	public override void Effect(Player user)
 	{
 		base.Effect(user);
-		user.opposite.CallingWuXie();
-		user.opposite.CallingSha();
+		if(!user.opposite.CallingWuXie())
+			user.opposite.CallingSha();
 
 	}
 

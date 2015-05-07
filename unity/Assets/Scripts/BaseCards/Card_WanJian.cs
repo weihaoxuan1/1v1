@@ -27,8 +27,8 @@ public class Card_WanJian : Card {
 	public override void Effect(Player user)
 	{
 		base.Effect(user);
-		user.opposite.CallingWuXie();
-		user.opposite.CallingShan();
+		if(!user.opposite.CallingWuXie())
+			user.opposite.CallingShan();
 
 	}
 

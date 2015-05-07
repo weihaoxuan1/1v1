@@ -41,7 +41,7 @@ public class Player_Man : Player
         {
             PlayShan();
         }*/
-        if (GUI.Button(new Rect(110, 410, 300, 200), "draw"))
+        /*if (GUI.Button(new Rect(110, 410, 300, 200), "draw"))
         {
             if (isDrawingStage)
             {
@@ -50,7 +50,7 @@ public class Player_Man : Player
                 MainProcess.Instance.NextStage();
             }
             
-        }
+        }*/
         
         if (GUI.Button(new Rect(110, 0, 300, 200), "cancel"))
         {
@@ -59,6 +59,11 @@ public class Player_Man : Player
                 isCallingShan = false;
                 DecreaseHp(1);
             }
+			if(isCallingSha)
+			{
+				isCallingSha = false;
+				DecreaseHp (1);
+			}
             
             if (MainProcess.Instance.isMyTurn&&MainProcess.Instance.GetCurstage() == MainProcess.Stage.playing)
             {

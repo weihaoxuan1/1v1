@@ -103,6 +103,55 @@ public class Player_Enemy : Player
         }
     }
 
+	public override void CallingSha()
+	{
+		print ("opposite calling sha");
+		isCallingSha = true;
+		foreach (GameObject c in holdCards)
+		{
+			if (c.name.Equals("sha") && isCallingSha)
+			{
+				c.GetComponent<Card_Sha>().Effect(this);
+				break;
+			}
+		}
+		if (!isCallingSha)
+		{
+			//holdCards.RemoveAt(count);
+			Debug.Log("opposite played sha");
+			CheckHoldCards();
+		}
+		else
+		{
+			isCallingSha = false;
+			DecreaseHp(1);
+			
+		}
+	}
+
+	public override bool CallingWuXie ()
+	{
+		print ("opposite calling wuxie");
+		isCallingWuXie = true;
+		foreach(GameObject c in holdCards)
+		{
+			if(c.name.Equals("wuxie") && isCallingWuXie)
+			{
+				c.GetComponent<Card_WuXie>().Effect(this);
+				break;
+			}
+		}
+		if(!isCallingWuXie)
+		{
+			print ("opposite played wuxie");
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
     public void OnChoose(GameObject card)
     {
         onChooseCardDels(card);

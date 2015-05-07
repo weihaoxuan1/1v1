@@ -27,6 +27,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40,6 +41,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: fe27cf039e56498499c26e4a397f76a7, type: 2}
   mSprites:
+  - name: ShuiYan
+    x: 1595
+    y: 1832
+    width: 155
+    height: 216
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 4
+    paddingRight: 2
+    paddingTop: 3
+    paddingBottom: 1
   - name: "\u9526\u56CA-\u4E07\u7BAD\u9F50\u53D1"
     x: 0
     y: 1058
@@ -54,8 +68,8 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u4E50\u4E0D\u601D\u8700"
-    x: 709
-    y: 1313
+    x: 401
+    y: 1741
     width: 427
     height: 307
     borderLeft: 0
@@ -67,8 +81,8 @@ MonoBehaviour:
     paddingTop: 8
     paddingBottom: 5
   - name: "\u9526\u56CA-\u4E94\u8C37\u4E30\u767B"
-    x: 401
-    y: 1621
+    x: 0
+    y: 630
     width: 307
     height: 427
     borderLeft: 0
@@ -93,7 +107,7 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u5175\u7CAE\u5BF8\u65AD"
-    x: 709
+    x: 829
     y: 1741
     width: 427
     height: 307
@@ -106,8 +120,8 @@ MonoBehaviour:
     paddingTop: 8
     paddingBottom: 5
   - name: "\u9526\u56CA-\u51B3\u6597"
-    x: 709
-    y: 457
+    x: 401
+    y: 1313
     width: 307
     height: 427
     borderLeft: 0
@@ -119,7 +133,7 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u5357\u86EE\u5165\u4FB5"
-    x: 709
+    x: 401
     y: 885
     width: 307
     height: 427
@@ -132,8 +146,8 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u65E0\u4E2D\u751F\u6709"
-    x: 1137
-    y: 1621
+    x: 401
+    y: 457
     width: 307
     height: 427
     borderLeft: 0
@@ -159,7 +173,7 @@ MonoBehaviour:
     paddingBottom: 0
   - name: "\u9526\u56CA-\u6843\u56ED\u7ED3\u4E49"
     x: 401
-    y: 337
+    y: 29
     width: 307
     height: 427
     borderLeft: 0
@@ -171,8 +185,8 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u706B\u653B"
-    x: 401
-    y: 765
+    x: 709
+    y: 1313
     width: 307
     height: 427
     borderLeft: 0
@@ -184,8 +198,8 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u8FC7\u6CB3\u62C6\u6865"
-    x: 1445
-    y: 1621
+    x: 1017
+    y: 1313
     width: 307
     height: 427
     borderLeft: 0
@@ -197,8 +211,8 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u94C1\u7D22\u8FDE\u73AF"
-    x: 401
-    y: 1193
+    x: 1325
+    y: 1313
     width: 307
     height: 427
     borderLeft: 0
@@ -210,8 +224,8 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u95EA\u7535"
-    x: 1137
-    y: 1380
+    x: 1257
+    y: 1808
     width: 337
     height: 240
     borderLeft: 0
@@ -223,8 +237,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: "\u9526\u56CA-\u987A\u624B\u7275\u7F8A"
-    x: 0
-    y: 630
+    x: 1633
+    y: 1313
     width: 307
     height: 427
     borderLeft: 0
@@ -250,4 +264,3 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
-  m_IsExploded: 1

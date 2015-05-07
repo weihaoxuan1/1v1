@@ -272,8 +272,9 @@ public class Player : MonoBehaviour {
     {
     }
 
-    public virtual void CallingWuXie()
+    public virtual bool CallingWuXie()
     {
+		return false;
     }
 
     public virtual void CallingTao()
