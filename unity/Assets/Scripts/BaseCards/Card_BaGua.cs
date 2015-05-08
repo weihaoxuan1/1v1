@@ -45,7 +45,8 @@ public class Card_BaGua : Card_Equipment {
 	bool EquipmentEffect(Player user,GameObject card)
 	{
 		if(ifIgnoreFangJu) return true;
-		Card temp = Deck.Instance.Judge ();
+        GameObject tempGameObject = Deck.Instance.Judge ();
+        Card temp = tempGameObject.GetComponent<Card>();
 		if(temp.color == 2 || temp.color == 4)
 		{
 			user.isCallingShan = false;

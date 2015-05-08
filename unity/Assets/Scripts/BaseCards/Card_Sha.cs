@@ -30,6 +30,15 @@ public class Card_Sha : Card{
 	
 	public void OnClick()
 	{
+        /*switch((int)PlayerStatus.Instance.curStatus)
+        {
+            case 0:
+                Player_Man.Instance.PlaySha(this);
+                break;
+            case 1:
+                Player_Enemy.Instance.isCallingSha = true;
+
+        }*/
 		if(clickableAllChoose)
 		{
 			BaseOnClick();

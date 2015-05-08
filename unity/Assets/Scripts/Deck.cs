@@ -11,8 +11,10 @@ public class Deck : MonoBehaviour {
 		Instance = this;
 	}
 
-    public BetterList<Card> cardPile;
-    public BetterList<Card> discardPile;
+    public GameObject deck;
+    public BetterList<GameObject> cardPile;
+    public GameObject[] arrayCardPile;
+    public BetterList<GameObject> discardPile;
     public int pTop = 0;
     public int restCardsNumber = 0;
     Card_Sha sha;
@@ -26,14 +28,15 @@ public class Deck : MonoBehaviour {
 
 	void Start () {
         //MainProcess.Instance.RegOnStageDelegate(OnStageDel);
-
+        
         if (Instance == null) Debug.Log("Deck is null");
         else Debug.Log("Deck is not null");
-	    cardPile = new BetterList<Card>();
-        discardPile = new BetterList<Card>();
+	    cardPile = new BetterList<GameObject>();
+        discardPile = new BetterList<GameObject>();
         sha = new Card_Sha();
         shan = new Card_Shan();
         tao = new Card_Tao();
+        arrayCardPile = new GameObject[52];
         //Debug.Log("aaaa"+ shan.name);
         InitDeck();
         /*for (int i = 0; i < 50; i++)
@@ -44,41 +47,34 @@ public class Deck : MonoBehaviour {
         //Debug.Log(cardPile[1].name);
 	}
 
-
+    //初始化牌堆，包括第一次洗牌
     void InitDeck()
     {
-        for (int i = 0; i < 50; i++)
+        int totalCardNum = gameObject.transform.childCount;
+        //获取deck对象下的全部卡牌并存入cardpile
+        for(int i = 0;i<totalCardNum;i++)
         {
-            int a = Random.Range(0, 100);
-            if (a < 60)
-            {
-                //cardPile[i] = sha;
-                cardPile.Add(sha);
-                Debug.Log("here add a sha");
-            }
-            else if (a < 80)
-            {
-                cardPile.Add(shan);
-                //cardPile[i] = shan;
-                Debug.Log("here add a shan");
-            }
-            else
-            {
-                cardPile.Add(tao);
-                //cardPile[i] = tao;
-                Debug.Log("here add a tao");
-            }
-
+            GameObject temp = gameObject.transform.GetChild(i).gameObject;
+            cardPile.Add(temp);
         }
-        pTop = 49;
-        restCardsNumber = 49;
+        BetterList<GameObject> tempList = new BetterList<GameObject>();
+        //第一次洗牌
+        for(int i=0;i<totalCardNum;i++)
+        {
+            int index = Random.Range(0,cardPile.size);
+            tempList.Add(cardPile[index]);
+            cardPile.RemoveAt(index);
+        }
+        cardPile = tempList;
+        arrayCardPile = cardPile.ToArray();
+        print("finish init");
     }
 	// Update is called once per frame
 	void Update () {
 	
 	}
 
-    public Card DrawCard()
+    public GameObject DrawCard()
     {
         //pTop--;
         restCardsNumber--;
@@ -88,7 +84,7 @@ public class Deck : MonoBehaviour {
         //MainProcess.Instance.NextStage();
     }
 
-    public Card Judge()
+    public GameObject Judge()
     {
         Debug.Log("judged a ");
         return cardPile[pTop--];
@@ -96,17 +92,16 @@ public class Deck : MonoBehaviour {
 
     public void WashDeck(){
         int rest = discardPile.size;
-
         for (int i = 0; i < rest; i++)
         {
-            int r = Random.Range(0, rest);
-            cardPile.Add(discardPile[r]);
-            discardPile.RemoveAt(r);
-            rest--;
+            int index = Random.Range(0, rest-i);
+            cardPile.Add(discardPile[index]);
+            discardPile.RemoveAt(index);
         }
+        print("finish wash deck");
     }
 
-    public void DiscardCard(Card c)
+    public void DiscardCard(GameObject c)
     {
         discardPile.Add(c);
 		Player_Man.Instance.CheckHoldCards ();

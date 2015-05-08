@@ -28,7 +28,7 @@ public class Card_BingLiang : Card {
 	{
 		//base.Effect(user);
 		user.opposite.CallingWuXie();
-		if(Deck.Instance.Judge().color != 3)
+		if(Deck.Instance.Judge().GetComponent<Card>().color != 3)
 		{
 			MainProcess.Instance.RegOnStageDelegate(JumpDrawingStage);
 		}

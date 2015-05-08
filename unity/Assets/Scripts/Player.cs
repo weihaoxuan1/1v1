@@ -192,7 +192,7 @@ public class Player : MonoBehaviour {
     {
         for (int i = 0; i < num;i++ )
         {
-			Card tempCard = Deck.Instance.DrawCard();
+			GameObject tempCard = Deck.Instance.DrawCard();
 
             pHoldCards++;
 			holdCards.Add(handCard.GetComponent<HandCard>().AddCard(tempCard));

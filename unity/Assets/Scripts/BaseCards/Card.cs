@@ -25,7 +25,7 @@ public class Card : MonoBehaviour{
 
 	public virtual void Effect(Player user)
     {
-        Deck.Instance.DiscardCard(this);
+        Deck.Instance.DiscardCard(gameObject);
 		user.holdCards.Remove (this.gameObject);
 		GameObject playCardPile = GameObject.Find("PlayCardPile")as GameObject;
 		gameObject.transform.parent = playCardPile.transform;

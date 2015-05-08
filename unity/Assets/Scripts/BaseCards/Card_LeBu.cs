@@ -28,7 +28,7 @@ public class Card_LeBu : Card {
 	{
 		//base.Effect(user);
 		user.opposite.CallingWuXie();
-		if(Deck.Instance.Judge().color != 2)
+		if(Deck.Instance.Judge().GetComponent<Card>().color != 2)
 		{
 			MainProcess.Instance.RegOnStageDelegate(JumpPlayingStage);
 		}
