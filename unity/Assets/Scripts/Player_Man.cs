@@ -17,7 +17,6 @@ public class Player_Man : Player
         curHealth = 4;
         //judgementCards = new Card[3];
         //holdCards = new Card[20];
-        pHoldCards = -1;
         holdCardsNumber = 0;
         //holdCards[1] = new Card_Sha();
         //Debug.Log(holdCards[1] == null ? "null" : "not null");
@@ -52,7 +51,7 @@ public class Player_Man : Player
             
         }*/
         
-        if (GUI.Button(new Rect(110, 0, 300, 200), "cancel"))
+        if (GUI.Button(new Rect(110, 0, 100, 100), "cancel"))
         {
             if(isCallingShan)
             {
@@ -142,7 +141,6 @@ public class Player_Man : Player
 
 	public bool IfFullHealth()
 	{
-		if(curHealth < maxHealth)return false;
-		else return true;
+        return curHealth == maxHealth;
 	}
 }

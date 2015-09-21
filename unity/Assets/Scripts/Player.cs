@@ -18,11 +18,12 @@ public class Player : MonoBehaviour {
 	public GameObject wuQi;
 	public GameObject fangJu;
 
+    public GameObject[] handCards;
+
     //public static Card[] judgementCards;
     //public static Card[] holdCards;
-    public List<Card> judgementCards;
-    public List<GameObject> holdCards;
-    public int pHoldCards;
+    public BetterList<GameObject> judgementCards = new BetterList<GameObject>();
+    public BetterList<GameObject> holdCards = new BetterList<GameObject>();
     public int holdCardsNumber;
     public bool isPlayingStage = false;//ÊÇ·ñ³öÅÆ½×¶Î
     public bool isDrawingStage = false;//ÊÇ·ñÃþÅÆ½×¶Î
@@ -44,7 +45,6 @@ public class Player : MonoBehaviour {
     {
         curHealth = 4;
         holdCards.Clear();
-        pHoldCards = -1;
         holdCardsNumber = 0;
         isPlayingStage = false;
         isDrawingStage = false;
@@ -67,7 +67,6 @@ public class Player : MonoBehaviour {
         curHealth = 4;
         //judgementCards = new Card[3];
         //holdCards = new Card[20];
-        pHoldCards = -1;
         holdCardsNumber = 0;
         //holdCards[1] = new Card_Sha();
     }
@@ -177,7 +176,6 @@ public class Player : MonoBehaviour {
                 {
                     c.gameObject.GetComponent<Card_Tao>().Effect(this);
                     Debug.Log("self played tao");
-                    pHoldCards--;
                     holdCardsNumber--;
                     holdCards.RemoveAt(count);
                     CheckHoldCards();
@@ -190,32 +188,16 @@ public class Player : MonoBehaviour {
 
     public void Draw(int num)
     {
-        for (int i = 0; i < num;i++ )
+        GameObject[] temp = Deck.Instance.DrawCard(num);
+        for (int i = 0; i < temp.Length; i++)
         {
-			GameObject tempCard = Deck.Instance.DrawCard();
-
-            pHoldCards++;
-			holdCards.Add(handCard.GetComponent<HandCard>().AddCard(tempCard));
+            //temp[i].transform.parent
+            holdCards.Add(temp[i]);
         }
-        holdCardsNumber += num;
-        //holdCards[1] = Deck.Instance.DrawCard();
-        //Debug.Log("handcard = "+pHoldCards.ToString() + holdCards[1].name);
-        //holdCards[++pHoldCards] = Deck.Instance.DrawCard();
+        handCards = holdCards.ToArray();
 
-        Debug.Log("handcardNO = " + holdCardsNumber);
-        //if (holdCards[1] == null)
-        //    Debug.Log(" is verynull");
-        /*for (int i = 0; i < holdCardsNumber; i++)
-        {
-			//holdCards[i] = new Card();
-            if (holdCards[i] == null)
-                Debug.Log(i.ToString() + " is verynull");
-            //Debug.Log("checkholdcards" + i);
-            else
-                holdCardsLabel.text = holdCards[i].name + " ";
-        }*/
+        
         CheckHoldCards();
-        //pHoldCards = holdCardsNumber;
     }
 
     
@@ -262,7 +244,7 @@ public class Player : MonoBehaviour {
 		CheckHoldCards ();
 	}
 
-    public List<Card> SetJudgementCard(Card c)
+    public BetterList<GameObject> SetJudgementCard(GameObject c)
     {
         judgementCards.Add(c);
         return judgementCards;
@@ -288,8 +270,7 @@ public class Player : MonoBehaviour {
     public void CheckHoldCards()
     {
 		print ("check hold cards");
-		holdCardsNumber = holdCards.Count;
-		pHoldCards = holdCardsNumber - 1;
+		holdCardsNumber = holdCards.size;
 		handCard.GetComponent<UIGrid>().enabled = true;
         /*for (int i = 0; i < holdCardsNumber; i++)
         {

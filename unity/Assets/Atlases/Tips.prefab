@@ -41,8 +41,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: fe27cf039e56498499c26e4a397f76a7, type: 2}
   mSprites:
+  - name: Back
+    x: 0
+    y: 1487
+    width: 402
+    height: 561
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 11
+    paddingRight: 7
+    paddingTop: 8
+    paddingBottom: 3
   - name: ShuiYan
-    x: 1595
+    x: 1597
     y: 1832
     width: 155
     height: 216
@@ -56,7 +69,7 @@ MonoBehaviour:
     paddingBottom: 1
   - name: "\u9526\u56CA-\u4E07\u7BAD\u9F50\u53D1"
     x: 0
-    y: 1058
+    y: 496
     width: 307
     height: 427
     borderLeft: 0
@@ -68,7 +81,7 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u4E50\u4E0D\u601D\u8700"
-    x: 401
+    x: 403
     y: 1741
     width: 427
     height: 307
@@ -82,7 +95,7 @@ MonoBehaviour:
     paddingBottom: 5
   - name: "\u9526\u56CA-\u4E94\u8C37\u4E30\u767B"
     x: 0
-    y: 630
+    y: 68
     width: 307
     height: 427
     borderLeft: 0
@@ -94,8 +107,8 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u501F\u5200\u6740\u4EBA"
-    x: 0
-    y: 202
+    x: 403
+    y: 1313
     width: 307
     height: 427
     borderLeft: 0
@@ -107,7 +120,7 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u5175\u7CAE\u5BF8\u65AD"
-    x: 829
+    x: 831
     y: 1741
     width: 427
     height: 307
@@ -120,20 +133,7 @@ MonoBehaviour:
     paddingTop: 8
     paddingBottom: 5
   - name: "\u9526\u56CA-\u51B3\u6597"
-    x: 401
-    y: 1313
-    width: 307
-    height: 427
-    borderLeft: 0
-    borderRight: 0
-    borderTop: 0
-    borderBottom: 0
-    paddingLeft: 8
-    paddingRight: 5
-    paddingTop: 7
-    paddingBottom: 2
-  - name: "\u9526\u56CA-\u5357\u86EE\u5165\u4FB5"
-    x: 401
+    x: 403
     y: 885
     width: 307
     height: 427
@@ -145,9 +145,22 @@ MonoBehaviour:
     paddingRight: 5
     paddingTop: 7
     paddingBottom: 2
-  - name: "\u9526\u56CA-\u65E0\u4E2D\u751F\u6709"
-    x: 401
+  - name: "\u9526\u56CA-\u5357\u86EE\u5165\u4FB5"
+    x: 403
     y: 457
+    width: 307
+    height: 427
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 8
+    paddingRight: 5
+    paddingTop: 7
+    paddingBottom: 2
+  - name: "\u9526\u56CA-\u65E0\u4E2D\u751F\u6709"
+    x: 403
+    y: 29
     width: 307
     height: 427
     borderLeft: 0
@@ -160,7 +173,7 @@ MonoBehaviour:
     paddingBottom: 2
   - name: "\u9526\u56CA-\u65E0\u61C8\u53EF\u51FB"
     x: 0
-    y: 1486
+    y: 924
     width: 400
     height: 562
     borderLeft: 0
@@ -172,8 +185,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: "\u9526\u56CA-\u6843\u56ED\u7ED3\u4E49"
-    x: 401
-    y: 29
+    x: 711
+    y: 1313
     width: 307
     height: 427
     borderLeft: 0
@@ -185,7 +198,7 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u706B\u653B"
-    x: 709
+    x: 1019
     y: 1313
     width: 307
     height: 427
@@ -198,7 +211,7 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u8FC7\u6CB3\u62C6\u6865"
-    x: 1017
+    x: 1327
     y: 1313
     width: 307
     height: 427
@@ -211,7 +224,7 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u94C1\u7D22\u8FDE\u73AF"
-    x: 1325
+    x: 1635
     y: 1313
     width: 307
     height: 427
@@ -224,7 +237,7 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u9526\u56CA-\u95EA\u7535"
-    x: 1257
+    x: 1259
     y: 1808
     width: 337
     height: 240
@@ -237,8 +250,8 @@ MonoBehaviour:
     paddingTop: 0
     paddingBottom: 0
   - name: "\u9526\u56CA-\u987A\u624B\u7275\u7F8A"
-    x: 1633
-    y: 1313
+    x: 711
+    y: 885
     width: 307
     height: 427
     borderLeft: 0
@@ -264,3 +277,4 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}
   m_IsPrefabParent: 1
+  m_IsExploded: 1

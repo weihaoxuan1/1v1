@@ -27,6 +27,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40,8 +41,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   material: {fileID: 2100000, guid: affb6ab5e78c6374297398b520df67f4, type: 2}
   mSprites:
+  - name: Back
+    x: 0
+    y: 463
+    width: 402
+    height: 561
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 11
+    paddingRight: 7
+    paddingTop: 8
+    paddingBottom: 3
   - name: "\u57FA\u672C-\u6740"
-    x: 401
+    x: 806
     y: 462
     width: 400
     height: 562
@@ -54,7 +68,7 @@ MonoBehaviour:
     paddingTop: 5
     paddingBottom: 5
   - name: "\u57FA\u672C-\u6843"
-    x: 0
+    x: 1207
     y: 462
     width: 400
     height: 562
@@ -68,7 +82,7 @@ MonoBehaviour:
     paddingBottom: 5
   - name: "\u57FA\u672C-\u706B\u6740"
     x: 0
-    y: 34
+    y: 35
     width: 307
     height: 427
     borderLeft: 0
@@ -80,8 +94,8 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u57FA\u672C-\u9152"
-    x: 802
-    y: 34
+    x: 403
+    y: 35
     width: 307
     height: 427
     borderLeft: 0
@@ -93,7 +107,7 @@ MonoBehaviour:
     paddingTop: 7
     paddingBottom: 2
   - name: "\u57FA\u672C-\u95EA"
-    x: 802
+    x: 1608
     y: 462
     width: 400
     height: 562
@@ -106,7 +120,7 @@ MonoBehaviour:
     paddingTop: 5
     paddingBottom: 5
   - name: "\u57FA\u672C-\u96F7\u6740"
-    x: 401
+    x: 806
     y: 34
     width: 307
     height: 427
@@ -118,6 +132,19 @@ MonoBehaviour:
     paddingRight: 5
     paddingTop: 7
     paddingBottom: 2
+  - name: "\u80CC\u9762-\u65B0"
+    x: 403
+    y: 463
+    width: 402
+    height: 561
+    borderLeft: 0
+    borderRight: 0
+    borderTop: 0
+    borderBottom: 0
+    paddingLeft: 11
+    paddingRight: 7
+    paddingTop: 8
+    paddingBottom: 3
   mPixelSize: 1
   mReplacement: {fileID: 0}
   mCoordinates: 0

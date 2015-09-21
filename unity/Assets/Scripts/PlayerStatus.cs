@@ -8,10 +8,14 @@ public class PlayerStatus : MonoBehaviour {
     {
         Instance = this;
     }
-    enum Status
+    public enum Status
     {
         normal = 0,
-        juedou = 1,
+        juedou,
+        callShan,
+        callSha,
+        callWuxie,
+
     }
 
 	// Use this for initialization

@@ -66,6 +66,21 @@ public class Deck : MonoBehaviour {
         standardCardPile = new GameObject[52];
         //读取Resources文件夹下的所有卡牌预制
         standardCardPile = Resources.LoadAll<GameObject>("AllCards");
+
+        //生成牌堆
+        foreach (GameObject c in standardCardPile)
+        {
+            GameObject t = GameObject.Instantiate(c) as GameObject;
+            t.transform.parent = transform;
+            t.transform.FindChild("Color").GetComponent<UISprite>().depth = 1;
+            t.transform.FindChild("Number").GetComponent<UILabel>().depth = 1;
+            t.transform.localPosition = Vector3.zero;
+            t.transform.localScale = Vector3.one;
+            t.GetComponent<UISprite>().spriteName = "Back";
+            t.name = t.name.Remove(t.name.IndexOf('('));
+            cardPile.Add(t);
+        }
+            
         InitDeck();
         //for (int i = 0; i < 50; i++)
         //{
@@ -113,17 +128,6 @@ public class Deck : MonoBehaviour {
     /// </summary>
     void InitDeck()
     {
-        //int totalCardNum = gameObject.transform.childCount;
-        ////获取deck对象下的全部卡牌并存入cardpile
-        //for(int i = 0;i<totalCardNum;i++)
-        //{
-        //    GameObject temp = gameObject.transform.GetChild(i).gameObject;
-        //    cardPile.Add(temp);
-        //}
-        for (int i = 0; i < standardCardPile.Length; i++)
-        {
-            cardPile.Add(standardCardPile[i]);
-        }
         BetterList<GameObject> tempList = new BetterList<GameObject>();
         //第一次洗牌
         for (int i = 0; i < standardCardPile.Length; i++)

@@ -55,7 +55,7 @@ public class MainProcess : MonoSingleton<MainProcess> {
 	float time;
     public float stageDelay = 1;
     float delay = 0;
-    Stage lastStage;
+    Stage preStage;
 	Stage curStage;
 	public Player opposite;
     public Player self;
@@ -68,7 +68,7 @@ public class MainProcess : MonoSingleton<MainProcess> {
     {
         turn = 1;
         time = 0;
-        lastStage = Stage.begin;
+        preStage = Stage.begin;
         curStage = Stage.begin;
         if (info) info.text = "?";
         isMyTurn = true;
@@ -76,27 +76,45 @@ public class MainProcess : MonoSingleton<MainProcess> {
 	// Use this for initialization
 	void Start () {
         stageEvent = new StageEvent();
-        lastStage = (Stage)0;
+        preStage = (Stage)0;
         curStage = (Stage)0;
         turn = 1;
         time = 0;
         //opposite = Player.Instance;// _Enemy.Instance;
         //self = Player.Instance;
-        Debug.Log("Started the game");
-        Invoke("NextStage",2);
+        //Debug.Log("Started the game");
+        //Invoke("NextStage",2);
 	}
+
+    void OnGUI()
+    {
+        if (GUI.Button(new Rect(0, 0, 100, 100), "start"))
+        {
+            GameStart();
+        }
+    }
+
+    /// <summary>
+    /// 游戏开始的地方
+    /// </summary>
+    void GameStart()
+    {
+        Player_Man.Instance.Draw(4);
+        Player_Enemy.Instance.Draw(4);
+        NextStage();
+    }
 	
 	// Update is called once per frame
 	void Update () {
         time += Time.deltaTime;
         //当调用过NextStage()时会进入
-        if(lastStage != curStage )
+        if(preStage != curStage )
         {
             delay += Time.deltaTime;
             //阶段之间的延时,修改stageDelay可控制
             if (delay >= stageDelay || (int)curStage%3!=2)
             {
-                lastStage = curStage;
+                preStage = curStage;
                 delay = 0;
                 if (onStageDels != null)
                     onStageDels(GetStageEvent());

@@ -30,7 +30,6 @@ public class Player_Enemy : Player
         //MainProcess.Instance.RegOnStageDelegate(OnStageDel);
         maxHealth = 4;
         curHealth = 4;
-        pHoldCards = -1;
         holdCardsNumber = 0;
     }
 
@@ -167,7 +166,7 @@ public class Player_Enemy : Player
             if (timeDelay >= AItime )
             {
                 Debug.Log("2");
-                if (pAI < holdCards.Count)
+                if (pAI < holdCards.size)
                 {
                     Debug.Log("3");
                     timeDelay = 0;
