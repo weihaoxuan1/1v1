@@ -10,6 +10,11 @@ public class Player : MonoBehaviour {
 
     public int maxHealth;
     public int curHealth;
+    
+    /// <summary>
+    /// 用来表示当前的Player脚本属于玩家还是敌人
+    /// </summary>
+    public string selfName;
 
     public GameObject self;
     public GameObject handCard;
@@ -191,11 +196,11 @@ public class Player : MonoBehaviour {
         GameObject[] temp = Deck.Instance.DrawCard(num);
         for (int i = 0; i < temp.Length; i++)
         {
-            //temp[i].transform.parent
             holdCards.Add(temp[i]);
+            CardControl.Instance.ChangeCardPosition(temp[i], handCard);
         }
         handCards = holdCards.ToArray();
-
+        
         
         CheckHoldCards();
     }

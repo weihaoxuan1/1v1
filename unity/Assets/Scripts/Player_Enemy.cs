@@ -26,6 +26,7 @@ public class Player_Enemy : Player
     void Start()
     {
         Instance = this;
+        selfName = "enemy";
         //opposite = Player_Man.Instance;
         //MainProcess.Instance.RegOnStageDelegate(OnStageDel);
         maxHealth = 4;

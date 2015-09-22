@@ -10,6 +10,7 @@ public class Player_Man : Player
     void Start()
     {
         Instance = this;
+        selfName = "me";
         self = GameObject.Find("Self");
         //opposite = Player_Enemy.Instance;
         MainProcess.Instance.RegOnStageDelegate(OnStageDel);
@@ -40,7 +41,7 @@ public class Player_Man : Player
         {
             PlayShan();
         }*/
-        /*if (GUI.Button(new Rect(110, 410, 300, 200), "draw"))
+        if (GUI.Button(new Rect(200, 0, 100, 100), "draw"))
         {
             if (isDrawingStage)
             {
@@ -49,7 +50,7 @@ public class Player_Man : Player
                 MainProcess.Instance.NextStage();
             }
             
-        }*/
+        }
         
         if (GUI.Button(new Rect(110, 0, 100, 100), "cancel"))
         {
